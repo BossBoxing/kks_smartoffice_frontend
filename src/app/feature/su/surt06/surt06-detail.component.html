@@ -1,0 +1,307 @@
+<!-- ###### Save Action ###### -->
+<toolbar>
+  <button class="btn btn-primary" (click)="util.focusInvalid(header); save()" [disabled]="!isFormDirty() || permission.isReadOnly">
+    <i class="fas fa-cog fa-spin" [hidden]="!saving"></i>
+    <i class="fas fa-save" [hidden]="saving"></i> {{ 'label.ALL.Save' | translate}}
+  </button>
+</toolbar>
+
+<h4>{{ 'label.SURT06.ProgramName' | translate}}</h4>
+<div class="row">
+  <div class="col">
+    <!-- ###### Master Section ###### -->
+    <app-card header="{{ 'label.SURT06.UserData' | translate }}">
+      <div class="card-content">
+        <form #header [formGroup]="suUserForm">
+          <div class="form-row">
+            <div class="form-group col-lg-3 col-md-6 col-sm-12">
+              <textbox formControlName="userName" class="text-center">{{ 'label.SURT06.UserName' | translate }} </textbox>
+            </div>
+            <div class="form-group col-lg-3 col-md-6 col-sm-12">
+              <auto-complete 
+                [showDescription]="false" 
+                [onSearch]="onSearchEmpId"
+                [modelChange]="empIdChange"
+                placeholder="{{ 'label.ALL.PleaseSelect' | translate }}"
+                formControlName="empId">
+                {{ 'label.SURT06.Employee' | translate }}
+              </auto-complete>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-lg-6 col-md-6 col-sm-12">
+              <textbox formControlName="ouName">{{ 'label.SURT06.Organization' | translate }} </textbox>
+            </div>
+            <div class="form-group col-lg-6 col-md-6 col-sm-12">
+              <textbox formControlName="divName">{{ 'label.SURT06.Division' | translate }} </textbox>
+            </div>
+            <div class="form-group col-lg-3 col-md-6 col-sm-12">
+              <select-input 
+                [items]="masterData.languages"
+                formControlName="userLin"
+                placeholder="{{ 'label.ALL.PleaseSelect' | translate }}">
+                {{ 'label.SURT06.Language' | translate }}
+              </select-input>
+            </div>
+            <div class="form-group col-lg-3 col-md-6 col-sm-12">
+              <checkbox formControlName="activeBool">{{ 'label.SURT06.Active' | translate }}</checkbox>
+            </div>
+            <div class="form-group col-lg-3 col-md-6 col-sm-12">
+              <checkbox formControlName="forceBool">{{ 'label.SURT06.ForceChangePassword' | translate }}</checkbox>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-lg-3 col-md-6 col-sm-12">
+              <textbox formControlName="email">{{ 'label.SURT06.Email' | translate }} </textbox>
+            </div>
+            <div class="form-group col-lg-3 col-md-6 col-sm-12">
+              <textbox formControlName="telephone" class="text-center">{{ 'label.SURT06.Telephone' | translate }} </textbox>
+            </div>
+            <div class="form-group col-lg-6 col-md-12 col-sm-12">
+              <textbox formControlName="description">{{ 'label.SURT06.Description' | translate }} </textbox>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-lg-3 col-md-6 col-sm-6">
+              <number formControlName="failTime">{{ 'label.SURT06.FailTime' | translate }}</number>
+            </div>
+            <div class="form-group col-lg-3 col-md-6 col-sm-6">
+              <checkbox formControlName="unlimitBool">{{ 'label.SURT06.UnlimitFlag' | translate }}</checkbox>
+            </div>
+            <div class="form-group col-lg-3 col-md-6 col-sm-12">
+              <select-input 
+                [items]="masterData.accountStatus"
+                formControlName="lockFlag"
+                placeholder="{{ 'label.ALL.PleaseSelect' | translate }}">
+                {{ 'label.SURT06.AccountStatus' | translate }}
+              </select-input>
+            </div>
+            <div class="form-group col-lg-3 col-md-6 col-sm-12">
+              <datepicker formControlName="accountExpireDate">{{ 'label.SURT06.AccountExpireDate' | translate }}</datepicker>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-lg-3 col-md-6 col-sm-12">
+              <datetime-viewer formControlName="lastChangePwdDate">{{ 'label.SURT06.LastChangePwdDate' | translate }} </datetime-viewer>
+            </div>
+            <div class="form-group col-lg-3 col-md-6 col-sm-12">
+              <datetime-viewer formControlName="nextExpiredPwdDate">{{ 'label.SURT06.NextExpiredPwdDate' | translate }} </datetime-viewer>
+            </div>
+            <div class="form-group col-lg-3 col-md-6 col-sm-12">
+              <textbox formControlName="updatedBy" class="text-center">{{ 'label.SURT06.UpdateBy' | translate }}</textbox>
+            </div>
+            <div class="form-group col-lg-3 col-md-6 col-sm-12">
+              <datetime-viewer formControlName="updatedDate">{{ 'label.SURT06.UpdateDate' | translate }}</datetime-viewer>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col">
+              <p class="font-weight-bold">{{ 'label.SURT06.Remark' | translate }}</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <ul>
+                <li>{{ 'label.SURT06.FailTimeDesc' | translate }} {{ masterData.maxFailTime | number:'0.0-0' }} {{ 'label.SURT06.Times' | translate }}</li>
+                <li>{{ 'label.SURT06.PasswordExpiredDesc' | translate }} {{ masterData.passwordAge | number:'0.0-0' }} {{ 'label.SURT06.Days' | translate }}</li>
+              </ul>
+            </div>
+          </div>
+        </form>
+      </div>
+    </app-card>
+
+    <tabset #detailTabset>
+      <!-- ###### Detail Section ###### -->
+      <tab heading="{{ 'label.SURT06.UserProfileData' | translate }}">
+        <app-card header="{{ 'label.SURT06.UserProfileData' | translate }}">
+          <div class="card-menu">
+            <button class="btn btn-primary" (click)="addUserProfile(); detailTab.goLastPage();" [disabled]="permission.isReadOnly">
+              <i class="fas fa-plus-circle"></i> {{ 'label.ALL.Add' | translate}}
+            </button>
+          </div>
+          <div class="card-content">
+            <div class="row">
+              <div class="col">
+                <app-table-client #detailTab [rows]="suUser.userProfiles" [sorts]="false">
+                  <ngx-datatable-column [width]="250">
+                    <ng-template ngx-datatable-header-template>
+                      <label class="datatable-header-cell-wrapper">
+                        {{ 'label.SURT06.Profile' | translate}}<span class="text-danger ng-star-inserted"> *</span>
+                      </label>
+                    </ng-template>
+                    <ng-template let-row="row" let-index="rowIndex" ngx-datatable-cell-template>
+                      <div [formGroup]="row.form">
+                        <select-input [items]="masterData.profiles"
+                          formControlName="profileId"
+                          [hasLabel]="false" 
+                          [small]="true"
+                          placeholder="{{ 'label.ALL.PleaseSelect' | translate }}">
+                        </select-input>
+                      </div>
+                    </ng-template>
+                  </ngx-datatable-column>
+                  <ngx-datatable-column [width]="200">
+                    <ng-template ngx-datatable-header-template>
+                      <label class="datatable-header-cell-wrapper">
+                        {{ 'label.SURT06.EfDate' | translate}}<span class="text-danger ng-star-inserted"> *</span>
+                      </label>
+                    </ng-template>
+                    <ng-template let-row="row" let-index="rowIndex" ngx-datatable-cell-template>
+                      <div [formGroup]="row.form">
+                        <datepicker formControlName="effDate" [hasLabel]="false" [small]="true" [max]="row.form.controls.endDate.value">
+                        </datepicker>
+                      </div>
+                    </ng-template>
+                  </ngx-datatable-column>
+                  <ngx-datatable-column [width]="200">
+                    <ng-template ngx-datatable-header-template>
+                      <label class="datatable-header-cell-wrapper">{{ 'label.SURT06.EndDate' | translate}}</label>
+                    </ng-template>
+                    <ng-template let-row="row" let-index="rowIndex" ngx-datatable-cell-template>
+                      <div [formGroup]="row.form">
+                        <datepicker formControlName="endDate" [hasLabel]="false" [small]="true" [min]="row.form.controls.effDate.value">
+                        </datepicker>
+                      </div>
+                    </ng-template>
+                  </ngx-datatable-column>
+                  <ngx-datatable-column [width]="50" [resizeable]="false" [canAutoResize]="false" [cellClass]="'text-center'">
+                    <ng-template ngx-datatable-header-template>
+                      <label class="datatable-header-cell-wrapper">{{ 'label.ALL.Delete' | translate }}</label>
+                    </ng-template>
+                    <ng-template let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                      <button (click)="removeUserProfile(row)" class="btn btn-outline-danger btn-sm" [disabled]="permission.isReadOnly">
+                        <i class="far fa-trash-alt"></i>
+                      </button>
+                    </ng-template>
+                  </ngx-datatable-column>
+                </app-table-client>
+              </div>
+            </div>
+          </div>
+        </app-card>
+      </tab> 
+
+      <!-- ###### Org Section ###### -->
+      <tab heading="{{ 'label.SURT06.UserOrganizationData' | translate }}" *ngIf="suUser.rowVersion">
+        <app-card header="{{ 'label.SURT06.UserOrganizationData' | translate }}">
+          <div class="card-menu">
+            <button class="btn btn-primary" (click)="addUserOrg()" [disabled]="permission.isReadOnly">
+              <i class="fas fa-plus-circle"></i> {{ 'label.ALL.Add' | translate}}
+            </button>
+          </div>
+          <div class="card-content">
+            <div class="row">
+              <div class="col">
+                <app-table-client #orgTab [rows]="suUser.userOrgDto" [sorts]="false">
+                  <ngx-datatable-column [width]="150" [cellClass]="'text-center'">
+                    <ng-template ngx-datatable-header-template>
+                      <label class="datatable -header-cell-wrapper">
+                        {{ 'label.SURT06.OuCode' | translate}}
+                      </label>
+                    </ng-template>
+                    <ng-template let-row="row" let-index="rowIndex" ngx-datatable-cell-template>
+                      <a [routerLink]="['/su/surt06/organization']" [state]="{ userId: row.userId, ouCode: row.ouCode }">
+                        {{ row.ouCode }}
+                      </a>
+                    </ng-template>
+                  </ngx-datatable-column>
+                  <ngx-datatable-column [width]="200">
+                    <ng-template ngx-datatable-header-template>
+                      <label class="datatable-header-cell-wrapper">
+                        {{ 'label.SURT06.OuName' | translate}}
+                      </label>
+                    </ng-template>
+                    <ng-template let-row="row" let-index="rowIndex" ngx-datatable-cell-template>
+                      {{ row.ouName }}
+                    </ng-template>
+                  </ngx-datatable-column>
+                  <ngx-datatable-column [width]="200" [cellClass]="'text-center'">
+                    <ng-template ngx-datatable-header-template>
+                      <label class="datatable-header-cell-wrapper">
+                        {{ 'label.SURT06.EfDate' | translate}}
+                      </label>
+                    </ng-template>
+                    <ng-template let-row="row" let-index="rowIndex" ngx-datatable-cell-template>
+                      {{ row.effDate | thaidate }}
+                    </ng-template>
+                  </ngx-datatable-column>
+                  <ngx-datatable-column [width]="200" [cellClass]="'text-center'">
+                    <ng-template ngx-datatable-header-template>
+                      <label class="datatable-header-cell-wrapper">{{ 'label.SURT06.EndDate' | translate}}</label>
+                    </ng-template>
+                    <ng-template let-row="row" let-index="rowIndex" ngx-datatable-cell-template>
+                      {{ row.endDate | thaidate }}
+                    </ng-template>
+                  </ngx-datatable-column>
+                  <ngx-datatable-column [width]="50" [resizeable]="false" [canAutoResize]="false" [cellClass]="'text-center'">
+                    <ng-template ngx-datatable-header-template>
+                      <label class="datatable-header-cell-wrapper">{{ 'label.ALL.Delete' | translate }}</label>
+                    </ng-template>
+                    <ng-template let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                      <button (click)="removeUserOrg(row)" class="btn btn-outline-danger btn-sm" [disabled]="permission.isReadOnly">
+                        <i class="far fa-trash-alt"></i>
+                      </button>
+                    </ng-template>
+                  </ngx-datatable-column>
+                </app-table-client>
+              </div>
+            </div>
+          </div>
+        </app-card>
+      </tab>
+ 
+      <!-- ###### Password Section ###### -->
+      <tab heading="{{ 'label.SURT06.Password' | translate }}" *ngIf="suUser.rowVersion">
+        <app-card header="{{ 'label.SURT06.Password' | translate }}">
+          <div class="card-content">
+            <div class="row">
+              <div class="col-md-4 offset-md-4">
+                <form #password [formGroup]="passwordForm">
+                  <div class="form-row">
+                    <div class="form-group col">
+                      <checkbox formControlName="isChangePassword">{{ 'label.SURT06.ChangePassword' | translate }}</checkbox>
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="form-row">
+                    <div class="form-group col">
+                      <textbox formControlName="oldPassword" [inputType]="'password'" class="text-center">{{ 'label.SURT06.CurrentPassword' | translate }} </textbox>
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col">
+                      <textbox formControlName="newPassword" [inputType]="'password'" class="text-center">{{ 'label.SURT06.NewPassword' | translate }} </textbox>
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <div class="form-group col">
+                      <textbox formControlName="confirmPassword" [inputType]="'password'" class="text-center">{{ 'label.SURT06.ConfirmPassword' | translate }} </textbox>
+                      <div class="invalid" *ngIf="passwordForm.hasError('matched')"> {{'message.SU00054' | translate}} </div>
+                    </div>
+                  </div>
+                  <br/>
+                  <div class="form-row">
+                    <button class="btn btn-primary btn-block" (click)="changePassword()" 
+                      [disabled]="passwordForm.controls.isChangePassword.value == false || permission.isReadOnly">
+                      <i class="fas fa-cog fa-spin" [hidden]="!saving"></i>
+                      <i class="fas fa-key" [hidden]="saving"></i> {{ 'label.SURT06.ChangePassword' | translate}}
+                    </button>
+                    <button class="btn btn-warning btn-block ml-0" (click)="resetPassword()"
+                      [disabled]="passwordForm.controls.isChangePassword.value == true || permission.isReadOnly">
+                      <i class="fas fa-cog fa-spin" [hidden]="!saving"></i>
+                      <i class="fas fa-unlock-alt" [hidden]="saving"></i> {{ 'label.SURT06.ResetPassword' | translate}}
+                    </button>
+                  </div>
+                  <br/>
+                  <div class="form-row text-danger">{{ 'label.SURT06.ResetPasswordDesc' | translate}}</div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </app-card>
+      </tab> 
+    </tabset>
+  </div>
+</div>

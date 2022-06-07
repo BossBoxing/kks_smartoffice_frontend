@@ -1,0 +1,137 @@
+<app-modal (onClose)="close()" header="{{ 'label.PLDT01.TaskInformation' | translate }}">
+    <div class="row">
+        <div class="col">
+            <app-card>
+                <div class="card-content">
+                    <form #header [formGroup]="plTaskEntryForm">
+                        <div class="form-row">
+                            <div class="form-group col-12">
+                                <radio [items]="masterData.workTypes" [inline]="true" formControlName="workType">{{ 'label.PLDT01.TaskType' | translate }}</radio>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="form-row">
+                            <div class="form-group col-lg-4 col-sm-12">
+                                <auto-complete 
+                                    [showDescription]="false" 
+                                    [onSearch]="onSearchCustCode" 
+                                    formControlName="custCode"
+                                    [small]="true">
+                                    {{ 'label.PLDT01.CustomerCode' | translate }}
+                                </auto-complete>
+                            </div>
+                            <div class="form-group col-lg-4 col-sm-12">
+                                <auto-complete 
+                                    [showDescription]="false" 
+                                    [onSearch]="onSearchReleaseCode" 
+                                    formControlName="releaseCode"
+                                    [small]="true">
+                                    {{ 'label.PLDT01.ReleaseCode' | translate }}
+                                </auto-complete>
+                            </div>
+                            <div class="form-group col-lg-4 col-sm-12">
+                                <auto-complete 
+                                    [showDescription]="false" 
+                                    [onSearch]="onSearchProjCode" 
+                                    formControlName="projCode"
+                                    [small]="true">
+                                    {{ 'label.PLDT01.ProjectCode' | translate }}
+                                </auto-complete>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-4 col-sm-12">
+                                <textbox formControlName="progDevId" class="text-center" [small]="true" (focusout)="findProgNameByProgId()">
+                                    {{ 'label.PLDT01.ProgramDevCode' | translate }}
+                                </textbox>
+                            </div>
+                            <div class="form-group col-md-8 col-sm-12">
+                                <textbox formControlName="progName" [small]="true">{{ 'label.PLDT01.ProgramDevName' | translate }}</textbox>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col">
+                                <auto-complete 
+                                    [showDescription]="false" 
+                                    [onSearch]="onSearchWorkCode"
+                                    formControlName="workCode"
+                                    [small]="true">
+                                    {{ 'label.PLDT01.WorkCode' | translate }}
+                                </auto-complete>
+                            </div>
+                            <div class="form-group col-md-4 col-sm-12" *ngIf="isWorkTypeDevelop()">
+                                <select-input 
+                                    [items]="masterData.progStatusCodes" 
+                                    placeholder="{{ 'label.ALL.PleaseSelect' | translate }}"
+                                    formControlName="progStatus">
+                                    {{ 'label.PLDT01.ProgramStatus' | translate }}
+                                </select-input>
+                            </div>
+                        </div>
+                        <div class="form-row" *ngIf="isWorkTypeDevelop()">
+                            <div class="form-group col-lg-8 col-sm-12">
+                                <auto-complete 
+                                    [showDescription]="false" 
+                                    [onSearch]="onSearchProgTypeCode"
+                                    formControlName="progTypeCode"
+                                    [modelChange]="progTypeCodeChange"
+                                    [small]="true">
+                                    {{ 'label.PLDT01.ProgramTypeCode' | translate }}
+                                </auto-complete>
+                            </div>
+                            <div class="form-group col-lg-2 col-sm-6">
+                                <number formControlName="assPts" currency [small]="true">{{ 'label.PLDT01.AssignedPoints' | translate }}</number>
+                            </div>
+                            <div class="form-group col-lg-2 col-sm-6">
+                                <number formControlName="calAssPts" currency [small]="true">{{ 'label.PLDT01.CalculatedPoints' | translate }}</number>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-12">
+                                <label for="remark">{{ 'label.PLDT01.Remark' | translate }}</label>
+                                <textarea formControlName="remark" class="form-control" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="form-row">
+                            <div class="form-group col-md-4 col-sm-6">
+                                <datepicker formControlName="startWorkDate" [max]="plTaskEntryForm.controls.endWorkDate.value" [small]="true">
+                                    {{ 'label.PLDT01.FromDate' | translate }}
+                                </datepicker>
+                            </div>
+                            <div class="form-group col-md-4 col-sm-6">
+                                <datepicker formControlName="endWorkDate" [min]="plTaskEntryForm.controls.startWorkDate.value" [small]="true">
+                                    {{ 'label.PLDT01.ToDate' | translate }}
+                                </datepicker>
+                            </div>
+                            <div class="form-group col-md-2 col-sm-6" *ngIf="isWorkTypeDevelop()">
+                                <number formControlName="progress" [small]="true" class="text-center" currency>{{ 'label.PLDT01.CompletePercent' | translate }}</number>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-4 col-sm-6">
+                                <time formControlName="startTimeHrs" [small]="true">{{ 'label.PLDT01.FromDevTime' | translate }}</time>
+                            </div>
+                            <div class="form-group col-md-4 col-sm-6">
+                                <time formControlName="endTimeHrs" [small]="true">{{ 'label.PLDT01.ToDevTime' | translate }}</time>
+                            </div>
+                            <div class="form-group col-md-2 col-sm-6">
+                                <number formControlName="totalHrs" currency [small]="true">{{ 'label.PLDT01.TotalHours' | translate }}</number>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="form-row text-center">
+                            <div class="form-group col-12">
+                                <button class="btn btn-outline-primary" (click)="close()">{{ 'label.ALL.Close' | translate }}</button>
+                                <button class="btn btn-primary" (click)="save()">
+                                    <i class="fas fa-cog fa-spin" [hidden]="!saving"></i>
+                                    <i class="fas fa-save" [hidden]="saving"></i> {{ 'label.ALL.Save' | translate }}
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </app-card>
+        </div>
+    </div>
+</app-modal>

@@ -1,0 +1,48 @@
+<app-card>
+    <div class="card-content">
+        <form [formGroup]="searchForm">
+            <div class="form-row text-center">
+                <div class="form-group col-md-12 col-sm-12" [hidden]="!pdfButton || !excelButton">
+                    <radio 
+                        [items]="exportTypeItems" 
+                        [inline]="true" 
+                        formControlName="exportType">
+                    </radio>
+                </div>
+            </div>
+            <div class="form-row justify-content-center mt-2">
+                <div class="col-auto">
+                    <button type="button" (click)="previewReport()" class="btn btn-primary" [hidden]="!previewPdf || !pdfButton || !isPrintPdf()">
+                        <i class="fas fa-cog fa-spin" [hidden]="!previewing"></i>
+                        <i class="fas fa-file-pdf" [hidden]="previewing"></i>
+                        {{ previewLabel | translate }}
+                    </button>
+                    <button type="button" (click)="downloadFile()" class="btn btn-primary" [disabled]="searchForm.disabled">
+                        <i class="fas fa-cog fa-spin" [hidden]="!downloading"></i>
+                        <i class="fas fa-file-download" [hidden]="downloading"></i>
+                        {{ downloadLabel | translate }} {{ getExportTypeText() }}
+                    </button>
+                    <button type="button" (click)="clearCriteriaForm()" class="btn btn-outline-primary" [hidden]="!criteriaForm && !previewPdf">
+                        <i class="fas fa-eraser"></i> {{ 'label.ALL.Clear' | translate }}
+                    </button>
+                </div>
+            </div>
+            <div [hidden]="!pdfButton || !previewPdf || !pdfResult" class="form-row">
+                <div class="col">
+                    <app-card header="{{ 'label.ALL.PdfData' | translate }}">
+                        <div class="card-content">
+                            <ngx-extended-pdf-viewer 
+                                [base64Src]="pdfResult" 
+                                [useBrowserLocale]="true" 
+                                height="80vh"
+                                [hidden]="!pdfResult" 
+                                [showBookmarkButton]="false" 
+                                [showOpenFileButton]="false">
+                            </ngx-extended-pdf-viewer>
+                        </div>
+                    </app-card>
+                </div>
+            </div>
+        </form>
+    </div>
+</app-card>

@@ -1,0 +1,59 @@
+<!-- ###### Save Action ###### -->
+<toolbar>
+  <button class="btn btn-primary" (click)="util.focusInvalid(header); save()" [disabled]="!isFormDirty() || permission.isReadOnly">
+    <i class="fas fa-cog fa-spin" [hidden]="!saving"></i>
+    <i class="fas fa-save" [hidden]="saving"></i> {{ 'label.ALL.Save' | translate}}
+  </button>
+</toolbar>
+
+<h4>{{ 'label.SURT06.ProgramName' | translate}}</h4>
+<div class="row">
+  <div class="col">
+    <!-- ###### Master Section ###### -->
+    <app-card header="{{ 'label.SURT06.UserData' | translate}}">
+      <div class="card-content">
+        <form #header [formGroup]="suUserOrganizationForm">
+          <div class="form-row">
+            <div class="form-group col-3">
+              <textbox formControlName="userName" class="text-center">{{ 'label.SURT06.UserName' | translate }} </textbox>
+            </div>
+            <div class="form-group col-3">
+              <textbox formControlName="empName">{{ 'label.SURT06.Employee' | translate }}</textbox>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-3">
+              <auto-complete 
+                [showDescription]="false" 
+                [onSearch]="onSearchOuCode"
+                placeholder="{{ 'label.ALL.PleaseSelect' | translate }}"
+                formControlName="ouCode">
+                {{ 'label.SURT06.Organization' | translate }}
+              </auto-complete>
+            </div>
+            <div class="form-group col-3">
+              <datepicker formControlName="effDate" [max]="suUserOrganizationForm.controls.endDate.value">
+                {{ 'label.SURT06.EfDate' | translate }}
+              </datepicker>
+            </div>
+            <div class="form-group col-3">
+              <datepicker formControlName="endDate" [max]="suUserOrganizationForm.controls.endDate.value">
+                {{ 'label.SURT06.EndDate' | translate }}
+              </datepicker>
+            </div>
+          </div>
+        </form>
+      </div>
+    </app-card>
+  </div>
+</div>
+<div class="row">
+  <div class="col">
+    <app-card header="{{ 'label.SURT06.DivisionInfo' | translate}}">
+      <div class="card-content">
+        <app-division-tree [items]="divisions" [defaults]="suUserOrganization.userOrgUnitDto" (onChange)="divisionChanged()" [disabled]="permission.isReadOnly">
+        </app-division-tree>
+      </div>
+    </app-card>
+  </div>
+</div>

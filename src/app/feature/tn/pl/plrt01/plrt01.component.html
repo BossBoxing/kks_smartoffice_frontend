@@ -1,0 +1,122 @@
+<h4>{{ 'label.PLRT01.ProgramName' | translate}}</h4>
+<!-- Criteria Section -->
+<div class="row">
+  <div class="col">
+    <app-card header="{{ 'label.ALL.Search' | translate }}">
+      <div class="card-content">
+        <form #criteria [formGroup]="searchForm">
+          <div class="form-row justify-content-center">
+            <div class="form-group col-md-6 col-sm-12">
+              <textbox formControlName="keyword"
+                placeholder="{{ 'label.PLRT01.CustomerGroupCode' | translate }}, {{ 'label.PLRT01.CustomerGroupName' | translate}}, {{ 'label.PLRT01.TelNo' | translate}}, {{ 'label.PLRT01.FaxNo' | translate}}">
+                {{ 'label.PLRT01.Keyword' | translate }}
+              </textbox>
+            </div>
+            <div class="form-group col-md-6 col-sm-6">
+              <radio [items]="radioStatus" [inline]="true" formControlName="active">
+                {{ 'label.PLRT01.Status' | translate}}</radio>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-12 col-sm-12 text-center">
+              <button class="btn btn-primary" (click)="util.focusInvalid(criteria); searchFunction()"><i
+                  class="fas fa-search"></i>
+                {{ 'label.ALL.Search' | translate }}</button>
+              <button class="btn btn-outline-primary" (click)="clear();"><i class="fas fa-eraser"></i>
+                {{ 'label.ALL.Clear' | translate }}</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </app-card>
+  </div>
+</div>
+<!-- Search Result Grid Section -->
+<div class="row">
+  <div class="col">
+    <app-card header="{{ 'label.PLRT01.DataPl' | translate }}">
+      <div class="card-menu">
+        <button class="btn btn-primary" (click)="addFunction()">
+          <i class="fas fa-plus-circle"></i> {{ 'label.ALL.Add' | translate}}
+        </button>
+      </div>
+      <div class="card-content">
+        <div class="row">
+          <div class="col">
+            <app-table [rows]="PlUser" [page]="page" (onTableEvent)="search()">
+              <ngx-datatable-column prop="custCode" [width]="100" [cellClass]="'text-center'">
+                <ng-template let-sort="sortFn" ngx-datatable-header-template>
+                  <label class="datatable-header-cell-wrapper" (click)="sort()">
+                    {{ 'label.PLRT01.CustomerGroupCode' | translate}}</label>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  <a [routerLink]="['detail']" [state]="{custCode: row.custCode}">{{ row.custCode }}</a>
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column prop="custName" [width]="150">
+                <ng-template let-sort="sortFn" ngx-datatable-header-template>
+                  <label class="datatable-header-cell-wrapper" (click)="sort()">
+                    {{ 'label.PLRT01.CustomerGroupName' | translate}}</label>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>{{ row.custName }}</ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column prop="telNo" [width]="50" [cellClass]="'text-center'">
+                <ng-template let-sort="sortFn" ngx-datatable-header-template>
+                  <label class="datatable-header-cell-wrapper" (click)="sort()">
+                    {{ 'label.PLRT01.TelNo' | translate}} </label>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  {{ row.telNo }} </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column prop="faxNo" [width]="50" [cellClass]="'text-center'">
+                <ng-template let-sort="sortFn" ngx-datatable-header-template>
+                  <label class="datatable-header-cell-wrapper" (click)="sort()">
+                    {{ 'label.PLRT01.FaxNo' | translate}}</label>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  {{ row.faxNo }}</ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column prop="effectiveDate" [width]="150" [cellClass]="'text-center'">
+                <ng-template let-sort="sortFn" ngx-datatable-header-template>
+                  <label class="datatable-header-cell-wrapper" (click)="sort()">
+                    {{ 'label.PLRT01.StartDate' | translate}}</label>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  {{ row.effectiveDate | thaidate}}</ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column prop="color" [width]="50" [cellClass]="'text-center'">
+                <ng-template let-sort="sortFn" ngx-datatable-header-template>
+                  <label class="datatable-header-cell-wrapper" (click)="sort()">
+                    {{ 'label.PLRT01.Color' | translate}}</label>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  <div [ngStyle]="{'color': row.color}"><i class="fas fa-square-full"></i></div>
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column prop="active" [width]="50" [cellClass]="'text-center'">
+                <ng-template let-sort="sortFn" ngx-datatable-header-template>
+                  <label class="datatable-header-cell-wrapper" (click)="sort()">
+                    {{ 'label.ALL.Active' | translate}}</label>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  <i *ngIf="row.active === 'Y'" class="fas fa-check"></i>
+                  <i *ngIf="row.active === 'N'" class="fas fa-times"></i>
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column cellClass="text-center" [sortable]="false" [width]="50">
+                <ng-template ngx-datatable-header-template>
+                  <label class="datatable-header-cell-wrapper">{{ 'label.ALL.Delete' | translate }}</label>
+                </ng-template>
+                <ng-template let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                  <button class="btn btn-outline-danger btn-sm" (click)="remove(row.custCode,row.rowVersion)">
+                    <i class="far fa-trash-alt"></i>
+                  </button>
+                </ng-template>
+              </ngx-datatable-column>
+            </app-table>
+          </div>
+        </div>
+      </div>
+    </app-card>
+  </div>
+</div>

@@ -1,0 +1,15 @@
+<label *ngIf="hasLabel">
+  <ng-content></ng-content><span *ngIf="required" class="text-danger"> *</span>
+</label>
+<div class="btn-group d-block" role="group">
+  <button type="button" [disabled]="disabled || item.disabled" (click)="onSelect(item.value)" class="btn" 
+    [class.btn-sm]="small"
+    [ngStyle]="{'min-width.px': 45}"
+    [ngClass]="[ value === item.value ? item.btnActiveClass : item.btnClass ]"
+    *ngFor="let item of items">{{ item.text }}</button>
+</div>
+<div class="invalid" *ngIf="hasErrors">
+  <div *ngIf="control.hasError('required') ">
+     {{'message.STD00036' | translate}}
+  </div>
+</div>

@@ -1,0 +1,112 @@
+<h4>Datatable</h4>
+<div class="row">
+  <div class="col">
+    <app-card header="table server side">
+      <div class="card-content">
+        <app-table [rows]="contacts" >
+          <ngx-datatable-merge-header [start]="1" [colspan]="3" title="กลุ่ม"></ngx-datatable-merge-header>
+          <ngx-datatable-merge-header [start]="5" [colspan]="2" title="กลุ่ม2"></ngx-datatable-merge-header>
+          <ngx-datatable-column prop="name" [width]="200">
+            <ng-template let-sort="sortFn" ngx-datatable-header-template>
+              <label class="datatable-header-cell-wrapper" (click)="sort()">ชื่อ</label>
+            </ng-template>  
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              {{row.name}}
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column prop="gender" [width]="100">
+            <ng-template let-sort="sortFn" ngx-datatable-header-template>
+              <label class="datatable-header-cell-wrapper" (click)="sort()">เพศ</label>
+            </ng-template>
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              {{row.gender}}
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column prop="company" [width]="150">
+            <ng-template let-sort="sortFn" ngx-datatable-header-template>
+              <label class="datatable-header-cell-wrapper" (click)="sort()">บริษัท</label>
+            </ng-template>
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              {{row.company}}
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column prop="startDate" [width]="150" [cellClass]="'text-center'" [summaryTemplate]="summaryLabel">
+            <ng-template let-sort="sortFn" ngx-datatable-header-template>
+              <label class="datatable-header-cell-wrapper" (click)="sort()">วันที่เริ่มทำงาน</label>
+            </ng-template>
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              {{row.startDate | thaidate}}
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column prop="salary" [width]="150" [cellClass]="'text-right'" [summaryTemplate]="summarySalary">
+            <ng-template let-sort="sortFn" ngx-datatable-header-template>
+              <label class="datatable-header-cell-wrapper" (click)="sort()">เงินเดือน</label>
+            </ng-template>
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              {{row.salary | number:'0.2-2'}}
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column prop="active" [width]="100" [cellClass]="'text-center'">
+            <ng-template let-sort="sortFn" ngx-datatable-header-template>
+              <label class="datatable-header-cell-wrapper" (click)="sort()">ใช้งาน</label>
+            </ng-template>
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              <i *ngIf="row.active" class="fas fa-check"></i>
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column [width]="100" [cellClass]="'text-center'" [sortable]="false">
+            <ng-template ngx-datatable-header-template>
+              <label class="datatable-header-cell-wrapper">ลบ</label>
+            </ng-template>
+            <ng-template let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+              <button class="btn btn-outline-danger btn-sm">
+                <i class="far fa-trash-alt"></i>
+              </button>
+            </ng-template>
+          </ngx-datatable-column>
+        </app-table>
+        <ng-template #summaryLabel>
+          <div class="custom-template-body text-right">
+            รวม
+          </div>
+        </ng-template>
+        <ng-template #summarySalary>
+          <div class="custom-template-body text-right">
+            {{ summary() | number:'0.2-2'}}
+          </div>
+        </ng-template>
+      </div>
+    </app-card>
+  </div>
+</div>
+<!-- <div class="row">
+  <div class="col">
+    <app-card header="table multiple header">
+      <div class="card-content">
+          <ngx-datatable
+          class="bootstrap"
+          [rows]="rows"
+          [columnMode]="ColumnMode.force"
+          headerHeight="50"
+          footerHeight="50"
+          [rowHeight]="getRowHeight"
+          [scrollbarV]="true"
+          (page)="onPage($event)"
+        >
+        <ngx-datatable-column name="Name" width="300">
+            <ng-template let-value="value" ngx-datatable-cell-template>
+              <strong>{{ value }}</strong>
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Gender" width="300">
+            <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+              <i [innerHTML]="row['name']"></i> and <i>{{ value }}</i>
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="Row Height" prop="height" width="80"> </ngx-datatable-column>
+        </ngx-datatable>
+      </div>
+    </app-card>
+  </div>
+</div> -->

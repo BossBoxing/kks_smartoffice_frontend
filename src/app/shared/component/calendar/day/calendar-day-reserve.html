@@ -1,0 +1,5 @@
+<div class="cal-event" [ngStyle]="{ backgroundColor: color.background, borderColor: color.border }"
+  [mwlCalendarTooltip]="weekEvent.event.title">
+  <calendar-reserve-title [event]="weekEvent.event" view="week" [calendarView]="calendarView" [titleColor]="color">
+  </calendar-reserve-title>
+</div>

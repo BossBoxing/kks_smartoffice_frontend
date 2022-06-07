@@ -1,0 +1,97 @@
+<h4>{{ 'label.SURT04.ProgramName' | translate}}</h4>
+
+<div class="row">
+  <div class="col">
+    <app-card header="{{ 'label.ALL.Search' | translate }}">
+      <div class="card-content">
+        <form #criteria [formGroup]="searchForm">
+          <div class="form-row justify-content-center">
+            <div class="form-group col-md-6 col-sm-12">
+              <textbox formControlName="keyword" placeholder="{{ 'label.SURT04.ProfileID' | translate }}, {{ 'label.SURT04.ProfileName' | translate }}">
+                {{ 'label.SURT04.Keyword' | translate }}
+              </textbox>
+            </div>
+            <div class="form-group col-md-6 col-sm-6">
+              <radio [items]="radioStatus" [inline]="true" formControlName="status">{{ 'label.SURT04.Status' | translate }}</radio>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-12 col-sm-12 text-center">
+              <button class="btn btn-primary " (click)="util.focusInvalid(criteria); searchFunction()" ><i class="fas fa-search"></i>
+                {{ 'label.ALL.Search' | translate }}</button>
+              <button class="btn btn-outline-primary" (click)="clear();"><i class="fas fa-eraser"></i>
+                {{ 'label.ALL.Clear' | translate }}</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </app-card>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col">
+    <app-card header="{{ 'label.SURT04.DataSuProfile' | translate }}">
+      <div class="card-menu">
+        <button class="btn btn-primary" (click)="addFunction()">
+          <i class="fas fa-plus-circle"></i> {{ 'label.ALL.Add' | translate}}
+        </button>
+      </div>
+      <div class="card-content">
+        <app-table [rows]="SuUser" [page]="page" (onTableEvent)="search()">
+          <ngx-datatable-column prop="profileId" [width]="200" [cellClass]="'text-center'">
+            <ng-template let-sort="sortFn" ngx-datatable-header-template>
+              <label class="datatable-header-cell-wrapper " (click)="sort()">{{ 'label.SURT04.ProfileID' | translate }}</label>
+            </ng-template>  
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              <a [routerLink]="'detail'" [state]="{profileId: row.profileId }">{{row.profileId}}</a>
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column prop="profileName" [width]="100" [cellClass]="'text-left'">
+            <ng-template let-sort="sortFn" ngx-datatable-header-template>
+              <label class="datatable-header-cell-wrapper" (click)="sort()">{{ 'label.SURT04.ProfileName' | translate }}</label>
+            </ng-template>
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              {{row.profileName}}
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column prop="code" [width]="150" [cellClass]="'text-center'">
+            <ng-template let-sort="sortFn" ngx-datatable-header-template>
+              <label class="datatable-header-cell-wrapper" (click)="sort()">{{ 'label.SURT04.Code' | translate }}</label>
+            </ng-template>
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              {{row.code}}
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column prop="description" [width]="150" [cellClass]="'text-left'">
+            <ng-template let-sort="sortFn" ngx-datatable-header-template>
+              <label class="datatable-header-cell-wrapper" (click)="sort()">{{ 'label.SURT04.Description' | translate }}</label>
+            </ng-template>
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              {{row.description}}
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column prop="Status" [width]="150" [cellClass]="'text-center'">
+            <ng-template let-sort="sortFn" ngx-datatable-header-template>
+              <label class="datatable-header-cell-wrapper" (click)="sort()">{{ 'label.SURT04.Status' | translate }}</label>
+            </ng-template>
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              <i *ngIf="row.Status === 'Y'" class="fas fa-check"></i>
+              <i *ngIf="row.Status === 'N'" class="fas fa-times"></i>
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column [width]="100" [cellClass]="'text-center'" [sortable]="false">
+            <ng-template ngx-datatable-header-template>
+              <label class="datatable-header-cell-wrapper">{{ 'label.ALL.Delete' | translate}}</label>
+            </ng-template>
+            <ng-template let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+              <button class="btn btn-outline-danger btn-sm" (click)="remove(row.profileId,row.rowVersion)">
+                <i class="far fa-trash-alt"></i>
+              </button>
+            </ng-template>
+          </ngx-datatable-column>
+        </app-table>
+      </div>
+    </app-card>
+  </div>
+</div>

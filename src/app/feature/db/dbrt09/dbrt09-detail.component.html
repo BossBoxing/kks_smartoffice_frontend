@@ -1,0 +1,35 @@
+<toolbar>
+  <button class="btn btn-primary" [disabled]="!isFormDirty()" (click)="util.focusInvalid(header); save()">
+    <i class="fas fa-cog fa-spin" [hidden]="!saving"></i>
+    <i class="fas fa-save" [hidden]="saving"></i> {{ 'label.ALL.Save' | translate}}
+  </button>
+</toolbar>
+
+<h4>{{ 'label.DBRT09.ProgramName' | translate }}</h4>
+<div class="row">
+  <div class="col">
+    <app-card header="{{ 'label.DBRT09.ReligionData' | translate }}">
+      <div class="card-content">
+        <form #header [formGroup]="dbReligionForm">
+          <div class="form-row">
+            <div class="form-group col-md-4 col-sm-6">
+              <textbox formControlName="religionCode" class="text-center">{{ 'label.DBRT09.ReligionCode' | translate }}</textbox>
+            </div>
+            <div class="form-group col-md-4 col-sm-6">
+              <checkbox formControlName="activeBool">{{ 'label.DBRT09.Active' | translate }}</checkbox>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-4 col-sm-12">
+              <textbox formControlName="religionNameTha">{{ 'label.DBRT09.ReligionNameTha' | translate }}
+              </textbox>
+            </div>
+            <div class="form-group col-md-4 col-sm-12">
+              <textbox formControlName="religionNameEng">{{ 'label.DBRT09.ReligionNameEng' | translate }}</textbox>
+            </div>
+          </div>
+        </form>
+      </div>
+    </app-card>
+  </div>
+</div>

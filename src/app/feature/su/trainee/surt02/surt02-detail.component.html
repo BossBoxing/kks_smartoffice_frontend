@@ -1,0 +1,109 @@
+<toolbar>
+    <button class="btn btn-primary" [disabled]="!isFormDirty()" (click)="util.focusInvalid(header); save()">
+      <i class="fas fa-cog fa-spin" [hidden]="!saving"></i>
+      <i class="fas fa-save" [hidden]="saving"></i> {{ 'label.ALL.Save' | translate}}
+    </button>
+  </toolbar>
+<!-- ###### Info Section ###### -->
+  <h4>{{ 'label.SURT02.ProgramName' | translate }}</h4>
+  <div class="row">
+    <div class="col">
+      <app-card header="{{ 'label.SURT02.DataSuUser' | translate }}">
+        <div class="card-content">
+          <form #header [formGroup]="suUserForm">
+            <div class="form-row justify-content-center">
+              <div class="form-group col-md-4 col-sm-12">
+                <textbox formControlName="id" class="text-center">{{ 'label.SURT02.UserId' | translate }}</textbox>
+              </div>
+              <div class="form-group col-md-4 col-sm-12">
+                <textbox formControlName="userName" class="text-left">{{ 'label.SURT02.UserName' | translate }}</textbox>
+              </div>
+              <div class="form-group col-md-4 col-sm-12">
+                <textbox formControlName="telephone" class="text-center">{{ 'label.SURT02.Telephone' | translate }}</textbox>
+              </div>
+              <div class="form-group col-md-8 col-sm-12">
+                <textbox formControlName="email" class="text-left">{{ 'label.SURT02.Email' | translate }}</textbox>
+              </div>
+              <div class="form-group col-md-4 col-sm-12">
+                <checkbox formControlName="activeBool">{{ 'label.ALL.Active' | translate }}</checkbox>
+              </div>
+              <div class="form-group col-md-12 col-sm-12">
+                <textbox formControlName="address" class="text-left">{{ 'label.SURT02.Address' | translate }}</textbox>
+              </div>
+            </div>
+          </form>
+        </div>
+      </app-card>
+      <!-- ###### Detail Section ###### -->
+      <app-card header="{{ 'label.SURT02.Description' | translate }}">
+        <div class="card-menu">
+          <button class="btn btn-primary" (click)="  addProfileDetail(); detailTab.goLastPage();">
+            <i class="fas fa-plus-circle"></i> {{ 'label.ALL.Add' | translate}}
+          </button>
+        </div>
+        <div class="card-content">
+          <div class="row">
+            <div class="col">
+              <app-table-client #detailTab [rows]="suUser.profiles" [sorts]="false" [summaryRow]="true">
+                <ngx-datatable-column [width]="100" [cellClass]="'text-center'">
+                  <ng-template let-sort="sortFn" ngx-datatable-header-template>
+                    <label class="datatable-header-cell-wrapper">
+                      {{ 'label.SURT02.ProfileId' | translate}}<span class="text-danger ng-star-inserted"> *</span>
+                    </label>
+                  </ng-template>
+                  <ng-template let-row="row" let-index="rowIndex" ngx-datatable-cell-template>
+                    <div [formGroup]="row.form">
+                      <auto-complete 
+                        [hasLabel]="false"
+                        [small]="true" 
+                        [showDescription]="false" 
+                        [onSearch]="onSearchProfileId"
+                        formControlName="profileId"
+                        placeholder="{{ 'label.ALL.PleaseSelect' | translate }}">
+                      </auto-complete>
+                    </div>
+                  </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column [width]="100" [cellClass]="'text-center'">
+                  <ng-template ngx-datatable-header-template>
+                    <label class="datatable-header-cell-wrapper">
+                      {{ 'label.SURT02.EffDate' | translate}}<span class="text-danger ng-star-inserted"> *</span>
+                    </label>
+                  </ng-template>
+                  <ng-template let-row="row" let-index="rowIndex" ngx-datatable-cell-template>
+                    <div [formGroup]="row.form">
+                      <datepicker formControlName="effDate" [hasLabel]="false" [small]="true" [max]="row.endDate"></datepicker>
+                    </div>
+                  </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column [width]="100" [cellClass]="'text-center'">
+                  <ng-template ngx-datatable-header-template>
+                    <label class="datatable-header-cell-wrapper">
+                      {{ 'label.SURT02.EndDate' | translate}}
+                    </label>
+                  </ng-template>
+                  <ng-template let-row="row" let-index="rowIndex" ngx-datatable-cell-template>
+                    <div [formGroup]="row.form">
+                      <datepicker formControlName="endDate" [hasLabel]="false" [small]="true" [min]="row.effDate"></datepicker>
+                    </div>
+                  </ng-template>
+                </ngx-datatable-column>
+                <ngx-datatable-column [width]="50" [resizeable]="false" [canAutoResize]="false"
+                  [cellClass]="'text-center'">
+                  <ng-template ngx-datatable-header-template>
+                    <label class="datatable-header-cell-wrapper">{{ 'label.ALL.Delete' | translate }}</label>
+                  </ng-template>
+                  <ng-template let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                    <button (click)="removeProfileDetail(row)" class="btn btn-outline-danger btn-sm">
+                      <i class="far fa-trash-alt"></i>
+                    </button>
+                  </ng-template>
+                </ngx-datatable-column>
+              </app-table-client>
+            </div>
+          </div>
+        </div>
+      </app-card>
+
+    </div>
+  </div>

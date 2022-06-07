@@ -1,0 +1,7 @@
+.btn{
+    margin-top:.2rem;
+    margin-bottom: .2rem;
+}
+[class*="btn-outline"]:not(:hover){
+   background-color: white;
+}

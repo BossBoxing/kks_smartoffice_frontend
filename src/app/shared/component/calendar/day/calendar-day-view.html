@@ -1,0 +1,26 @@
+<div class="cal-week-view">
+  <calendar-day-header [dayHeader]="dayHeader"></calendar-day-header>
+  <div class="cal-time-events">
+    <div class="cal-time-label-column">
+      <div *ngFor="let roomColumn of day.roomRows" class="cal-hour">
+        <calendar-day-segment [room]="roomColumn.room" [segmentHeight]="roomColumn.height" [isRoomLabel]="true">
+        </calendar-day-segment>
+      </div>
+    </div>
+    <div class="cal-day-columns">
+      <div class="cal-day-column" *ngFor="let period of day.periodColumns">
+        <div *ngFor="let event of period.events" class="cal-event-container" [class.cal-starts-within-day]="true"
+          [class.cal-ends-within-day]="true" [style.top.px]="event.top" [style.height.px]="event.height"
+          [style.left.%]="event.left" [style.width.%]="event.width">
+          <calendar-day-reserve [weekEvent]="event" [calendarView]="calendarView" (click)="eventClicked.emit({ event: event.event })">
+          </calendar-day-reserve>
+        </div>
+        <div *ngFor="let roomColumn of day.roomRows" class="cal-hour">
+          <calendar-day-segment [room]="roomColumn" [segmentHeight]="roomColumn.height"
+            [style.height.px]="roomColumn.height">
+          </calendar-day-segment>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

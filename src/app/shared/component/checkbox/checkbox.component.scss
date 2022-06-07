@@ -1,0 +1,8 @@
+:host::ng-deep .custom-checkbox{
+    .form-group &{
+        margin-top:1.5rem;
+    }
+    .custom-control-label{
+        cursor: pointer;
+    }
+}

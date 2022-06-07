@@ -1,0 +1,14 @@
+<div class="card" >
+  <div class="card-header" *ngIf="header" [class.pb-3]="isCollapsed">
+          <span (click)="toggleCollaspe()" class="card-header-label">
+                   {{ header }}
+                  <span *ngIf="collapsible" class="icon-btn ml-3">
+                      <i class="fas fa-chevron-circle-up" [class.down]="isCollapsed"></i>
+                  </span>
+         </span>
+         <ng-content select=".card-menu"></ng-content>
+  </div>
+  <div class="card-body" [@slide]="getState()">
+          <ng-content select=".card-content"></ng-content>
+  </div>
+</div>

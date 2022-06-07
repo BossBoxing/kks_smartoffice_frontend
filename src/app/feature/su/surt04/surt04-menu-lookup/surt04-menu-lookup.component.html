@@ -1,0 +1,62 @@
+<app-modal (onClose)="onClose()" header="{{ 'label.SURT04.SelectMenu' | translate }}">
+  <div class="row">
+    <div class="col">
+      <app-card header="{{ 'label.ALL.Search' | translate }}">
+        <div class="card-content">
+          <div class="row">
+            <div class="col-6">
+              <app-search [value]="keyword" (search)="enter($event)" placeholder="{{ 'label.SURT04.SearchPlaceholderLookUp' | translate }}">
+              </app-search>
+            </div>
+          </div>
+          <br>
+        </div>
+      </app-card>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <app-card>
+        <div class="card-content">
+          <app-table [rows]="queryList" [rowIdentity]="identity" [select]="selectedList" [page]="page" (onTableEvent)="search()">
+            <ngx-datatable-column cellClass="text-center" [width]="50" [sortable]="false" [canAutoResize]="false"
+              [draggable]="false" [resizeable]="false">
+              <ng-template ngx-datatable-header-template let-value="value" let-allRowsSelected="allRowsSelected"
+                let-selectFn="selectFn">
+                <checkbox [value]="allRowsSelected" [disabled]="isDisableSelectAll()"
+                  (afterChange)="selectFn(!allRowsSelected);onSelectAll($event);">
+                </checkbox>
+              </ng-template>
+              <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-row="row" let-value="value"
+                let-isSelected="isSelected" let-onCheckboxChangeFn="onCheckboxChangeFn">
+                <checkbox [value]="isSelected" (afterChange)="onCheckboxChangeFn($event);onSelectMultiple(row,$event);" [disabled]="row.disabled">
+                </checkbox>
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column prop="menuId" [width]="150" [cellClass]="'text-center'">
+              <ng-template ngx-datatable-header-template>
+                <label class="datatable-header-cell-wrapper">{{ 'label.SURT04.MenuCode' | translate}}</label>
+              </ng-template>
+              <ng-template let-row="row" let-index="rowIndex" ngx-datatable-cell-template>
+                {{ row.menuId }}
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column prop="menuName" [width]="200">
+              <ng-template ngx-datatable-header-template>
+                <label class="datatable-header-cell-wrapper">{{ 'label.SURT04.MenuName' | translate}}</label>
+              </ng-template>
+              <ng-template let-row="row" let-index="rowIndex" ngx-datatable-cell-template>
+                {{ row.menuName }}
+              </ng-template>
+            </ngx-datatable-column>
+          </app-table>
+          <div class="text-center mt-3">
+            <button (click)="onAccept()" class="btn btn-primary" [disabled]="selectedList.length === 0">
+              <i class="fas fa-check-circle"></i> {{ 'label.ALL.Select' | translate }} {{ selectedList.length }} {{ 'label.ALL.Record' | translate }}
+            </button>
+          </div>
+        </div>
+      </app-card>
+    </div>
+  </div>
+</app-modal>

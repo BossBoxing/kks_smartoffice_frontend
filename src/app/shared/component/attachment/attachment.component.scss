@@ -1,0 +1,21 @@
+.custom-file-label{
+    overflow: hidden;
+    text-align: left;
+}
+.file-link{
+    position: absolute;
+    top:0;
+    // right:79px;
+    z-index: 2;
+    // padding-left: 10px;
+    // padding-right: 5px;
+}
+.remove {
+    position: absolute;
+    top:0;
+    right: 53px;
+    z-index: 2;
+    padding-left: 5px;
+    padding-right: 10px;
+    font-size: 14px;
+}

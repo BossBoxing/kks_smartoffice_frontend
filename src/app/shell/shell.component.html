@@ -1,0 +1,20 @@
+<div class="page-wrapper" [ngClass]="{'toggled' : getSideBarState()}">
+  <app-header></app-header>
+  <app-sidebar></app-sidebar>
+  <main class="page-content">
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+            <router-outlet></router-outlet>
+        </div>
+      </div>
+      <div class="row">
+         <div class="col text-right pt-3">
+            <label><small>Release date : {{timestamp|date:'d MMM y HH:mm:ss'}}</small></label>
+         </div>
+      </div>
+    </div>
+    <div class="overlay" *ngIf="!getSideBarState() && (isMediumScreen | async)" [@fadeAnimation] (click)="toggleSidebar()"></div>
+  </main>
+</div>

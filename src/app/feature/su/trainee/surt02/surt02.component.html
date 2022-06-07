@@ -1,0 +1,102 @@
+<h4>{{ 'label.SURT02.ProgramName' | translate}}</h4>
+<!-- Criteria Section -->
+<div class="row">
+  <div class="col">
+    <app-card header="{{ 'label.ALL.Search' | translate }}">
+      <div class="card-content">
+        <form #criteria [formGroup]="searchForm">
+          <div class="form-row justify-content-center">
+            <div class="form-group col-md-6 col-sm-12">
+              <textbox formControlName="keyword" placeholder="{{ 'label.SURT02.UserId' | translate }}, {{ 'label.SURT02.UserName' | translate }}">
+                {{ 'label.SURT02.Keyword' | translate }}
+              </textbox>
+            </div>
+            <div class="form-group col-md-6 col-sm-6">
+              <radio [items]="radioStatus" [inline]="true" formControlName="active">{{ 'label.SURT02.Status' | translate }}</radio>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-12 col-sm-12 text-center">
+              <button class="btn btn-primary" (click)="util.focusInvalid(criteria); searchFunction()"><i class="fas fa-search"></i>
+                {{ 'label.ALL.Search' | translate }}</button>
+              <button class="btn btn-outline-primary" (click)="clear();"><i class="fas fa-eraser"></i>
+                {{ 'label.ALL.Clear' | translate }}</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </app-card>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col">
+    <app-card header="{{ 'label.SURT04.DataSuProfile' | translate }}">
+      <div class="card-content">
+        <app-table [rows]="SuUser" [page]="page" (onTableEvent)="search()">
+          <ngx-datatable-column prop="userId" [width]="50" [cellClass]="'text-center'">
+            <ng-template let-sort="sortFn" ngx-datatable-header-template>
+              <label class="datatable-header-cell-wrapper " (click)="sort()">{{ 'label.SURT02.UserId' | translate }}</label>
+            </ng-template>  
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              <a [routerLink]="'detail'"[state]="{userId: row.userId ,profileId: row.profileId}">{{row.userId}}</a>
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column prop="userName" [width]="100" [cellClass]="'text-left'">
+            <ng-template let-sort="sortFn" ngx-datatable-header-template>
+              <label class="datatable-header-cell-wrapper" (click)="sort()">{{ 'label.SURT02.UserName' | translate }}</label>
+            </ng-template>
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              {{row.userName}}
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column prop="description" [width]="150" [cellClass]="'text-left'">
+            <ng-template let-sort="sortFn" ngx-datatable-header-template>
+              <label class="datatable-header-cell-wrapper" (click)="sort()">{{ 'label.SURT02.Description' | translate }}</label>
+            </ng-template>
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              {{row.description}}
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column prop="address" [width]="150" [cellClass]="'text-left'">
+            <ng-template let-sort="sortFn" ngx-datatable-header-template>
+              <label class="datatable-header-cell-wrapper" (click)="sort()">{{ 'label.SURT02.Address' | translate }}</label>
+            </ng-template>
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              {{row.address}}
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column prop="telephone" [width]="150" [cellClass]="'text-center'">
+            <ng-template let-sort="sortFn" ngx-datatable-header-template>
+              <label class="datatable-header-cell-wrapper" (click)="sort()">{{ 'label.SURT02.Telephone' | translate }}</label>
+            </ng-template>
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              {{row.telephone}}
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column prop="email" [width]="150" [cellClass]="'text-left'">
+            <ng-template let-sort="sortFn" ngx-datatable-header-template>
+              <label class="datatable-header-cell-wrapper" (click)="sort()">{{ 'label.SURT02.Email' | translate }}</label>
+            </ng-template>
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              {{row.email}}
+            </ng-template>
+          </ngx-datatable-column>
+
+          <ngx-datatable-column prop="active" [width]="50" [cellClass]="'text-center'">
+            <ng-template let-sort="sortFn" ngx-datatable-header-template>
+              <label class="datatable-header-cell-wrapper" (click)="sort()">{{ 'label.SURT02.Status' | translate }}</label>
+            </ng-template>
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              <i *ngIf="row.active === 'Y'" class="fas fa-check"></i>
+              <i *ngIf="row.active === 'N'" class="fas fa-times"></i>
+            </ng-template>
+          </ngx-datatable-column>
+        </app-table>
+      </div>
+    </app-card>
+  </div>
+</div>

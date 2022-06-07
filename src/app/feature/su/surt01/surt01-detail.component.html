@@ -1,0 +1,164 @@
+<toolbar>
+  <button class="btn btn-primary" (click)="save(); util.focusInvalid(header);" [disabled]="!isFormDirty() || permission.isReadOnly">
+    <i class="fas fa-cog fa-spin" [hidden]="!saving"></i>
+    <i class="fas fa-save" [hidden]="saving"></i> {{ 'label.ALL.Save' | translate }}
+  </button>
+</toolbar>
+
+<h4>{{ 'label.SURT01.ProgramName' | translate }}</h4>
+<div class="row">
+  <div class="col">
+    <app-card header="{{ 'label.SURT01.ProgramDetail' | translate }}">
+      <div class="card-content">
+        <form #header [formGroup]="suOrganizeForm">
+          <div class="form-row">
+            <div class="form-group col-md-3 col-sm-6">
+              <textbox formControlName="ouCode" class="text-center" [uppercase]="true">{{ 'label.SURT01.CompanyCode' | translate }}</textbox>
+            </div>
+            <div class="form-group col-md-3 col-sm-6">
+              <checkbox formControlName="mainOuBool">{{ 'label.SURT01.IsMainCompany' | translate }}</checkbox>
+            </div>
+            <div class="form-group col-md-3 col-sm-6">
+              <auto-complete 
+                [showDescription]="false" 
+                [onSearch]="onSearchOuMain" 
+                formControlName="ouMain">
+                {{ 'label.SURT01.MainCompanyCode' | translate }}
+              </auto-complete>
+            </div>
+            <div class="form-group col-md-3 col-sm-6">
+              <textbox formControlName="taxId" class="text-center">{{ 'label.SURT01.TaxId' | translate }}</textbox>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6 col-sm-6">
+              <textbox formControlName="ouNameTha">{{ 'label.SURT01.CompanyNameTha' | translate }}</textbox>
+            </div>
+            <div class="form-group col-md-6 col-sm-6">
+              <textbox formControlName="ouNameEng">{{ 'label.SURT01.CompanyNameEng' | translate }}</textbox>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6 col-sm-12">
+              <textbox formControlName="addrTha1">{{ 'label.SURT01.AddressThaFirst' | translate }}</textbox>
+            </div>
+            <div class="form-group col-md-6 col-sm-12">
+              <textbox formControlName="addrEng1">{{ 'label.SURT01.AddressEngFirst' | translate }}</textbox>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6 col-sm-12">
+              <textbox formControlName="addrTha2">{{ 'label.SURT01.AddressThaSecond' | translate }}</textbox>
+            </div>
+            <div class="form-group col-md-6 col-sm-12">
+              <textbox formControlName="addrEng2">{{ 'label.SURT01.AddressEngSecond' | translate }}</textbox>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-3 col-sm-6">
+              <textbox formControlName="provinceTha">{{ 'label.SURT01.ProvinceTha' | translate }}</textbox>
+            </div>
+            <div class="form-group col-md-3 col-sm-6">
+              <textbox formControlName="provinceEng">{{ 'label.SURT01.ProvinceEng' | translate }}</textbox>
+            </div>
+            <div class="form-group col-md-3 col-sm-6">
+              <textbox formControlName="zipCode" class="text-center">{{ 'label.SURT01.ZipCode' | translate }}</textbox>
+            </div>
+            <div class="form-group col-md-3 col-sm-6">
+              <textbox formControlName="fax">{{ 'label.SURT01.Fax' | translate }}</textbox>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-3 col-sm-6">
+              <textbox formControlName="telephone">{{ 'label.SURT01.Telephone' | translate }}</textbox>
+            </div>
+            <div class="form-group col-md-6 col-sm-12">
+              <textbox formControlName="email">{{ 'label.SURT01.Email' | translate }}</textbox>
+            </div>
+            <div class="form-group col-md-3 col-sm-6">
+              <checkbox formControlName="activeBool">{{ 'label.ALL.Active' | translate }}</checkbox>
+            </div>
+          </div>
+        </form>
+      </div>
+    </app-card>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col">
+    <app-card header="{{ 'label.SURT01.Divisions' | translate }}">
+      <div class="card-menu">
+        <button class="btn btn-primary" [disabled]="permission.isReadOnly" (click)="addDivision(); divisionTable.goLastPage();">
+          <i class="fas fa-plus-circle"></i> {{ 'label.ALL.Add' | translate }}
+        </button>
+      </div>
+      <div class="card-content">
+        <div class="row">
+          <div class="col">
+            <app-table-client #divisionTable [rows]="suOrganize.divisions" [sorts]="false">
+              <ngx-datatable-column width="50">
+                <ng-template ngx-datatable-header-template>
+                  <label class="datatable-header-cell-wrapper require">{{ 'label.SURT01.DivisionCode' | translate }}</label>
+                </ng-template>
+                <ng-template let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                  <div [formGroup]="row.form">
+                    <textbox formControlName="divCode" [hasLabel]="false" [small]="true" class="text-center" [uppercase]="true"
+                      [disabled]="(isInsertMode() && rowIndex === 0) || row.form.controls.rowVersion.value"></textbox>
+                  </div>
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column width="150">
+                <ng-template ngx-datatable-header-template>
+                  <label class="datatable-header-cell-wrapper require">{{ 'label.SURT01.DivisionName' | translate }}</label>
+                </ng-template>
+                <ng-template let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                  <div [formGroup]="row.form">
+                    <textbox formControlName="divName" [hasLabel]="false" [small]="true"></textbox>
+                  </div>
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column width="50" [cellClass]="'text-center'">
+                <ng-template ngx-datatable-header-template>
+                  <label class="datatable-header-cell-wrapper">{{ 'label.SURT01.IsMainDivision' | translate }}</label>
+                </ng-template>
+                <ng-template let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                  <div [formGroup]="row.form">
+                    <checkbox formControlName="subFlagBool" [hasLabel]="false" [small]="true" [disabled]="rowIndex === 0"></checkbox>
+                  </div>
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column width="150">
+                <ng-template ngx-datatable-header-template>
+                  <label class="datatable-header-cell-wrapper require">{{ 'label.SURT01.DivisionParent' | translate }}</label>
+                </ng-template>
+                <ng-template let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                  <div [formGroup]="row.form">
+                    <auto-complete 
+                      [showDescription]="false" 
+                      [onSearch]="onSearchDivParent(row)" 
+                      [hasLabel]="false"
+                      [small]="true"
+                      formControlName="divParent">
+                    </auto-complete>
+                  </div>
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column [cellClass]="'text-center'" width="50">
+                <ng-template ngx-datatable-header-template>
+                  <label class="datatable-header-cell-wrapper">{{ 'label.ALL.Delete' | translate }}</label>
+                </ng-template>
+                <ng-template let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                  <button (click)="removeDivision(row)" class="btn btn-outline-danger btn-sm" [disabled]="permission.isReadOnly"
+                    [hidden]="(isInsertMode() && rowIndex === 0) || (row.form.controls.divCode.value === suOrganize.ouCode)">
+                    <i class="far fa-trash-alt"></i>
+                  </button>
+                </ng-template>
+              </ngx-datatable-column>
+            </app-table-client>
+          </div>
+        </div>
+      </div>
+    </app-card>
+  </div>
+</div>

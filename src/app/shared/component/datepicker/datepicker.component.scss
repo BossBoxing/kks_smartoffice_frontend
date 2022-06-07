@@ -1,0 +1,16 @@
+.date-group .form-control{
+    border-right: 0;
+}
+.date-group .input-group-append{
+    .btn-link,.btn-sm{
+        color:gray;
+        background:white;
+        border:1px solid #ced4da;
+        border-left:0;
+    }
+}
+.mat-calendar {
+    .mat-calendar-body-cell-content,th,td {
+        font-family: 'prompt' !important;
+    }
+}

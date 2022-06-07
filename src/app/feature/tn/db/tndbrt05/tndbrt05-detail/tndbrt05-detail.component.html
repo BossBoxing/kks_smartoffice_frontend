@@ -1,0 +1,113 @@
+<!-- save button // back button -->
+<toolbar>
+  <button class="btn btn-primary" (click)="util.focusInvalid(header); save()" [disabled]="!isFormDirty()">
+    <i class="fas fa-cog fa-spin" [hidden]="!saving"></i>
+    <i class="fas fa-save" [hidden]="saving"></i> {{ 'label.ALL.Save' | translate}}
+  </button>
+</toolbar>
+
+<h4>{{ 'label.TNDBRT05.ProgramName' | translate}}</h4>
+<div class="row">
+  <div class="col">
+    <!-- ###### Master Section ###### -->
+    <app-card header="{{ 'label.TNDBRT05.ProvinceData' | translate }}">
+      <div class="card-content">
+        <form #header [formGroup]="dbProvinceForm">
+          <div class="form-row">
+            <div class="form-group col-md-3">
+              <auto-complete [showDescription]="false" [onSearch]="onSearchCountry" formControlName="countryCode">{{ 'label.TNDBRT05.Country' | translate}}</auto-complete>
+            </div>
+            <div class="form-group col-3">
+              <textbox formControlName="provinceCode" class="text-center">{{ 'label.TNDBRT05.ProvinceCode' | translate}}</textbox>
+            </div>
+            <div class="form-group col-6">
+              <checkbox formControlName="activeBool">{{ 'label.ALL.Active' |translate}}</checkbox>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <textbox formControlName="provinceNameTha">{{ 'label.TNDBRT05.ProvinceNameTha' | translate}}</textbox>
+            </div>
+            <div class="form-group col-md-6">
+              <textbox formControlName="provinceNameEng">{{ 'label.TNDBRT05.ProvinceNameEng' | translate}}</textbox>
+            </div>
+          </div>
+        </form>
+      </div>
+    </app-card>
+    <!-- ###### Detail Section ###### -->
+    <app-card header="{{ 'label.TNDBRT05.DistrictData' | translate }}">
+      <div class="card-menu">
+        <button class="btn btn-primary" (click)="addDistrictDetail(); detailTab.goLastPage();">
+          <i class="fas fa-plus-circle"></i> {{ 'label.ALL.Add' | translate}}
+        </button>
+      </div>
+      <div class="card-content">
+        <div class="row">
+          <div class="col">
+            <app-table-client #detailTab [rows]="dbProvince.districts" [sorts]="false" [summaryRow]="true">
+              <ngx-datatable-column [width]="50">
+                <ng-template let-sort="sortFn" ngx-datatable-header-template>
+                  <label class="datatable-header-cell-wrapper">
+                    {{ 'label.TNDBRT05.DistrictID' | translate}}<span class="text-danger ng-star-inserted"> *</span>
+                  </label>
+                </ng-template>
+                <ng-template let-row="row" let-index="rowIndex" ngx-datatable-cell-template>
+                  <div [formGroup]="row.form">
+                    <textbox formControlName="districtCode" [hasLabel]="false" [small]="true" class="text-center"></textbox>
+                  </div>
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column [width]="200">
+                <ng-template ngx-datatable-header-template>
+                  <label class="datatable-header-cell-wrapper">
+                    {{ 'label.TNDBRT05.DistrictNameTha' | translate}}<span class="text-danger ng-star-inserted"> *</span>
+                  </label>
+                </ng-template>
+                <ng-template let-row="row" let-index="rowIndex" ngx-datatable-cell-template>
+                  <div [formGroup]="row.form">
+                    <textbox formControlName="districtNameTha" [hasLabel]="false" [small]="true"></textbox>
+                  </div>
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column [width]="200">
+                <ng-template ngx-datatable-header-template>
+                  <label class="datatable-header-cell-wrapper">
+                    {{ 'label.TNDBRT05.DistrictNameEng' | translate}}<span class="text-danger ng-star-inserted"> *</span>
+                  </label>
+                </ng-template>
+                <ng-template let-row="row" let-index="rowIndex" ngx-datatable-cell-template>
+                  <div [formGroup]="row.form">
+                    <textbox formControlName="districtNameEng" [hasLabel]="false" [small]="true"></textbox>
+                  </div>
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column [width]="50" prop="active" [resizeable]="false" [canAutoResize]="false"
+                [cellClass]="'text-center'">
+                <ng-template ngx-datatable-header-template>
+                  <label class="datatable-header-cell-wrapper">{{ 'label.ALL.Active' |translate}}</label>
+                </ng-template>
+                <ng-template let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                  <div [formGroup]="row.form">
+                    <checkbox formControlName="activeBool"></checkbox>
+                  </div>
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column [width]="50" [resizeable]="false" [canAutoResize]="false"
+                [cellClass]="'text-center'">
+                <ng-template ngx-datatable-header-template>
+                  <label class="datatable-header-cell-wrapper">{{ 'label.ALL.Delete' | translate }}</label>
+                </ng-template>
+                <ng-template let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                  <button (click)="removeDistrictDetail(row)" class="btn btn-outline-danger btn-sm">
+                    <i class="far fa-trash-alt"></i>
+                  </button>
+                </ng-template>
+              </ngx-datatable-column>
+            </app-table-client>
+          </div>
+        </div>
+      </div>
+    </app-card>
+  </div>
+</div>

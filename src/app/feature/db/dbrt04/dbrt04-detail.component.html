@@ -1,0 +1,34 @@
+<toolbar>
+  <button class="btn btn-primary" [disabled]="!isFormDirty()"(click)="util.focusInvalid(header); save()">
+    <i class="fas fa-cog fa-spin" [hidden]="!saving"></i>
+    <i class="fas fa-save" [hidden]="saving"></i> {{ 'label.ALL.Save' | translate}}
+  </button>
+</toolbar>
+<h4>{{ 'label.DBRT04.ProgramName' | translate }}</h4>
+<div class="row">
+  <div class="col">
+    <app-card header="{{ 'label.DBRT04.CountryData' | translate }}">
+      <div class="card-content">
+        <form #header [formGroup]="dbCountryForm">
+          <div class="form-row">
+            <div class="form-group col-6">
+              <textbox formControlName="countryCode" class="text-center">{{ 'label.DBRT04.CountryCode' | translate }}</textbox>
+            </div>
+            <div class="form-group col-6">
+              <checkbox formControlName="activeBool">{{ 'label.DBRT04.Active' | translate }}</checkbox>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6 col-sm-12">
+              <textbox formControlName="countryNameTha">{{ 'label.DBRT04.CountryNameTha' | translate }}
+              </textbox>
+            </div>
+            <div class="form-group col-md-6 col-sm-12">
+              <textbox formControlName="countryNameEng">{{ 'label.DBRT04.CountryNameEng' | translate }}</textbox>
+            </div>
+          </div>
+        </form>
+      </div>
+    </app-card>
+  </div>
+</div>

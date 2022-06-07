@@ -1,0 +1,14 @@
+<h4>{{ 'label.MN001.ProgramName' | translate}}</h4>
+<div class="row">
+   <div class="col">
+     <app-card>
+        <div class="card-content">
+          <ul class="mt-4">
+            <li *ngFor="let manual of manuals">
+             <a href="{{ manual.parameterValue}}" target="_blank">{{ manual.remark}}</a>
+            </li>
+          </ul>
+        </div>
+     </app-card>
+   </div>
+</div>

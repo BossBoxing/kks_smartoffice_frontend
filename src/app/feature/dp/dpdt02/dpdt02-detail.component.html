@@ -1,0 +1,400 @@
+<toolbar>
+  <button class="btn btn-primary" [disabled]="!true" [hidden]="!isPrintHide()"
+    (click)="util.focusInvalid(header); print()">
+    <i class="fas fa-cog fa-spin" [hidden]="!saving"></i>
+    <i class="fas bi bi-printer" [hidden]="saving"></i> {{ 'label.DPDT02.PrintDoc' | translate }}
+  </button>
+  <button class="btn btn-thursday" [disabled]="!true" [hidden]="!isCancelHide()"
+    (click)="util.focusInvalid(header); cancel()">
+    <i class="fas fa-cog fa-spin" [hidden]="!saving"></i>
+    <i class="bi bi-arrow-up-circle" [hidden]="saving"></i> {{ 'label.DPDT02.CancelForm' | translate }}
+  </button>
+  <button class="btn btn-success" [disabled]="!true" [hidden]="!isSendHide()"
+    (click)="util.focusInvalid(header); send()">
+    <i class="fas fa-cog fa-spin" [hidden]="!saving"></i>
+    <i class="bi bi-arrow-up-circle" [hidden]="saving"></i> {{ 'label.DPDT02.SendForm' | translate }}
+  </button>
+  <button class="btn btn-primary" [disabled]="!true" [hidden]="isSaveHide()"
+    (click)="util.focusInvalid(header); save()">
+    <i class="fas fa-cog fa-spin" [hidden]="!saving"></i>
+    <i class="fas fa-save" [hidden]="saving"></i> {{ 'label.ALL.Save' | translate}}
+  </button>
+</toolbar>
+
+
+<h4>{{ 'label.DPDT02.IDP' | translate }}</h4>
+<div class="row">
+  <div class="col">
+    <app-card header="รายละเอียด">
+      <div class="card-content">
+        <form #header [formGroup]="dpEvaluationMasterForm">
+          <div class="form-row ">
+            <div class="form-group col-md-3 col-sm-12">
+              <textbox formControlName="transNo" class="text-center">{{ 'label.DPDT02.TransNo' | translate }} </textbox>
+            </div>
+            <div class="form-group col-md-3">
+              <div class="form-row">
+                <div class="form-group col-md-6 col-sm-12">
+                  <textbox formControlName="evaluationYear" class="text-center">
+                    {{ 'label.DPDT02.YearBE' | translate }}
+                  </textbox>
+                </div>
+                <div class="form-group col-md-6 col-sm-12">
+                  <textbox formControlName="evaluationPeriod" class="text-center">
+                    {{ 'label.DPDT02.Period' | translate }}
+                  </textbox>
+                </div>
+              </div>
+            </div>
+            <div class="form-group col-md-3 col-sm-12">
+              <datetime-viewer formControlName="submitDate" class="text-center">
+                {{ 'label.DPDT02.SubmiteDate' | translate }}
+              </datetime-viewer>
+            </div>
+            <div class="form-group col-md-3 col-sm-12">
+              <status [status]="dpEvaluationMaster.statusDesc" [color]="dpEvaluationMaster.statusColor">
+                {{'label.DPDT02.Status' | translate }}
+              </status>
+            </div>
+          </div>
+          <div class=" form-row ">
+            <div class=" form-group col-md-3 col-sm-12">
+              <auto-complete formControlName="docFormatNo" [showDescription]="false" [onSearch]="onSearcheDocFormatNo">
+                {{ 'label.DPDT02.DocFormatType' | translate }}
+              </auto-complete>
+            </div>
+            <div class="form-group col-md-3 col-sm-12">
+              <textbox formControlName="updatedBy" class="text-center">{{ 'label.DPDT02.updatedBy' | translate }}
+              </textbox>
+            </div>
+            <div class="form-group col-md-3 col-sm-12">
+              <datetime-viewer formControlName="updatedDate" class="text-center">{{ 'label.DPDT02.updatedDate' |
+                translate }}
+              </datetime-viewer>
+            </div>
+            <div class="form-group col-md-3 col-sm-12">
+              <textbox formControlName="refTransNo" class="text-center">{{ 'label.DPDT02.evaNo' | translate
+                }}
+              </textbox>
+            </div>
+
+          </div>
+          <div class="form-row ">
+            <div class="form-group col-md-3 col-sm-12">
+              <auto-complete formControlName="empId" [showDescription]="false" [onSearch]="onSearcheEvaluators">{{
+                'label.DPDT02.employee' | translate }}
+              </auto-complete>
+            </div>
+            <div class="form-group col-md-3 col-sm-12">
+              <auto-complete formControlName="evaluator" [showDescription]="false" [onSearch]="onSearcheEvaluators">{{
+                'label.DPDT02.Evaluator' | translate }}
+              </auto-complete>
+            </div>
+            <div class="form-group col-md-3 col-sm-12">
+              <checkbox formControlName="isLastEvaluator">{{ 'label.DPDT02.isLastEvaluator' | translate }}</checkbox>
+            </div>
+            <div class="form-group col-md-3 col-sm-12">
+              <auto-complete formControlName="nextEvaluators" [showDescription]="false"
+                [onSearch]="onSearcheEvaluators">{{ 'label.DPDT02.nextEvaluators' | translate }}
+              </auto-complete>
+            </div>
+          </div>
+          <div class="form-row ">
+            <div class="form-group col-md-3">
+              <div class="form-row">
+                <div class="form-group col-md-6 col-sm-12">
+                  <number currency formControlName="totalScoreEmp">{{ 'label.DPDT02.TotolScroeEmp' | translate }}
+                  </number>
+                </div>
+                <div class="form-group col-md-6 col-sm-12">
+                  <textbox formControlName="gradeTotalScoreEmp" class="text-center">{{ 'label.DPDT02.gradeTotalScoreEmp'
+                    | translate }}
+                  </textbox>
+                </div>
+              </div>
+            </div>
+            <div class="form-group col-md-3 col-sm-12">
+            </div>
+            <div class="form-group col-md-3 col-sm-12">
+            </div>
+            <div class="form-group col-md-3">
+              <div class="form-row">
+                <div class="form-group col-md-6 col-sm-12">
+                  <number currency formControlName="totalScore">{{ 'label.DPDT02.TotolScroe' | translate }}
+                  </number>
+                </div>
+                <div class="form-group col-md-6 col-sm-12">
+                  <textbox formControlName="gradeTotalScore" class="text-center">{{ 'label.DPDT02.gradeTotalScore' |
+                    translate }}
+                  </textbox>
+                  <div style="color:red; margin-top: 10px;">
+                    <p>{{ 'label.DPDT02.GradeMean' | translate }}</p>
+                    <p>{{ 'label.DPDT02.A' | translate }}</p>
+                    <p>{{ 'label.DPDT02.BPlus' | translate }}</p>
+                    <p>{{ 'label.DPDT02.B' | translate }}</p>
+                    <p>{{ 'label.DPDT02.C' | translate }}</p>
+                    <p>{{ 'label.DPDT02.D' | translate }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </app-card>
+    <div>
+      <div style="margin-bottom: 10px;">
+        <tabset>
+          <ng-container *ngIf="dpFormatMaster">
+            <ng-container *ngFor="let row of dpFormatMaster.detailDto;">
+              <tab heading="{{ row.topicNo }} {{ row.description }}">
+                <app-table-client #detailTab [rows]="row.subDetailDto" [sorts]="false" [summaryRow]="false">
+                  <ngx-datatable-column prop="mainTopic" [width]="300">
+                    <ng-template ngx-datatable-header-template>
+                      <label class="datatable-header-cell-wrapper">
+                        {{ 'label.DPDT02.mainTopic' | translate }}
+                      </label>
+                    </ng-template>
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                      <ng-container *ngIf="userInfo.language == 'EN'">{{ row.topicNo }} {{ row.descriptionEng}}
+                      </ng-container>
+                      <ng-container *ngIf="userInfo.language == 'TH'">{{ row.topicNo }} {{ row.descriptionTha}}
+                      </ng-container>
+                      <div style="margin-left: 30px; margin-top: 5px;">
+                        <ng-container *ngIf="row.guides.length > 0">
+                          {{ 'label.DPDT02.ScoreDesc' | translate }}
+                        </ng-container>
+                        <ul style="margin-top: 5px; margin-left: 10px; list-style-type: none;" class="text-primary"
+                          *ngFor="let guide of row.guides;">
+                          <li>
+                            <ng-container *ngIf="userInfo.language == 'EN'">{{ guide.guidelineDescEng }}
+                            </ng-container>
+                            <ng-container *ngIf="userInfo.language == 'TH'">{{ guide.guidelineDescTha }}
+                            </ng-container>
+                          </li>
+                        </ul>
+                      </div>
+                    </ng-template>
+                  </ngx-datatable-column>
+                  <ngx-datatable-column prop="maxScore" [width]="30">
+                    <ng-template ngx-datatable-header-template>
+                      <label class="datatable-header-cell-wrapper">
+                        {{ 'label.DPDT02.MaxScore' | translate }}</label>
+                    </ng-template>
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                      <div class="text-right">
+                        {{ row.maxScore.toFixed(2) }}
+                        <div style="margin-top: 25px;"></div>
+                        <ul class="text-primary" style="list-style-type: none;" *ngFor="let guide of row.guides;">
+                          <li>
+                            {{ guide.guidelineScore }}
+                          </li>
+                        </ul>
+                      </div>
+                    </ng-template>
+                  </ngx-datatable-column>
+                  <ng-container *ngIf="isBetweenStartAndEnd(1)">
+                    <ngx-datatable-column prop="scoreMonth1" [width]="50">
+                      <ng-template ngx-datatable-header-template>
+                        <label class="datatable-header-cell-wrapper">{{ 'label.DPDT02.Month1' | translate }}</label>
+                      </ng-template>
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        <div [formGroup]="row.form">
+                          <number currency formControlName="scoreMonth1" [hasLabel]="false" [small]="true"></number>
+                        </div>
+                      </ng-template>
+                    </ngx-datatable-column>
+                  </ng-container>
+                  <ng-container *ngIf="isBetweenStartAndEnd(2)">
+                    <ngx-datatable-column prop="scoreMonth2" [width]="50">
+                      <ng-template ngx-datatable-header-template>
+                        <label class="datatable-header-cell-wrapper">{{ 'label.DPDT02.Month2' | translate }}</label>
+                      </ng-template>
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        <div [formGroup]="row.form">
+                          <number currency formControlName="scoreMonth2" [hasLabel]="false" [small]="true"></number>
+                        </div>
+                      </ng-template>
+                    </ngx-datatable-column>
+                  </ng-container>
+                  <ng-container *ngIf="isBetweenStartAndEnd(3)">
+                    <ngx-datatable-column prop="scoreMonth3" [width]="50">
+                      <ng-template ngx-datatable-header-template>
+                        <label class="datatable-header-cell-wrapper">{{ 'label.DPDT02.Month3' | translate }}</label>
+                      </ng-template>
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        <div [formGroup]="row.form">
+                          <number currency formControlName="scoreMonth3" [hasLabel]="false" [small]="true"></number>
+                        </div>
+                      </ng-template>
+                    </ngx-datatable-column>
+                  </ng-container>
+                  <ng-container *ngIf="isBetweenStartAndEnd(4)">
+                    <ngx-datatable-column prop="scoreMonth4" [width]="50">
+                      <ng-template ngx-datatable-header-template>
+                        <label class="datatable-header-cell-wrapper">{{ 'label.DPDT02.Month4' | translate }}</label>
+                      </ng-template>
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        <div [formGroup]="row.form">
+                          <number currency formControlName="scoreMonth4" [hasLabel]="false" [small]="true"></number>
+                        </div>
+                      </ng-template>
+                    </ngx-datatable-column>
+                  </ng-container>
+                  <ng-container *ngIf="isBetweenStartAndEnd(5)">
+                    <ngx-datatable-column prop="scoreMonth5" [width]="50">
+                      <ng-template ngx-datatable-header-template>
+                        <label class="datatable-header-cell-wrapper">{{ 'label.DPDT02.Month5' | translate }}</label>
+                      </ng-template>
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        <div [formGroup]="row.form">
+                          <number currency formControlName="scoreMonth5" [hasLabel]="false" [small]="true"></number>
+                        </div>
+                      </ng-template>
+                    </ngx-datatable-column>
+                  </ng-container>
+                  <ng-container *ngIf="isBetweenStartAndEnd(6)">
+                    <ngx-datatable-column prop="scoreMonth6" [width]="50">
+                      <ng-template ngx-datatable-header-template>
+                        <label class="datatable-header-cell-wrapper">{{ 'label.DPDT02.Month6' | translate }}</label>
+                      </ng-template>
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        <div [formGroup]="row.form">
+                          <number currency formControlName="scoreMonth6" [hasLabel]="false" [small]="true"></number>
+                        </div>
+                      </ng-template>
+                    </ngx-datatable-column>
+                  </ng-container>
+                  <ng-container *ngIf="isBetweenStartAndEnd(7)">
+                    <ngx-datatable-column prop="scoreMonth7" [width]="50">
+                      <ng-template ngx-datatable-header-template>
+                        <label class="datatable-header-cell-wrapper">{{ 'label.DPDT02.Month7' | translate }}</label>
+                      </ng-template>
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        <div [formGroup]="row.form">
+                          <number currency formControlName="scoreMonth7" [hasLabel]="false" [small]="true"></number>
+                        </div>
+                      </ng-template>
+                    </ngx-datatable-column>
+                  </ng-container>
+                  <ng-container *ngIf="isBetweenStartAndEnd(8)">
+                    <ngx-datatable-column prop="scoreMonth8" [width]="50">
+                      <ng-template ngx-datatable-header-template>
+                        <label class="datatable-header-cell-wrapper">{{ 'label.DPDT02.Month8' | translate }}</label>
+                      </ng-template>
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        <div [formGroup]="row.form">
+                          <number currency formControlName="scoreMonth8" [hasLabel]="false" [small]="true"></number>
+                        </div>
+                      </ng-template>
+                    </ngx-datatable-column>
+                  </ng-container>
+                  <ng-container *ngIf="isBetweenStartAndEnd(9)">
+                    <ngx-datatable-column prop="scoreMonth9" [width]="50">
+                      <ng-template ngx-datatable-header-template>
+                        <label class="datatable-header-cell-wrapper">{{ 'label.DPDT02.Month9' | translate }}</label>
+                      </ng-template>
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        <div [formGroup]="row.form">
+                          <number currency formControlName="scoreMonth9" [hasLabel]="false" [small]="true"></number>
+                        </div>
+                      </ng-template>
+                    </ngx-datatable-column>
+                  </ng-container>
+                  <ng-container *ngIf="isBetweenStartAndEnd(10)">
+                    <ngx-datatable-column prop="scoreMonth10" [width]="50">
+                      <ng-template ngx-datatable-header-template>
+                        <label class="datatable-header-cell-wrapper">{{ 'label.DPDT02.Month10' | translate }}</label>
+                      </ng-template>
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        <div [formGroup]="row.form">
+                          <number currency formControlName="scoreMonth10" [hasLabel]="false" [small]="true"></number>
+                        </div>
+                      </ng-template>
+                    </ngx-datatable-column>
+                  </ng-container>
+                  <ng-container *ngIf="isBetweenStartAndEnd(11)">
+                    <ngx-datatable-column prop="scoreMonth11" [width]="50">
+                      <ng-template ngx-datatable-header-template>
+                        <label class="datatable-header-cell-wrapper">{{ 'label.DPDT02.Month11' | translate }}</label>
+                      </ng-template>
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        <div [formGroup]="row.form">
+                          <number currency formControlName="scoreMonth11" [hasLabel]="false" [small]="true"></number>
+                        </div>
+                      </ng-template>
+                    </ngx-datatable-column>
+                  </ng-container>
+                  <ng-container *ngIf="isBetweenStartAndEnd(12)">
+                    <ngx-datatable-column prop="scoreMonth12" [width]="50">
+                      <ng-template ngx-datatable-header-template>
+                        <label class="datatable-header-cell-wrapper">{{ 'label.DPDT02.Month12' | translate }}</label>
+                      </ng-template>
+                      <ng-template let-row="row" ngx-datatable-cell-template>
+                        <div [formGroup]="row.form">
+                          <number currency formControlName="scoreMonth12" [hasLabel]="false" [small]="true"></number>
+                        </div>
+                      </ng-template>
+                    </ngx-datatable-column>
+                  </ng-container>
+                  <ngx-datatable-column prop="avgScore" [width]="50">
+                    <ng-template ngx-datatable-header-template>
+                      <label class="datatable-header-cell-wrapper">
+                        {{ 'label.DPDT02.avgScore' | translate }}</label>
+                    </ng-template>
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                      <div [formGroup]="row.form" class="disable">
+                        <number currency formControlName="avgScore" [hasLabel]="false" [small]="true">
+                        </number>
+                      </div>
+                    </ng-template>
+                  </ngx-datatable-column>
+                  <ngx-datatable-column prop="evaScore" [width]="50">
+                    <ng-template ngx-datatable-header-template>
+                      <label class="datatable-header-cell-wrapper">
+                        {{ 'label.DPDT02.EvaluationScore' | translate }}</label>
+                    </ng-template>
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                      <div [formGroup]="row.form" class="disable">
+                        <number currency formControlName="evaScore" [hasLabel]="false" [small]="true">
+                        </number>
+                      </div>
+                    </ng-template>
+                  </ngx-datatable-column>
+                </app-table-client>
+                <div class="row">
+                  <div class="col-md-6 col-sm-0"></div>
+                  <div class="col-md-3 col-sm-12">
+                  </div>
+                </div>
+              </tab>
+            </ng-container>
+          </ng-container>
+        </tabset>
+      </div>
+      <div class="row">
+        <div class="col">
+          <app-card header="{{ 'label.DPDT02.RemarkEmp' | translate }}">
+            <div class="card-content">
+              <form #footer [formGroup]="dpEvaluationMasterForm">
+                <textarea rows="5" formControlName="remarkEmp" class="form-control">
+              </textarea>
+              </form>
+            </div>
+          </app-card>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <app-card header="{{ 'label.DPDT02.Remark' | translate }}">
+            <div class="card-content">
+              <form #footer [formGroup]="dpEvaluationMasterForm">
+                <textarea rows="5" formControlName="remark" class="form-control">
+              </textarea>
+              </form>
+            </div>
+          </app-card>
+        </div>
+      </div>
+    </div>
+  </div>

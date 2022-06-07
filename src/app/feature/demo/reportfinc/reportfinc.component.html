@@ -1,0 +1,39 @@
+<div class="row">
+    <div class="col">
+        <app-card header="{{ 'label.ALL.Criteria' | translate }}">
+            <div class="card-menu">
+            </div>
+            <div class="card-content">
+                <form #searchScore [formGroup]="criteriaForm">
+                    <div class="form-row">
+                        <div class="form-group col-lg-3 col-md-3">
+                            <select-input [items]="vouchNo" placeholder="ทั้งหมด" formControlName="vouchNoFrom">
+                                ตั้งแต่เลขที่ใบสำคัญ
+                            </select-input>
+                        </div>
+                        <div class="form-group col-lg-3 col-md-3">
+                            <select-input [items]="vouchNo" placeholder="ทั้งหมด" formControlName="vouchNoTo">
+                                ถึงเลขที่ใบสำคัญ
+                            </select-input>
+                        </div>
+                        <div class="form-group col-lg-3 col-md-3">
+                            <datepicker formControlName="docDateStart" [small]="true">
+                                ตั้งแต่วันที่
+                            </datepicker>
+                        </div>
+                        <div class="form-group col-lg-3 col-md-3">
+                            <datepicker formControlName="docDateEnd" [small]="true">
+                                ถึงวันที่
+                            </datepicker>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </app-card>
+    </div>
+</div>
+<report-viewer
+    [criteriaForm]="criteriaForm"
+    (assignReportParam)="assignReportParam()"
+    [reportParam]="reportParam">
+</report-viewer>

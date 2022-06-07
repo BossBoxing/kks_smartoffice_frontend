@@ -1,0 +1,23 @@
+:host::ng-deep .card{
+    margin-bottom: 15px;
+    box-shadow: 0 1px 2px 0 rgba(0,0,0,0.1);
+    .card-header-label{
+        cursor: pointer;
+    }
+    .card-header{
+        span{
+            font-weight: 600;
+        }
+        .card-menu{
+            position: absolute;
+            right:11px;
+            top:8px;
+        }
+        .icon-btn i{
+            transition: transform .2s ease;
+            &.down{
+                transform: rotate(180deg);
+            }
+        }
+    } 
+}

@@ -1,0 +1,63 @@
+<toolbar>
+  <button class="btn btn-primary" (click)="util.focusInvalid(header); save()" [disabled]="!isFormDirty() || permission.isReadOnly">
+    <i class="fas fa-cog fa-spin" [hidden]="!saving"></i>
+    <i class="fas fa-save" [hidden]="saving"></i> {{ 'label.ALL.Save' | translate }}</button>
+</toolbar>
+
+<h4>{{ 'label.SURT03.ProgramName' | translate }}</h4>
+<!-- ########## Master Form ########## -->
+<div class="row">
+  <div class="col">
+    <app-card header="{{ 'label.SURT03.MenuDetail' | translate }}">
+      <div class="card-content">
+        <form #header [formGroup]="menuForm">
+          <div class="form-row">
+            <div class="form-group col-md-3 col-sm-6">
+              <select-input 
+                [items]="masterData.systemCodes" 
+                formControlName="systemCode"
+                placeholder="{{ 'label.ALL.PleaseSelect' | translate }}">
+                {{ 'label.SURT03.Website' | translate }}
+              </select-input>
+            </div>
+            <div class="form-group col-md-3 col-sm-6">
+              <textbox formControlName="menuCode" class="text-center">{{ 'label.SURT03.MenuCode' | translate }}</textbox>
+            </div>
+            <div class="form-group col-md-6 col-sm-6">
+              <auto-complete 
+                [showDescription]="false" 
+                [onSearch]="onSearchMainMenu"
+                formControlName="mainMenu">
+                {{ 'label.SURT03.MainMenu' | translate }}
+              </auto-complete>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6 col-sm-6">
+              <select-input 
+                [items]="masterData.programCodes" 
+                formControlName="programCode" 
+                placeholder="{{ 'label.ALL.PleaseSelect' | translate }}">
+                {{ 'label.SURT03.ProgramCode' | translate }}
+              </select-input>
+            </div>
+            <div class="form-group col-md-3 col-sm-6">
+              <textbox formControlName="icon">{{ 'label.SURT03.Icon' | translate }}</textbox>
+            </div>
+            <div class="form-group col-md-3 col-sm-6">
+              <checkbox formControlName="active">{{ 'label.SURT03.Active' | translate }}</checkbox>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6 col-sm-6">
+              <textbox formControlName="menuNameTh">{{ 'label.SURT03.MenuNameTha' | translate }}</textbox>
+            </div>
+            <div class="form-group col-md-6 col-sm-6">
+              <textbox formControlName="menuNameEn">{{ 'label.SURT03.MenuNameEng' | translate }}</textbox>
+            </div>
+          </div>
+        </form>
+      </div>
+    </app-card>
+  </div>
+</div>

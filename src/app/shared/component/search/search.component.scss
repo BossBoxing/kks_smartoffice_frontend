@@ -1,0 +1,15 @@
+.input-group{
+    background-color:#E8E7E7;
+    margin-bottom: 20px;
+}
+.input-group-text{
+    border:none;
+    background: none;
+}
+.form-control {
+    margin-right:10px;
+    background: none;
+  &:focus {
+    box-shadow: none;
+  }
+}

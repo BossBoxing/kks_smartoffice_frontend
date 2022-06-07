@@ -1,0 +1,166 @@
+<toolbar>
+  <button class="btn btn-primary" [disabled]="!isFormDirty()" (click)="util.focusInvalid(header); save()">
+    <i class="fas fa-cog fa-spin" [hidden]="!saving"></i>
+    <i class="fas fa-save" [hidden]="saving"></i> {{ 'label.ALL.Save' | translate}}
+  </button>
+</toolbar>
+<h4>{{ 'label.DPRT01.Define an assessment format' | translate }}</h4>
+<div class="row">
+  <div class="col">
+    <app-card header="ข้อมูลรูปแบบการประเมิน">
+      <div class="card-content">
+        <form #header [formGroup]="dpFormatMasterForm">
+          <div class="form-row">
+            <div class="form-group col-md-3 col-sm-12">
+              <textbox formControlName="docFormatNo" class="text-center" [uppercase]="true">{{ 'label.DPRT01.DocFormatNo' | translate }}</textbox>
+            </div>
+            <div class="form-group col-md-3 col-sm-12 ">
+              <checkbox formControlName="active">{{ 'label.DPRT01.Active' | translate }}</checkbox>
+            </div>
+            <div class="form-group col-md-3 col-sm-12">
+              <select-input formControlName="docFormatType" [items]="masterData.selectFormatType" placeholder="">
+                {{ 'label.DPRT01.Assessment Type' | translate }}
+              </select-input>
+            </div>
+            <div class="form-group col-md-3 col-sm-6">
+              <number formControlName="totalScore" currency>{{ 'label.DPRT01.TotalScore' | translate }}</number>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6 col-sm-12">
+              <textbox formControlName="docFormatNameTha">{{ 'label.DPRT01.DescriptionTha' | translate }}
+              </textbox>
+            </div>
+            <div class="form-group col-md-6 col-sm-12">
+              <textbox formControlName="docFormatNameEng">{{ 'label.DPRT01.DescriptionEng' | translate }}
+              </textbox>
+            </div>
+          </div>
+        </form>
+      </div>
+    </app-card>
+  </div>
+</div>
+
+<!--รายละเอียดหัวข้อประเมิน-->
+<div class="row">
+  <div class="col">
+    <app-card header="{{ 'label.DPRT01.Assessment topic details' | translate }}">
+      <div class="card-menu">
+        <button class="btn btn-primary" (click)="addFormatDetail(); detailTab.goLastPage();">
+          <i class="fas fa-plus-circle"></i> {{ 'label.ALL.Add' | translate }}
+        </button>
+      </div>
+      <div class="card-content">
+        <div class="row">
+          <div class="col">
+            <app-table-client #detailTab [rows]="dpFormatMaster.details" [sorts]="false">
+              <ngx-datatable-column prop="topicNo" [width]="70" [cellClass]="'text-center'">
+                <ng-template let-sort="sortFn" ngx-datatable-header-template>
+                  <label class="datatable-header-cell-wrapper" (click)="sort()">
+                    {{ 'label.DPRT01.Evaluation Topics' | translate }}<span class="text-danger ng-star-inserted"> * </span>
+                  </label>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  <div [formGroup]="row.form">
+                    <textbox formControlName="topicNo" class="text-center" [hasLabel]="false" [small]="true">
+                    </textbox>
+                  </div>
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column prop="isMainType" [width]="50" [cellClass]="'text-center'">
+                <ng-template let-sort="sortFn" ngx-datatable-header-template>
+                  <label class="datatable-header-cell-wrapper" (click)="sort()">
+                    {{ 'label.DPRT01.IsmainTopic' | translate }}</label>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template justify-content-center>
+                  <div [formGroup]="row.form">
+                    <checkbox formControlName="isMainType"></checkbox>
+                  </div>
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column prop="mainTopic" [width]="50" [cellClass]="'text-center'">
+                <ng-template let-sort="sortFn" ngx-datatable-header-template>
+                  <label class="datatable-header-cell-wrapper" (click)="sort()">
+                    {{ 'label.DPRT01.MainTopic' | translate }}
+                  </label>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  <div [formGroup]="row.form">
+                    <textbox formControlName="mainTopic" class="text-center" [hasLabel]="false" [small]="true">
+                    </textbox>
+                  </div>
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column prop="descriptionTha" [width]="300" [cellClass]="'text-center'">
+                <ng-template let-sort="sortFn" ngx-datatable-header-template>
+                  <label class="datatable-header-cell-wrapper" (click)="sort()">
+                    {{ 'label.DPRT01.DescriptionTha' | translate }} <span class="text-danger ng-star-inserted"> * </span>
+                  </label>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  <div [formGroup]="row.form">
+                    <textbox formControlName="descriptionTha" [hasLabel]="false" [small]="true">
+                    </textbox>
+                  </div>
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column prop="descriptionEng" [width]="300" [cellClass]="'text-right'">
+                <ng-template let-sort="sortFn" ngx-datatable-header-template>
+                  <label class="datatable-header-cell-wrapper" (click)="sort()">
+                    {{ 'label.DPRT01.DescriptionEng' | translate }} <span class="text-danger ng-star-inserted"> * </span>
+                  </label>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  <div [formGroup]="row.form">
+                    <textbox formControlName="descriptionEng" [hasLabel]="false" [small]="true">
+                    </textbox>
+                  </div>
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column prop="maxScore" [width]="50">
+                <ng-template let-sort="sortFn" ngx-datatable-header-template>
+                  <label class="datatable-header-cell-wrapper" (click)="sort()">
+                    {{ 'label.DPRT01.MaxScore' | translate }} <span class="text-danger ng-star-inserted"> * </span>
+                  </label>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  <div [formGroup]="row.form">
+                    <number currency formControlName="maxScore" [hasLabel]="false" [small]="true">
+                    </number>
+                  </div>
+                </ng-template>
+              </ngx-datatable-column>
+
+              <ngx-datatable-column cellClass="text-center" [width]="50" [sortable]="false">
+                <ng-template ngx-datatable-header-template>
+                  <label class="datatable-header-cell-wrapper">{{ 'label.DPRT01.Scoring' | translate }}
+                  </label>
+                </ng-template>
+                <ng-template let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                  <div [formGroup]="row.form">
+                  <button class="btn btn-outline-primary btn-sm" (click)="guideDetail(row)" 
+                  [hidden]="!row.form.controls.rowVersion.value || row.form.controls.isMainType.value">
+                    <i class="fas fa-edit"></i>
+                  </button>
+                </div>
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column cellClass="text-center" [width]="50" [sortable]="false">
+                <ng-template ngx-datatable-header-template>
+                  <label class="datatable-header-cell-wrapper"> {{ 'label.ALL.Delete' | translate }}
+                  </label>
+                </ng-template>
+                <ng-template let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                  <button (click)="removeFormatDetail(row)" class="btn btn-outline-danger btn-sm">
+                    <i class="far fa-trash-alt"></i>
+                  </button>
+                </ng-template>
+              </ngx-datatable-column>
+            </app-table-client>
+          </div>
+        </div>
+      </div>
+    </app-card>
+  </div>
+</div>

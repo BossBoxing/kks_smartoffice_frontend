@@ -1,0 +1,107 @@
+<toolbar>
+    <button class="btn btn-primary" [disabled]="!isFormDirty()" (click)="util.focusInvalid(header); save()">
+        <i class="fas fa-cog fa-spin" [hidden]="!saving"></i>
+        <i class="fas fa-save" [hidden]="saving"></i> {{ 'label.ALL.Save' | translate}}
+    </button>
+</toolbar>
+
+<h4>{{ 'label.PLRT01.ProgramName' | translate }}</h4>
+<div class="row">
+    <div class="col">
+        <app-card header="{{ 'label.PLRT01.DataPl' | translate }}">
+            <div class="card-content">
+                <form #header [formGroup]="plCustomForm">
+                    <div class="form-row justify-content-center">
+                        <div class="form-group col-md-4 col-sm-12">
+                            <textbox formControlName="custCode" class="text-center">
+                                {{ 'label.PLRT01.CustomerGroupCode' | translate }}</textbox>
+                        </div>
+                        <div class="form-group col-md-4 col-sm-12">
+                            <textbox formControlName="custName" class="text-left">
+                                {{ 'label.PLRT01.CustomerGroupName' | translate }}</textbox>
+                        </div>
+                        <div class="form-group col-md-2 col-sm-6">
+                            <checkbox formControlName="activeBool">
+                                {{ 'label.ALL.Active' | translate }}</checkbox>
+                        </div>
+                        <div class="form-group col-md-2 col-sm-6">
+                            <br><input type="color" style="width: 20px;" formControlName="color">
+                            {{ 'label.PLRT01.Color' | translate }}
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="card-content">
+                <form #header [formGroup]="plCustomForm">
+                    <div class="form-row justify-content">
+                        <div class="form-group col-md-4 col-sm-12">
+                            <textbox formControlName="shortName" class="text-left">
+                                {{ 'label.PLRT01.ShortName' | translate }}</textbox>
+                        </div>
+                        <div class="form-group col-md-4 col-sm-12">
+                            <textbox formControlName="telNo" class="text-center"
+                                onkeypress='return event.charCode >= 33 && event.charCode <= 63'>
+                                {{ 'label.PLRT01.TelNo' | translate }}</textbox>
+                        </div>
+                        <div class="form-group col-md-4 col-sm-12">
+                            <textbox formControlName="faxNo" class="text-center"
+                                onkeypress='return event.charCode >= 33 && event.charCode <= 63'>
+                                {{ 'label.PLRT01.FaxNo' | translate }}</textbox>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="card-content">
+                <form #header [formGroup]="plCustomForm">
+                    <div class="form-row justify-content">
+                        <div class="form-group col-md-4 col-sm-12">
+                            <textbox formControlName="custContact" class="text-left">
+                                {{ 'label.PLRT01.CustContact' | translate }}</textbox>
+                        </div>
+                        <div class="form-group col-md-4 col-sm-12">
+                            <textbox formControlName="toolDev" class="text-left">
+                                {{ 'label.PLRT01.ToolDev' | translate }}</textbox>
+                        </div>
+                        <div class="form-group col-md-4 col-sm-12">
+                            <datepicker formControlName="effectiveDate" class="text-center" [small]="true">
+                                {{ 'label.PLRT01.StartDate' | translate }}</datepicker>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="card-content">
+                <form #header [formGroup]="plCustomForm">
+                    <div class="form-row justify-content">
+                        <div class="form-group col-md-8 col-sm-12">
+                            <textbox formControlName="address" class="text-left">
+                                {{ 'label.PLRT01.Address' | translate }}</textbox>
+                        </div>
+                        <div class="form-group col-md-4 col-sm-12">
+                            <textbox formControlName="remark" class="text-left">
+                                {{ 'label.PLRT01.Remark' | translate }}</textbox>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="card-content">
+                <form #header [formGroup]="plCustomForm">
+                    <div class="form-row justify-content">
+                        <div class="form-group col-md-4 col-sm-12">
+                            <textbox formControlName="areaCode" class="text-center"
+                                onkeypress='return event.charCode >= 33 && event.charCode <= 63'>
+                                {{ 'label.PLRT01.Area' | translate }}</textbox>
+                        </div>
+                        <div class="form-group col-md-4 col-sm-12">
+                            <textbox formControlName="osSpec" class="text-left">
+                                {{ 'label.PLRT01.Os' | translate }}</textbox>
+                        </div>
+                        <div class="form-group col-md-4 col-sm-12">
+                            <textbox formControlName="hardwareSpec" class="text-left">
+                                {{ 'label.PLRT01.Hardware' | translate }}</textbox>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </app-card>
+    </div>
+</div>

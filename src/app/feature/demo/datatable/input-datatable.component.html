@@ -1,0 +1,145 @@
+<h4>Input Datatable</h4>
+<div class="row">
+  <div class="col">
+    <tabset>
+      <tab heading="table in tab fixed">
+        <app-card header="table client side">
+          <div class="card-menu">
+            <button class="btn btn-primary" (click)="save();">
+              showdata</button>
+            <button class="btn btn-primary" (click)="add();itemTable.goLastPage();"><i class="fas fa-plus-circle"></i>
+              เพิ่ม</button>
+          </div>
+          <div class="card-content">
+            
+              <div>
+                <app-table-client #itemTable [sorts]="[{ prop:'name',dir:'desc'},{ prop:'salary',dir:'desc'}]" [rows]="demoItems" [select]="demoItemSelected">
+                  <ngx-datatable-row-detail rowHeight="auto">
+                    <ng-template let-row="row" let-expanded="expanded" ngx-datatable-row-detail-template>
+                      <div  class="container-fluid" [formGroup]="row.form" >
+                        <div class="alert alert-primary">
+                          <h6 class="alert-heading">รายละเอียด</h6>
+                          <hr>
+                          <div class="form-row">
+                            <div class="form-group col-md-3 col-sm-6">
+                              <textbox formControlName="description" [small]="true">desc</textbox>
+                            </div>
+                            <div class="form-group col-md-3 col-sm-6">
+                              <textbox [value]="row.salary" [small]="true"></textbox>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </ng-template>
+                  </ngx-datatable-row-detail>
+                  <ngx-datatable-column [width]="50" [resizeable]="false" [sortable]="false" [draggable]="false"
+                    [canAutoResize]="false">
+                    <ng-template let-row="row" let-expanded="expanded" ngx-datatable-cell-template>
+                      <button class="btn btn-link btn-sm" (click)="itemTable.toggleExpandRow(row)">
+                        <i class="fas fa-chevron-right" [class.fa-rotate-90]="expanded"></i>
+                      </button>
+                    </ng-template>
+                  </ngx-datatable-column>
+                  <ngx-datatable-column [cellClass]="'text-center'" [width]="50" [sortable]="false"
+                    [canAutoResize]="false" [draggable]="false" [resizeable]="false">
+                    <ng-template ngx-datatable-header-template let-value="value" let-allRowsSelected="allRowsSelected"
+                      let-selectFn="selectFn">
+                      <checkbox [value]="allRowsSelected" [disabled]="demoItems.length === 0"
+                        (afterChange)="selectFn(!allRowsSelected)">
+                      </checkbox>
+                    </ng-template>
+                    <ng-template ngx-datatable-cell-template let-rowIndex="rowIndex" let-value="value"
+                      let-isSelected="isSelected" let-onCheckboxChangeFn="onCheckboxChangeFn">
+                      <checkbox [value]="isSelected" (afterChange)="onCheckboxChangeFn($event)">
+                      </checkbox>
+                    </ng-template>
+                  </ngx-datatable-column>
+                  <ngx-datatable-column prop="companyCode" width="100">
+                    <ng-template let-sort="sortFn" ngx-datatable-header-template>
+                      <label class="datatable-header-cell-wrapper" (click)="sort()">code</label>
+                    </ng-template>
+                    <ng-template let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                      <div [formGroup]="row.form">
+                        <lookup name="company" [service]="LookupDemoService" [content]="LookupDemoComponent" formControlName="companyCode" [hasLabel]="false" [small]="true"></lookup>
+                      </div>
+                    </ng-template>
+                  </ngx-datatable-column>
+                  <ngx-datatable-column prop="companyName" width="100">
+                    <ng-template let-sort="sortFn" ngx-datatable-header-template>
+                      <label class="datatable-header-cell-wrapper" (click)="sort()">name</label>
+                    </ng-template>
+                    <ng-template let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                        <div name="nameTha" lookupParent="company"></div>
+                    </ng-template>
+                  </ngx-datatable-column>
+                  <ngx-datatable-column prop="name" width="200">
+                    <ng-template let-sort="sortFn" ngx-datatable-header-template>
+                      <label class="datatable-header-cell-wrapper" (click)="sort()">ชื่อ</label>
+                    </ng-template>
+                    <ng-template let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                      <div [formGroup]="row.form">
+                        <textbox formControlName="name" [hasLabel]="false" [small]="true"></textbox>
+                      </div>
+                    </ng-template>
+                  </ngx-datatable-column>
+                 <ngx-datatable-column prop="startDate" [cellClass]="'text-center'">
+                    <ng-template ngx-datatable-header-template>
+                      <label class="datatable-header-cell-wrapper">วันที่เริ่มทำงาน</label>
+                    </ng-template>
+                    <ng-template let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                      <div [formGroup]="row.form">
+                        <datepicker formControlName="startDate" [hasLabel]="false" [small]="true"></datepicker>
+                      </div>
+                    </ng-template>
+                  </ngx-datatable-column>
+                   <ngx-datatable-column prop="salary" [cellClass]="'text-right'">
+                    <ng-template ngx-datatable-header-template>
+                      <label class="datatable-header-cell-wrapper">เงินเดือน</label>
+                    </ng-template>
+                    <ng-template let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                      <div [formGroup]="row.form">
+                        <number currency formControlName="salary" [hasLabel]="false" [small]="true"></number>
+                      </div>
+                    </ng-template>
+                  </ngx-datatable-column>
+                  <ngx-datatable-column prop="active" [cellClass]="'text-center'">
+                    <ng-template ngx-datatable-header-template>
+                      <label class="datatable-header-cell-wrapper">ใช้งาน</label>
+                    </ng-template>
+                    <ng-template let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                      <div [formGroup]="row.form">
+                        <checkbox formControlName="active">
+                        </checkbox>
+                      </div>
+                    </ng-template>
+                  </ngx-datatable-column>
+                  <ngx-datatable-column prop="status" [cellClass]="'text-center'">
+                    <ng-template ngx-datatable-header-template>
+                      <label class="datatable-header-cell-wrapper">สถานะ</label>
+                    </ng-template>
+                    <ng-template let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                       <status [hasLabel]="false" [small]="true" status="ปกติ"></status>
+                    </ng-template>
+                  </ngx-datatable-column>
+                  <ngx-datatable-column [cellClass]="'text-center'" [sortable]="false" width="100">
+                    <ng-template ngx-datatable-header-template>
+                      <label class="datatable-header-cell-wrapper">ลบ</label>
+                    </ng-template>
+                    <ng-template let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                      <button class="btn btn-outline-danger btn-sm" (click)="remove(row.guid)">
+                        <i class="far fa-trash-alt"></i>
+                      </button>
+                    </ng-template>
+                  </ngx-datatable-column>
+                </app-table-client>
+              </div>
+        
+          </div>
+        </app-card>
+      </tab>
+      <tab heading="tab2">
+        <button class="btn btn-primary" (click)="add()">test table in tab</button>
+      </tab>
+    </tabset>
+  </div>
+</div>

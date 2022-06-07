@@ -1,0 +1,65 @@
+<ngx-datatable #myTable class="bootstrap expandable" headerHeight="auto" [columnMode]="columnMode.force" [rows]="rows"
+  rowHeight="auto" [scrollbarH]="true" footerHeight="auto" [rowIdentity]="rowIdentity" [trackByProp]="trackByProp"
+  [sortType]="SortType.multi" [sorts]="sorts" [offset]="page.index" [limit]="page.size" [selectionType]="'checkbox'"
+  [selectAllRowsOnPage]="false" [selected]="select" (select)='onSelect($event)' [summaryRow]="summaryRow"
+  [summaryPosition]="'bottom'" [summaryHeight]="'auto'" [messages]="messages" [groupRowsBy]="groupRow"
+  [groupExpansionDefault]="true">
+  <ng-content></ng-content>
+  <ngx-datatable-group-header *ngIf="groupHead" [rowHeight]="80">
+    <ng-template let-group="group" let-expanded="expanded" ngx-datatable-group-header-template>
+      <!-- <div style="padding:5px;">
+        <button class="btn btn-primary" (click)="addRowButton(group.value[0].groupHead)" [disabled]= "disableButton">
+          {{ 'label.ALL.Add' | translate }}
+        </button>
+        <a [class.datatable-icon-right]="!expanded" [class.datatable-icon-down]="expanded" title="Expand/Collapse Group"
+          (click)="toggleExpandGroup(group)">
+          <b>{{ group.value[0].groupHeadName }}    </b>
+        </a>
+      </div> -->
+
+      <!-- <div class="d-flex align-items-center">
+        <div class="ml-2">
+            <select [value]='page.size' (change)="onPageSize($event.target.value)" class="custom-select custom-select-sm" dir="rtl">
+                <option *ngFor="let size of pageSizes">{{size}}</option>
+            </select>
+        </div>
+        <div class="page-count">แถวต่อหน้า ทั้งหมด {{rowCount.toLocaleString()}} รายการ
+        </div>
+    </div> -->
+
+      <div style="padding-top:5px; padding-bottom:5px;" class="d-flex align-items-center">
+        <div class="form-group col-md-6 col-sm-6" style="padding-left:5px;">
+        <a [class.datatable-icon-right]="!expanded" [class.datatable-icon-down]="expanded" title="Expand/Collapse Group"
+          (click)="toggleExpandGroup(group)">
+          <b>{{ group.value[0].groupHeadName }}    </b>
+        </a>
+      </div>
+        <div class="form-group col-md-6 col-sm-6 text-right" style="padding-right:0px;">
+          <button class="btn btn-primary" (click)="addRowButton(group.value[0].groupHead)" [disabled]= "disableButton">
+            <i class="fas fa-plus-circle"></i> {{ 'label.ALL.Add' | translate }}
+          </button>
+        </div>
+      </div>
+    </ng-template>
+  </ngx-datatable-group-header>
+  <ngx-datatable-footer>
+    <ng-template *ngIf="pagination" ngx-datatable-footer-template let-rowCount="rowCount" let-pageSize="pageSize"
+      let-selectedCount="selectedCount" , let-curPage="curPage" let-offset="offset">
+      <div class="d-flex align-items-center">
+        <div class="ml-2">
+          <select [value]='page.size' (change)="onPageSize($event.target.value)" class="custom-select custom-select-sm"
+            dir="rtl">
+            <option *ngFor="let size of pageSizes">{{size}}</option>
+          </select>
+        </div>
+        <div class="page-count">แถวต่อหน้า ทั้งหมด {{(rows.length - rowCount).toLocaleString()}} รายการ
+        </div>
+      </div>
+      <datatable-pager [pagerLeftArrowIcon]="'datatable-icon-left'" [pagerRightArrowIcon]="'datatable-icon-right'"
+        [pagerPreviousIcon]="'datatable-icon-prev'" [pagerNextIcon]="'datatable-icon-skip'" [page]="curPage"
+        [size]="pageSize" [count]="rowCount" [hidden]="!((rowCount / pageSize) > 1)"
+        (change)="datatable.onFooterPage($event)">
+      </datatable-pager>
+    </ng-template>
+  </ngx-datatable-footer>
+</ngx-datatable>

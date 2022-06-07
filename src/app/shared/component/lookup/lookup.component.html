@@ -1,0 +1,15 @@
+<label *ngIf="hasLabel"><ng-content></ng-content><span *ngIf="required" class="text-danger"> *</span></label>
+<div class="input-group">
+    <input #textBox [disabled]="disabled || searching || isDisableOnParent" type="text" (change)="onInput($event.target.value)" (blur)="onTouched()" class="form-control" [class.is-invalid]="hasErrors" [class.form-control-sm]="small" placeholder="{{placeholder}}">
+    <div class="input-group-append">
+     <button type="button" class="btn btn-main" [class.btn-sm]="small" [disabled]="disabled || searching || isDisableOnParent" (click)="open()" >
+       <i class="fas fas fa-sync-alt fa-spin" [hidden]="!searching"></i>  
+       <i class="fas fa-glasses" [hidden]="searching"></i>
+     </button>
+   </div>
+</div>
+<div class="invalid" *ngIf="hasErrors">
+    <div *ngIf="control.hasError('required') ">
+        กรุณาระบุ
+    </div>
+</div>

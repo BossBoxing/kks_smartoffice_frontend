@@ -1,0 +1,6 @@
+<label *ngIf="hasLabel">
+    <ng-content></ng-content>
+</label>
+<input #inputText type="text" disabled="true" class="form-control"
+    [class.form-control-sm]="small" [ngClass]="class" [value]="value"  
+    (input)="onTextChange($event.target.value)" (blur)="onTouched()" (keyup.enter)="onEnter($event.target.value)">

@@ -1,0 +1,83 @@
+<h4>{{ 'label.SURT02.ProgramName' | translate }}</h4>
+<!--########## criteria section ##########-->
+<div class="row">
+  <div class="col">
+    <app-card header="{{ 'label.ALL.Search' | translate }}">
+      <div class="card-content">
+        <app-search [value]="keyword" (search)="enter($event)" placeholder="{{ 'label.SURT02.SearchPlaceholder' | translate }}">
+        </app-search>
+      </div>
+    </app-card>
+  </div>
+</div>
+
+<!--########## result grid section ##########-->
+<div class="row">
+  <div class="col">
+    <app-card header="{{ 'label.SURT02.ProgramInfo' | translate }}">
+      <div class="card-menu">
+        <button class="btn btn-primary" (click)="addFunction()" [disabled]="permission.isReadOnly">
+          <i class="fas fa-plus-circle"></i> {{ 'label.ALL.Add' | translate }}
+        </button>
+      </div>
+      <div class="card-content">
+        <div class="row">
+          <div class="col">
+            <app-table [rows]="programs" [page]="page" (onTableEvent)="search()">
+              <ngx-datatable-column prop="system" width="200" [cellClass]="'text-center'">
+                <ng-template let-sort="sortFn" ngx-datatable-header-template>
+                  <label class="datatable-header-cell-wrapper" (click)="sort()">{{ 'label.SURT02.Website' | translate }}</label>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  {{ row.system }}
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column prop="module" width="200">
+                <ng-template let-sort="sortFn" ngx-datatable-header-template>
+                  <label class="datatable-header-cell-wrapper" (click)="sort()">{{ 'label.SURT02.System' | translate }}</label>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  {{ row.module }}
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column prop="programCode" width="125" [cellClass]="'text-center'">
+                <ng-template let-sort="sortFn" ngx-datatable-header-template>
+                  <label class="datatable-header-cell-wrapper" (click)="sort()">{{ 'label.SURT02.ProgramCode' | translate }}</label>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  <a [routerLink]="['detail']" [state]="{ programCode: row.programCode }">{{ row.programCode }}</a>
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column prop="programName" width="200">
+                <ng-template let-sort="sortFn" ngx-datatable-header-template>
+                  <label class="datatable-header-cell-wrapper" (click)="sort()">{{ 'label.SURT02.Program' | translate }}</label>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  {{ row.programName }}
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column prop="programPath" width="200">
+                <ng-template let-sort="sortFn" ngx-datatable-header-template>
+                  <label class="datatable-header-cell-wrapper" (click)="sort()">{{ 'label.SURT02.ProgramPath' | translate }}</label>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  {{ row.programPath }}
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column [cellClass]="'text-center'" [sortable]="false" width="50">
+                <ng-template ngx-datatable-header-template>
+                  <label class="datatable-header-cell-wrapper">{{ 'label.ALL.Delete' | translate }}</label>
+                </ng-template>
+                <ng-template let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                  <button (click)="remove(row.programCode, row.rowVersion)" class="btn btn-outline-danger btn-sm" [disabled]="permission.isReadOnly">
+                    <i class="far fa-trash-alt"></i>
+                  </button>
+                </ng-template>
+              </ngx-datatable-column>
+            </app-table>
+          </div>
+        </div>
+      </div>
+    </app-card>
+  </div>
+</div>

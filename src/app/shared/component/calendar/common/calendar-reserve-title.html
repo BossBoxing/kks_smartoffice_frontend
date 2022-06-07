@@ -1,0 +1,7 @@
+<span *ngIf="calendarView === CalendarView.Month" [innerHTML]="event.startTime + '-' + event.endTime + ' ' + event.title" class="cal-event-title"
+    style="color: #fff; font-weight: 500"></span>
+<div *ngIf="calendarView !== CalendarView.Month" class="cal-event-title text-center" [style.color]="titleColor.border">
+    <span [innerHTML]="event.title" [style.font-weight]="500"></span>
+    <br>
+    <span [innerHTML]="event.startTime + '-' + event.endTime"></span>
+</div>

@@ -1,0 +1,13 @@
+<label *ngIf="hasLabel"><ng-content></ng-content><span *ngIf="required" class="text-danger"> *</span></label>
+<input type="text" #year [placeholder]="placeholder" [disabled]="disabled" class="form-control text-center" [class.is-invalid]="hasErrors" [class.form-control-sm]="small"  (blur)="onTouched()">
+<div class="invalid" *ngIf="hasErrors">
+        <div *ngIf="control.hasError('required') ">
+            กรุณาระบุ
+        </div>
+        <div *ngIf="control.hasError('min')">
+           กรุณาระบุปี พ.ศ. {{ control.errors.min.min }}  ขึ้นไป
+        </div>
+        <div *ngIf="control.hasError('max')">
+           กรุณาระบุปี พ.ศ. น้อยกว่า {{ control.errors.max.max }}
+        </div>
+</div>

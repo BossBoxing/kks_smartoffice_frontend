@@ -1,0 +1,22 @@
+<label>
+  <ng-content></ng-content><span *ngIf="required" class="text-danger"> *</span>
+</label>
+<div class="upload-container rounded" [class.disable]="disabled" [class.is-invalid]="errors.length > 0|| hasErrors"
+  *ngIf="!content.path" appDragDrop (click)="imgInput.click()" [disableDrag]="disabled" (onFileDropped)="add($event)">
+  <i class="fas fa-plus fa-lg text-secondary"></i>
+</div>
+<input #imgInput hidden type="file" (change)="add($event.target.files)" [disabled]="disabled" accept="image/*">
+<div [class.img-preview]="!dynamicWidth" [class.img-preview-dynamic]="dynamicWidth" *ngIf="content.path">
+  <button *ngIf="!disabled" type="button" class="btn btn-danger btn-sm" (click)="remove()"><i class="fas fa-trash-alt"></i></button>
+  <img [src]="displayUrl | async" class="img-fluid img-thumbnail">
+</div>
+<div class="invalid" *ngIf="errors.length > 0">
+  <span *ngFor="let error of errors">
+    {{ error }}
+  </span>
+</div>
+<div class="invalid" *ngIf="hasErrors">
+  <div *ngIf="control.hasError('required') ">
+     {{'message.STD00036' | translate}}
+  </div>
+</div>

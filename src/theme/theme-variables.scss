@@ -1,0 +1,121 @@
+/*
+ * Application global variables.
+ */
+
+// Set Font Awesome font path
+$fa-font-path: "~@fortawesome/fontawesome-free/webfonts";
+
+// ---------------------------------------------------------------------------
+// Bootstrap variables
+//
+// Override Bootstrap variables here to suite your theme.
+// Copy variables you want to customize from node_modules/bootstrap/scss/_variables.scss
+
+//
+// Color system
+//
+
+$font-family-sans-serif: // Safari for OS X and iOS (San Francisco)
+'Prompt',
+-apple-system,
+// Chrome < 56 for OS X (San Francisco)
+BlinkMacSystemFont,
+// Windows
+"Segoe UI",
+// Android
+"Roboto",
+// Basic web fallback
+"Helvetica Neue", Arial, sans-serif,
+// Emoji fonts
+"Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !default;
+$main :#B2A1CD;
+$white:  #fff;
+$gray-100: #f8f9fa;
+$gray-200: #e9ecef;
+$gray-300: #dee2e6;
+$gray-400: #ced4da;
+$gray-500: #adb5bd;
+$gray-600: #868e96;
+$gray-700: #495057;
+$gray-800: #343a40;
+$gray-900: #212529;
+$black:  #000;
+
+$light-purple: #B2A1CD;
+$indigo:  #6610f2;
+$purple:  #6f42c1;
+$pink:    #e83e8c;
+$red:     #F57676;
+$orange:  #fd7e14;
+$yellow:  #FFBF00;
+$green:   #12A286;
+$teal:    #20c997;
+$cyan:    #17a2b8;
+$blue:    #0275d8;
+
+$sunday: #FF3333;
+$monday: #FFE600;
+$tuesday: #ff1493;
+$wednesday: #28a745;
+$thursday: #fd7e14;
+$friday: #00bfff;
+$saturday: #6f42c1;
+
+$theme-colors: (
+  primary: $light-purple,
+  secondary: $gray-600,
+  success: $green,
+  info: $cyan,
+  warning: $yellow,
+  danger: $red,
+  light: $gray-100,
+  dark: $gray-800,
+  sunday: $sunday,
+  monday: $monday,
+  tuesday: $tuesday,
+  wednesday: $wednesday,
+  thursday: $thursday,
+  friday: $friday,
+  saturday: $saturday,
+  main: $main,
+  blue-primary: $blue
+);
+$custom-file-text: (
+  en: "Browse",
+  th: "เลือก"
+);
+$body-color:  $gray-800;
+$input-btn-line-height: 1.28;
+$font-size-base:.875rem;
+$font-size-sm: .8125rem;
+$h4-font-size: $font-size-base * 1.4;
+$body-bg:#f4f7f6;
+$yiq-contrasted-threshold: 180;
+$yiq-text-dark: $gray-800;
+$modal-content-bg:#f4f7f6;
+$modal-content-border-width:0px;
+$card-spacer-x :1rem;
+$card-border-radius:  .3rem;
+$card-border-width:0px;
+$card-cap-bg: white;
+$nav-tabs-border-width:0;
+$nav-tabs-link-active-color: black;
+$nav-tabs-link-active-bg: white;
+$input-btn-focus-color:       rgba($light-purple, .25);
+$component-active-bg: $main;
+$input-focus-border-color: lighten($light-purple, 25%) !default;
+$custom-control-indicator-checked-disabled-bg: rgba($main, .5);
+$link-color: $light-purple;
+// Use Bootstrap defaults for other variables, imported here so we can access all app variables in one place when used
+// in components.
+@import "~bootstrap/scss/_functions";
+@import "~bootstrap/scss/_variables";
+@import '~@angular/material/theming';
+
+$custom-typography: mat-typography-config($font-family: 'Prompt');
+@include mat-core($custom-typography);
+$custom-primary: mat-palette($mat-pink,A200, A100, A400);
+$custom-accent: mat-palette($mat-pink,A200, A100, A400);
+$custom-theme: mat-light-theme($custom-primary, $custom-accent);
+@include angular-material-theme($custom-theme);
+

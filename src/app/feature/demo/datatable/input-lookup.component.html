@@ -1,0 +1,39 @@
+<h4>Input From Lookup</h4>
+<div class="row">
+  <div class="col">
+    <app-card header="table client side">
+      <div class="card-menu">
+        <button class="btn btn-primary" (click)="addItems()"><i class="fas fa-minus-circle"></i>&nbsp;<i class="fas fa-plus-circle"></i>
+          {{ 'label.ALL.Select' | translate }}</button>
+      </div>
+      <div class="card-content">
+        <app-table-client [rows]="demoItems">
+          <ngx-datatable-column name="categoryCode" cellClass="text-center">
+            <ng-template let-sort="sortFn" ngx-datatable-header-template>
+              <label class="datatable-header-cell-wrapper" (click)="sort()">Code</label>
+            </ng-template>
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              {{row.categoryCode}}
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="categoryNameTha">
+            <ng-template let-sort="sortFn" ngx-datatable-header-template>
+              <label class="datatable-header-cell-wrapper" (click)="sort()">Name Tha</label>
+            </ng-template>
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              {{row.categoryNameTha}}
+            </ng-template>
+          </ngx-datatable-column>
+          <ngx-datatable-column name="categoryNameEng">
+            <ng-template let-sort="sortFn" ngx-datatable-header-template>
+              <label class="datatable-header-cell-wrapper" (click)="sort()">Name Eng</label>
+            </ng-template>
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              {{row.categoryNameEng}}
+            </ng-template>
+          </ngx-datatable-column>
+        </app-table-client>
+      </div>
+    </app-card>
+  </div>
+</div>

@@ -1,0 +1,204 @@
+<h4> ประเมินผลการปฏิบัติงานของพนักงาน </h4>
+
+<div class="row">
+    <div class="col">
+        <app-card header="ค้นหา">
+            <div class="card-content">
+                <form #criteria [formGroup]="searchForm">
+                    <div class="form-row justify-content-left">
+                        <div class="for-group col-md-6 col-sm-12">
+                            <textbox formControlName="keyword"
+                                placeholder="เลขที่อ้างอิง, เลขที่เอกสารที่อ้างอิง, ชื่อ-รหัสพนักงาน">
+                                คำค้นหา
+                            </textbox>
+                        </div>
+                        <div class="for-group col-6 col-md-3 col-sm-6">
+                            <!-- <textbox formControlName="keywordYear" type="number"
+                                placeholder="">
+                                ปี
+                            </textbox> -->
+                            <label for="">ปี</label>
+                            <input class="form-control text-center" formControlName="keywordYear" type="number">
+                        </div>
+                        <div class="for-group col-6 col-md-3 col-sm-6">
+                            <label for="">ครั้ง</label>
+                            <input class="form-control text-center" formControlName="keywordPeriod" type="number">
+                            <!-- <textbox formControlName="keywordPeriod" type="number"
+                                placeholder="">
+                                ครั้งที่
+                            </textbox> -->
+                        </div>
+                    </div>
+                    <div class="form-row ">
+                        <div class="form-group col-md-12 col-sm-12 text-center mt-1 ">
+                            <button class="btn btn-primary" (click)="util.focusInvalid(criteria); searchFunction()"><i
+                                    class="fas fa-search"></i>
+                                {{ 'label.ALL.Search' | translate }}</button>
+                            <button class="btn btn-outline-primary" (click)="clear();"><i class="fas fa-eraser"></i>
+                                {{ 'label.ALL.Clear' | translate }}</button>
+                            <button class="btn btn-primary" (click)="template(templateModal)">
+                                {{ 'label.ALL.Copy' | translate }}</button>
+                            <ng-template #templateModal>
+                                <app-modal (onClose)="close()" header="คัดลอก">
+                                    <div class="container-fluid">
+                                        <!-- Modal -->
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <div class="col-4">
+                                                    <label for="name">รายชื่อ</label>
+                                                    <select class="custom-select" id="inputGroupSelect01">
+                                                        <option selected>เลือกชื่อ...</option>
+                                                        <option value="1">สมบัติ ทรัพย์สิน</option>
+                                                        <option value="2">ประกายทอง กองใหญ่</option>
+                                                        <option value="3">ประสิทธิโชค โลภมาก</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-4">
+                                                    <label for="name">คัดลอกปี</label>
+                                                    <input type="text" class="form-control" aria-label="Username"
+                                                        aria-describedby="basic-addon1" required>
+                                                </div>
+                                                <div class="col-4">
+                                                    <label for="name">คัดลอกครั้งที่</label>
+                                                    <input type="text" class="form-control" aria-label="Username"
+                                                        aria-describedby="basic-addon1" required>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-4">
+                                                    <label for="name">เป็นของพนักงาน</label>
+                                                    <input type="text" class="form-control"
+                                                        placeholder="ประกายทอง กองใหญ่" aria-label="Username"
+                                                        aria-describedby="basic-addon1" disabled>
+                                                </div>
+                                                <div class="col-4">
+                                                    <label for="name">ปี</label>
+                                                    <input type="text" class="form-control" aria-label="Username"
+                                                        aria-describedby="basic-addon1" required>
+                                                </div>
+                                                <div class="col-4">
+                                                    <label for="name">ครั้งที่</label>
+                                                    <input type="text" class="form-control" aria-label="Username"
+                                                        aria-describedby="basic-addon1" required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                (onClose)="close()">Close</button>
+                                            <button type="button" class="btn btn-primary">Save changes</button>
+                                        </div>
+                                    </div>
+                                </app-modal>
+                            </ng-template>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </app-card>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
+        <app-card header="ข้อมูลการประเมินผลการปฏิบัติงานของพนักงาน">
+            <div class="card-menu">
+                <button class="btn btn-primary" (click)="addFunction()">
+                    <i class="fas fa-plus-circle"></i> {{ 'label.ALL.Add' | translate }}
+                </button>
+            </div>
+            <div class="card-content">
+                <div class="row">
+                    <div class="col">
+                        <app-table [rows]="transMaster" [page]="page" (onTableEvent)="search()">
+                            <ngx-datatable-column prop="transNo" [width]="50" [cellClass]="'text-center'">
+                                <ng-template let-sort="sortFn" ngx-datatable-header-template>
+                                    <label class="datatable-header-cell-wrapper" (click)="sort()">
+                                        เลขที่เอกสาร
+                                    </label>
+                                </ng-template>
+                                <ng-template let-row="row" ngx-datatable-cell-template>
+                                    <a [routerLink]="['detail']" [state]="{transNo: row.transNo}">
+                                        {{ row.transNo }}
+                                    </a>
+                                </ng-template>
+                            </ngx-datatable-column>
+
+                            <ngx-datatable-column prop="yearPeriod" [width]="40" [cellClass]="'text-center'">
+                                <ng-template let-sort="sortFn" ngx-datatable-header-template>
+                                    <label class="datatable-header-cell-wrapper" (click)="sort()">
+                                        ปี/ครั้งที่
+                                    </label>
+                                </ng-template>
+                                <ng-template let-row="row" ngx-datatable-cell-template>
+                                    {{ row.yearPeriod }}
+                                </ng-template>
+                            </ngx-datatable-column>
+
+                            <ngx-datatable-column prop="fullName" [width]="250">
+                                <ng-template let-sort="sortFn" ngx-datatable-header-template>
+                                    <label class="datatable-header-cell-wrapper" (click)="sort()">
+                                        ชื่อพนักงาน
+                                    </label>
+                                </ng-template>
+                                <ng-template let-row="row" ngx-datatable-cell-template>{{ row.fullName }}
+                                </ng-template>
+                            </ngx-datatable-column>
+
+                            <ngx-datatable-column prop="totalScore" [width]="20" [cellClass]="'text-right'">
+                                <ng-template let-sort="sortFn" ngx-datatable-header-template>
+                                    <label class="datatable-header-cell-wrapper" (click)="sort()">
+                                        คะแนนสรุป
+                                    </label>
+                                </ng-template>
+                                <ng-template let-row="row" ngx-datatable-cell-template>
+
+                                    {{ row.totalScore | number:'.2-2' }}
+                                </ng-template>
+                            </ngx-datatable-column>
+
+                            <ngx-datatable-column prop="grade" [width]="40" [cellClass]="'text-center'">
+                                <ng-template let-sort="sortFn" ngx-datatable-header-template>
+                                    <label class="datatable-header-cell-wrapper" (click)="sort()">
+                                        เกรด
+                                    </label>
+                                </ng-template>
+                                <ng-template let-row="row" ngx-datatable-cell-template>{{ row.grade }}
+                                </ng-template>
+                            </ngx-datatable-column>
+
+                            <ngx-datatable-column prop="submitDate" [width]="70" [cellClass]="'text-center'">
+                                <ng-template let-sort="sortFn" ngx-datatable-header-template>
+                                    <label class="datatable-header-cell-wrapper" (click)="sort()">
+                                        วันที่ยืนยัน
+                                    </label>
+                                </ng-template>
+                                <ng-template let-row="row" ngx-datatable-cell-template>
+
+                                    {{ row.submitDate | date:'dd/MM/yyyy' }}
+
+                                </ng-template>
+                            </ngx-datatable-column>
+
+                            <ngx-datatable-column prop="status" [width]="40" [cellClass]="'text-center'">
+                                <ng-template let-sort="sortFn" ngx-datatable-header-template>
+                                    <label class="datatable-header-cell-wrapper" (click)="sort()">
+                                        สถานะ
+                                    </label>
+                                </ng-template>
+                                <ng-template let-row="row" ngx-datatable-cell-template>
+                                    <!-- {{ row.status }} -->
+                                    <span class="text" *ngIf="row.status == 'N'">กำลังดำเนินการ</span>
+                                    <span class="text-warning" *ngIf="row.status == 'W'">รอประเมิน</span>
+                                    <span class="text-success" *ngIf="row.status == 'A'">ประเมินเรียบร้อย</span>
+                                    <span class="text-danger" *ngIf="row.status == 'C'">ยกเลิก</span>
+                                    <span class="text" *ngIf="row.status == 'R'">ส่งกลับ</span>
+                                </ng-template>
+                            </ngx-datatable-column>
+                        </app-table>
+                    </div>
+                </div>
+            </div>
+        </app-card>
+    </div>
+</div>

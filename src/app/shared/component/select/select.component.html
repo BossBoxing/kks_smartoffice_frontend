@@ -1,0 +1,41 @@
+<label *ngIf="hasLabel">
+  <ng-content></ng-content><span *ngIf="required" class="text-danger"> *</span>
+</label>
+<ng-select class="custom" [class.is-invalid]="hasErrors" [items]="items" [bindLabel]="bindLabel" [bindValue]="bindValue"
+  [ngModel]="value" (ngModelChange)="onSelected($event)" [disabled]="disabled" [multiple]="multiple" [appendTo]="appendTo"
+  dropdownPosition="bottom" [class.sm]="small" [searchFn]="customSearch" [virtualScroll]="true"
+  notFoundText="{{'label.ALL.NotFound' | translate}}" placeholder="{{placeholder | translate}}"
+  (change)="onItemChange($event)" [clearable]="clearable">
+  <ng-template *ngIf="showDescription && !customTemplate" ng-option-tmp let-item="item" let-index="index"
+    let-search="searchTerm">
+    <div [ngOptionHighlight]="search" class="ng-option-label" container="body"
+      tooltip="{{item[bindLabel]}} : {{item[bindDesc]}}">{{item[bindLabel]}}</div>
+    <small class="text-secondary" [ngOptionHighlight]="search">{{item[bindDesc]}}</small>
+  </ng-template>
+  <ng-template *ngIf="!showDescription && !customTemplate" ng-option-tmp let-item="item" let-index="index"
+    let-search="searchTerm">
+    <div class="select-option">
+      <span [ngOptionHighlight]="search" container="body" tooltip="{{item[bindLabel]}}"
+        class="ng-option-label">{{item[bindLabel]}}
+      </span>
+    </div>
+  </ng-template>
+  <ng-template *ngIf="customLabel" ng-label-tmp let-item="item">
+    <ng-container *ngTemplateOutlet="labelTemplate; context:{ item: item }"></ng-container>
+  </ng-template>
+  <ng-template *ngIf="customTemplate" ng-option-tmp let-item="item" let-search="searchTerm">
+    <ng-container *ngTemplateOutlet="optionTemplate; context:{ item: item,search:search }"></ng-container>
+  </ng-template>
+</ng-select>
+<div class="invalid" *ngIf="hasErrors">
+  <div *ngIf="control.hasError('required') ">
+    {{'message.STD00036' | translate}}
+  </div>
+  <div *ngIf="control.hasError('duplicate') ">
+    {{'message.SQL23505' | translate}}
+  </div>
+  <ng-container *ngIf="control.hasError('custom')">
+      <ng-content select=".invalid-custom">
+      </ng-content>
+  </ng-container>
+</div>

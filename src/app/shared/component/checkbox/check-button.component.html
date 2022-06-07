@@ -1,0 +1,9 @@
+<label *ngIf="hasLabel">
+  <ng-content></ng-content>
+</label>
+<button type="button" [disabled]="disabled" (click)="onSelect()" class="btn" [class.btn-sm]="small"
+ [ngClass]="[ value === true ? btnActiveClass : btnClass ]" >
+  <i class="fas fa-check text-white" [hidden]="value !== true"></i>
+  <i class="far fa-square" [hidden]="value === true"></i>
+   {{ text }}
+</button>

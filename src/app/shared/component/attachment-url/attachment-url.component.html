@@ -1,0 +1,30 @@
+<label *ngIf="hasLabel">
+    <ng-content></ng-content><span *ngIf="required" class="text-danger"> *</span>
+</label>
+<div class="attach-url">
+    <i class="fas fa-link icon" (click)="openUrl()" [ngStyle]="{ 'top.px': small ? 8 : 10 }"></i>
+    <input type="text" [placeholder]="placeholder" [disabled]="disabled" class="form-control"
+        [class.is-invalid]="hasErrors" [class.form-control-sm]="small" [ngClass]="class" [value]="value"
+        (input)="onTextChange($event.target.value)" (blur)="onTouched()">
+</div>
+<div class="invalid" *ngIf="hasErrors">
+    <div *ngIf="control.hasError('required') || control.hasError('empty')">
+        กรุณาระบุ
+    </div>
+    <div *ngIf="control.hasError('minlength') ">
+        กรุณาระบุมากกว่า {{ control.errors.minlength.requiredLength }} ตัวอักษร
+    </div>
+    <div *ngIf="control.hasError('maxlength') ">
+        กรุณาระบุไม่เกิน {{ control.errors.maxlength.requiredLength }} ตัวอักษร
+    </div>
+    <div *ngIf="control.hasError('email') ">
+        รูปแบบ email ไม่ถูกต้อง
+    </div>
+    <div *ngIf="control.hasError('exact') ">
+        กรุณาระบุ {{ control.errors.exact.requiredLength }} หลัก
+    </div>
+    <ng-container *ngIf="control.hasError('pattern')">
+        <ng-content select=".invalid-pattern">
+        </ng-content>
+    </ng-container>
+</div>

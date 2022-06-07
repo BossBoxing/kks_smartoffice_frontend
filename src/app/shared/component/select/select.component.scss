@@ -1,0 +1,13 @@
+.select-option{
+   position: relative;
+   white-space: nowrap;
+   overflow: hidden;
+   text-overflow: ellipsis;
+}
+.view{
+   position: absolute;
+   right:0px;
+   color:#333 !important;
+   background-color:white;
+   border-radius: 5px;
+}

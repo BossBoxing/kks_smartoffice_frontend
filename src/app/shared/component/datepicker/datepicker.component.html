@@ -1,0 +1,18 @@
+<label *ngIf="hasLabel"><ng-content></ng-content><span  *ngIf="required"class="text-danger"> *</span></label>
+<div class="input-group date-group">
+    <input #inputDate  (blur)="_onblur()" [disabled]="disabled" class="form-control text-center" [class.is-invalid]="hasErrors" [class.form-control-sm]="small" placeholder="{{placeholder}}"> 
+    <input [matDatepicker]="picker" [disabled]="disabled" [value]="value" [min]="min" [max]="max" (dateChange)="pickerChange($event.value)" class="form-control position-absolute invisible">
+    <div class="input-group-append">
+      <button class="btn btn-link" [class.is-invalid]="hasErrors" (click)="picker.open()" [disabled]="disabled" [class.btn-sm]="small" type="button" ><i class="far fa-calendar-minus" [class.fa-lg]="!small"></i></button>
+    </div>
+</div>
+<mat-datepicker #picker></mat-datepicker>
+<div class="invalid" *ngIf="hasErrors">
+    <div *ngIf="control.hasError('required')">
+        กรุณาระบุวันที่
+    </div>
+    <ng-container *ngIf="control.hasError('custom')">
+        <ng-content select=".invalid-custom">
+        </ng-content>
+    </ng-container>
+</div>

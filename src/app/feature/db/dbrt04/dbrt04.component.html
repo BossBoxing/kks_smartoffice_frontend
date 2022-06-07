@@ -1,0 +1,93 @@
+<h4>{{ 'label.DBRT04.ProgramName' | translate}}</h4>
+<!--########## criteria section ##########-->
+<div class="row">
+  <div class="col">
+    <app-card header="{{ 'label.ALL.Search' | translate }}">
+      <div class="card-content">
+        <form #criteria [formGroup]="searchForm">
+          <div class="form-row">
+            <div class="form-group col-md-6 col-sm-12">
+              <textbox formControlName="keyword" placeholder="{{ 'label.DBRT04.Search' | translate }}">
+                {{ 'label.DBRT04.Keyword' | translate }}
+              </textbox>
+            </div>
+            <div class="form-group col-md-6 col-sm-12">
+              <radio [items]="radioStatus" [inline]="true" formControlName="active">{{ 'label.DBRT04.Status' | translate }}</radio>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-12 col-sm-12 text-center">
+              <button class="btn btn-primary" (click)="util.focusInvalid(criteria); searchFunction()"><i class="fas fa-search"></i>
+                {{ 'label.ALL.Search' | translate }}</button>
+              <button class="btn btn-outline-primary" (click)="clear();"><i class="fas fa-eraser"></i>
+                {{ 'label.ALL.Clear' | translate }}</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </app-card>
+  </div>
+</div>
+<!--########## result grid section ##########-->
+<div class="row">
+  <div class="col">
+    <app-card header="{{ 'label.DBRT04.CountryData' | translate }}">
+      <div class="card-menu">
+        <button class="btn btn-primary" (click)="addFunction()" [disabled]="permission.isReadOnly">
+          <i class="fas fa-plus-circle"></i> {{ 'label.ALL.Add' | translate}}
+        </button>
+      </div>
+      <div class="card-content">
+        <div class="row">
+          <div class="col">
+            <app-table [rows]="dbCountries" [page]="page" (onTableEvent)="search()">
+              <ngx-datatable-column prop="countryCode" [width]="50"  [cellClass]="'text-center'">
+                <ng-template let-sort="sortFn" ngx-datatable-header-template>
+                  <label class="datatable-header-cell-wrapper" (click)="sort()">{{ 'label.DBRT04.CountryCode' | translate}}</label>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  <a [routerLink]="['detail']" [state]="{ countryCode: row.countryCode }">{{ row.countryCode }}</a>
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column prop="countryNameTha" [width]="150">
+                <ng-template let-sort="sortFn" ngx-datatable-header-template>
+                  <label class="datatable-header-cell-wrapper" (click)="sort()">{{ 'label.DBRT04.CountryNameTha' | translate}}</label>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  {{ row.countryNameTha }}
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column prop="countryNameEng" [width]="150">
+                <ng-template let-sort="sortFn" ngx-datatable-header-template>
+                  <label class="datatable-header-cell-wrapper" (click)="sort()">{{ 'label.DBRT04.CountryNameEng' | translate}}</label>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  {{ row.countryNameEng }}
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column prop="active" [width]="50" [cellClass]="'text-center'">
+                <ng-template let-sort="sortFn" ngx-datatable-header-template>
+                  <label class="datatable-header-cell-wrapper">{{ 'label.DBRT04.Active' | translate}}</label>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  <i *ngIf="row.active === 'Y'" class="fas fa-check"></i>
+                  <i *ngIf="row.active === 'N'" class="fas fa-times"></i>
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column cellClass="text-center" [sortable]="false" [width]="50">
+                <ng-template ngx-datatable-header-template>
+                  <label class="datatable-header-cell-wrapper">{{ 'label.ALL.Delete' | translate }}</label>
+                </ng-template>
+                <ng-template let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                  <button class="btn btn-outline-danger btn-sm" (click)="remove(row.countryCode, row.rowVersion)" [disabled]="permission.isReadOnly">
+                    <i class="far fa-trash-alt"></i>
+                  </button>
+                </ng-template>
+              </ngx-datatable-column>
+            </app-table>
+          </div>
+        </div>
+      </div>
+    </app-card>
+  </div>
+</div>

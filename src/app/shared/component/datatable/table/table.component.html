@@ -1,0 +1,28 @@
+<ngx-datatable class="bootstrap" headerHeight="auto" footerHeight="auto" [columnMode]="columnMode.force" [rows]="rows" [virtualization]="false"
+  rowHeight="auto" [scrollbarH]="true" [externalSorting]="true" [externalPaging]="true" (sort)="onSort($event)"
+  [rowIdentity]="rowIdentity" [trackByProp]="trackByProp" (page)="onPage($event)" [count]="page.totalElements"
+  [offset]="page.index" [limit]="page.size" [selectionType]="'checkbox'" [selectAllRowsOnPage]="selectOnePage"
+  [selected]="select" (select)='onChecked($event)' [summaryRow]="summaryRow" [summaryPosition]="'bottom'"
+  [summaryHeight]="'auto'" [messages]="messages" [sorts]="sort"
+  [rowClass]="getRowClass">
+  <ng-content></ng-content>
+  <ngx-datatable-footer>
+    <ng-template ngx-datatable-footer-template let-rowCount="rowCount" let-pageSize="pageSize"
+      let-selectedCount="selectedCount" , let-curPage="curPage" let-offset="offset">
+      <div class="d-flex align-items-center">
+        <div class="ml-2">
+          <select [value]='page.size' (change)="onPageSize($event.target.value)" class="custom-select custom-select-sm" dir="rtl">
+            <option *ngFor="let size of pageSizes">{{size}}</option>
+          </select>
+        </div>
+        <div class="page-count">แถวต่อหน้า ทั้งหมด {{rowCount.toLocaleString()}} รายการ
+        </div>
+      </div>
+      <datatable-pager [pagerLeftArrowIcon]="'datatable-icon-left'" [pagerRightArrowIcon]="'datatable-icon-right'"
+        [pagerPreviousIcon]="'datatable-icon-prev'" [pagerNextIcon]="'datatable-icon-skip'" [page]="curPage"
+        [size]="pageSize" [count]="rowCount" [hidden]="!((rowCount / pageSize) > 1)"
+        (change)="datatable.onFooterPage($event)">
+      </datatable-pager>
+    </ng-template>
+  </ngx-datatable-footer>
+</ngx-datatable>

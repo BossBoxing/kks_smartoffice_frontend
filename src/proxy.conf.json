@@ -1,0 +1,14 @@
+{
+  "/api/*": {
+    "target": "http://localhost:5001/api/",
+    "secure": false,
+    "changeOrigin": false,
+    "logLevel": "debug"
+  },
+  "/auth/*": {
+    "target": "https://spa.softsquaregroup.com/ssru.identity/",
+    "secure": true,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  }
+}

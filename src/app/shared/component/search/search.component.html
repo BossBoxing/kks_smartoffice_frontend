@@ -1,0 +1,8 @@
+<div class="input-group rounded-pill p-1">
+  <div class="input-group-prepend border-0">
+    <span class="input-group-text" id="inputGroup-sizing-sm">
+        <i class="{{icon}}"></i>
+    </span>
+  </div>
+  <input type="text" [value]="value" placeholder="{{placeholder}}" class="form-control border-0" (keyup.enter)="onEnter($event.target.value)">
+</div>

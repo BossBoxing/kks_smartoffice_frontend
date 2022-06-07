@@ -1,0 +1,67 @@
+<toolbar>
+    <button class="btn btn-primary" [disabled]="!isFormDirty()" (click)="util.focusInvalid(header); save()">
+      <i class="fas fa-cog fa-spin" [hidden]="!saving"></i>
+      <i class="fas fa-save" [hidden]="saving"></i> {{ 'label.ALL.Save' | translate}}
+    </button>
+  </toolbar>
+  
+<h4>{{ 'label.TNDBRT03.ProgramName' | translate}}</h4>
+<div class="row">
+  <div class="col">
+    <app-card header="{{ 'label.TNDBRT03.ProgramName' | translate}}">
+      <div class="card-content">
+        <form #header [formGroup]="dbTitleForm">
+          <div class="form-row justify-content-center">
+            <div class="form-group col-md-4 col-sm-12">
+              <textbox formControlName="titleCode" class="text-center">{{ 'label.TNDBRT03.TitlcCode' | translate }} 
+              </textbox>
+            </div>
+            <div class="form-group col-md-4 col-sm-12">
+              <textbox formControlName="titleNameTha" class="text-left">{{ 'label.TNDBRT03.TitleNameTha' | translate }}
+              </textbox>
+            </div>
+            <div class="form-group col-md-4 col-sm-12">
+              <textbox formControlName="titleNameEng" class="text-left">{{ 'label.TNDBRT03.TitleNameEng' | translate }}
+              </textbox>
+            </div>
+          </div>
+          <div class="form-row justify-content-center">
+              <div class="form-group col-md-4 col-sm-12">
+                <textbox formControlName="suffixNameTha" class="text-left">{{ 'label.TNDBRT03.SuffixNameTha' | translate }}
+                </textbox>
+              </div>
+              <div class="form-group col-md-4 col-sm-12">
+                <textbox formControlName="suffixNameEng" class="text-left">{{ 'label.TNDBRT03.SuffixNameEng' | translate }}
+                </textbox>
+              </div>
+              <div class="form-group col-md-4 col-sm-12">
+                <textbox formControlName="titleIniTha" class="text-left">{{ 'label.TNDBRT03.TitleIniTha' | translate }}
+                </textbox>
+              </div>
+            </div>
+            <div class="form-row justify-content-center">
+              <div class="form-group col-md-4 col-sm-12">
+                <textbox formControlName="titleIniEng" class="text-left">{{ 'label.TNDBRT03.TitleIniEng' | translate }}
+                </textbox>
+              </div>
+              <div class="form-group col-md-4 col-sm-12">
+                <textbox formControlName="suffixIniTha" class="text-left">{{ 'label.TNDBRT03.SuffixIniTha' | translate }}
+                </textbox>
+              </div>
+              <div class="form-group col-md-4 col-sm-12">
+                <textbox formControlName="suffixIniEng" class="text-left">{{ 'label.TNDBRT03.SuffixIniEng' | translate }}
+                </textbox>
+              </div>
+            </div>
+          <div class="form-row ">
+              <div class="form-group col-md-4 col-sm-12">
+                  <div class="form-group col-md-4 col-sm-12">
+                      <checkbox formControlName="activeBool">{{ 'label.ALL.Active' | translate}}</checkbox>
+                    </div>
+              </div>
+          </div>
+        </form>
+      </div>
+    </app-card>
+  </div>
+</div>

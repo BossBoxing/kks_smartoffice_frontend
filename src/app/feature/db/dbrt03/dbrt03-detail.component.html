@@ -1,0 +1,58 @@
+<toolbar>
+  <button class="btn btn-primary" [disabled]="!isFormDirty()" (click)="util.focusInvalid(header); save()">
+    <i class="fas fa-cog fa-spin" [hidden]="!saving"></i>
+    <i class="fas fa-save" [hidden]="saving"></i> {{ 'label.ALL.Save' | translate}}
+  </button>
+</toolbar>
+<h4>{{ 'label.DBRT03.ProgramName' | translate }}</h4>
+<div class="row">
+  <div class="col">
+    <app-card header="{{ 'label.DBRT03.TitleData' | translate }}">
+      <div class="card-content">
+        <form #header [formGroup]="dbTitleForm">
+          <div class="form-row">
+            <div class="form-group col-6">
+              <textbox formControlName="titleCode" class="text-center">{{ 'label.DBRT03.TitleCode' | translate }}</textbox>
+            </div>
+            <div class="form-group col-6">
+              <checkbox formControlName="activeBool">{{ 'label.DBRT03.Active' | translate }}</checkbox>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6 col-sm-12">
+              <textbox formControlName="titleNameTha">{{ 'label.DBRT03.TitleNameTha' | translate }}
+              </textbox>
+            </div>
+            <div class="form-group col-md-6 col-sm-12">
+              <textbox formControlName="titleNameEng">{{ 'label.DBRT03.TitleNameEng' | translate }}</textbox>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6 col-sm-12">
+              <textbox formControlName="suffixNameTha">{{ 'label.DBRT03.SuffixNameTha' | translate }}</textbox>
+            </div>
+            <div class="form-group col-md-6 col-sm-12">
+              <textbox formControlName="suffixNameEng">{{ 'label.DBRT03.SuffixNameEng' | translate }}</textbox>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6 col-sm-12">
+              <textbox formControlName="titleIniTha">{{ 'label.DBRT03.TitleIniTha' | translate }}</textbox>
+            </div>
+            <div class="form-group col-md-6 col-sm-12">
+              <textbox formControlName="titleIniEng">{{ 'label.DBRT03.TitleIniEng' | translate }}</textbox>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6 col-sm-12">
+              <textbox formControlName="suffixIniTha">{{ 'label.DBRT03.SuffixIniTha' | translate }}</textbox>
+            </div>
+            <div class="form-group col-md-6 col-sm-12">
+              <textbox formControlName="suffixIniEng">{{ 'label.DBRT03.SuffixIniEng' | translate }}</textbox>
+            </div>
+          </div>
+        </form>
+      </div>
+    </app-card>
+  </div>
+</div>

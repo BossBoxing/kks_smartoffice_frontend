@@ -1,0 +1,111 @@
+<toolbar>
+  <button class="btn btn-primary" (click)="util.focusInvalid(header); save()" [disabled]="!isFormDirty() || permission.isReadOnly">
+    <i class="fas fa-cog fa-spin" [hidden]="!saving"></i>
+    <i class="fas fa-save" [hidden]="saving"></i> {{ 'label.ALL.Save' | translate }}
+  </button>
+</toolbar>
+
+<h4>{{ 'label.SURT02.ProgramName' | translate }}</h4>
+<!-- ########## Master Form ########## -->
+<div class="row">
+  <div class="col">
+    <app-card header="{{ 'label.SURT02.ProgramDetail' | translate }}">
+      <div class="card-content">
+        <form #header [formGroup]="suProgramInfoForm">
+          <div class="form-row">
+            <div class="form-group col-md-3 col-sm-6">
+              <select-input 
+                [items]="masterData.systemCodes" 
+                formControlName="systemCode"
+                placeholder="{{ 'label.ALL.PleaseSelect' | translate }}">
+                {{ 'label.SURT02.Website' | translate }}
+              </select-input>
+            </div>
+            <div class="form-group col-md-3 col-sm-6">
+              <select-input 
+                [items]="masterData.moduleCodes" 
+                formControlName="moduleCode"
+                placeholder="{{ 'label.ALL.PleaseSelect' | translate }}">
+                {{ 'label.SURT02.System' | translate }}
+              </select-input>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-3 col-sm-6">
+              <textbox formControlName="programCode" class="text-center">{{ 'label.SURT02.ProgramCode' | translate }}</textbox>
+            </div>
+            <div class="form-group col-md-6 col-sm-6">
+              <textbox formControlName="programName">{{ 'label.SURT02.Program' | translate }}</textbox>
+            </div>
+            <div class="form-group col-md-3 col-sm-6">
+              <textbox formControlName="programPath">{{ 'label.SURT02.ProgramPath' | translate }}</textbox>
+            </div>
+          </div>
+        </form>
+      </div>
+    </app-card>
+  </div>
+</div>
+
+<!-- ########## Detail Form ########## -->
+<div class="row">
+  <div class="col">
+    <app-card header="{{ 'label.SURT02.ProgramLabels' | translate }}">
+      <div class="card-menu">
+        <button class="btn btn-primary" [disabled]="permission.isReadOnly" (click)="addProgramLabel();programLabelTable.goLastPage();">
+          <i class="fas fa-plus-circle"></i> {{ 'label.ALL.Add' | translate }}
+        </button>
+      </div>
+      <div class="card-content">
+        <div class="row">
+          <div class="col">
+            <app-table-client #programLabelTable [rows]="suProgramInfo.suProgramLabels" [sorts]="false">
+              <ngx-datatable-column width="200">
+                <ng-template ngx-datatable-header-template>
+                  <label class="datatable-header-cell-wrapper require">{{ 'label.SURT02.FieldName' | translate }}</label>
+                </ng-template>
+                <ng-template let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                  <div [formGroup]="row.form">
+                    <textbox formControlName="fieldName" [hasLabel]="false" [small]="true"></textbox>
+                  </div>
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column width="250">
+                <ng-template ngx-datatable-header-template>
+                  <label class="datatable-header-cell-wrapper">{{ 'label.SURT02.Thai' | translate }}
+                    <span class="text-danger ng-star-inserted"> *</span>
+                  </label>
+                </ng-template>
+                <ng-template let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                  <div [formGroup]="row.form">
+                    <textbox formControlName="labelNameTh" [hasLabel]="false" [small]="true"></textbox>
+                  </div>
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column width="250">
+                <ng-template ngx-datatable-header-template>
+                  <label class="datatable-header-cell-wrapper">{{ 'label.SURT02.English' | translate }}</label>
+                </ng-template>
+                <ng-template let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                  <div [formGroup]="row.form">
+                    <textbox formControlName="labelNameEn" [hasLabel]="false" [small]="true"></textbox>
+                  </div>
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column [cellClass]="'text-center'" width="50">
+                <ng-template ngx-datatable-header-template>
+                  <label class="datatable-header-cell-wrapper">{{ 'label.ALL.Delete' | translate }}</label>
+                </ng-template>
+                <ng-template let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                  <button (click)="removeProgramLabel(row)" class="btn btn-outline-danger btn-sm" [disabled]="permission.isReadOnly">
+                    <i class="far fa-trash-alt"></i>
+                  </button>
+                </ng-template>
+              </ngx-datatable-column>
+            </app-table-client>
+          </div>
+        </div>
+      </div>
+    </app-card>
+  </div>
+</div>

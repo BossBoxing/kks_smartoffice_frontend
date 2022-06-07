@@ -1,0 +1,128 @@
+<div class="row m-4">
+    <div class="col">
+        <p class="font-thai">ประเมินการปฏิบัติงานรายบุคคล</p>
+    </div>
+</div>
+
+<div class="row m-2 border p-4">
+    <div class="row">
+        <p class="font-thai">รายละเอียด</p>
+    </div>
+
+    <div class="row">
+
+
+        <div class="col">
+
+            <label for="" class="font-thai m-2">เลขที่เอกสาร</label>
+            <input type="text" class="form-control font-thai">
+        </div>
+        <div class="col">
+            <label for="" class="font-thai m-2">ปี</label>
+            <input type="text" class="form-control font-thai">
+        </div>
+        <div class="col">
+            <label for="" class="font-thai m-2">ครั้งที่</label>
+            <input type="text" class="form-control font-thai">
+        </div>
+        <div class="col">
+            <label for="" class="font-thai m-2">วันที่ยืนยันแบบประเมิน</label>
+            <input type="text" class="form-control font-thai">
+        </div>
+        <div class="col">
+            <label for="" class="font-thai m-2">สถานะ</label>
+            <input type="text" class="form-control font-thai">
+        </div>
+    </div>
+
+    <div class="row">
+
+
+        <!-- <div class="col">
+
+            <label for="" class="font-thai m-2">เดือนที่ประเมินตั้งแต่</label>
+            <select class="form-control text-center" [formControl]="inputMonth1">
+                <option *ngFor="let m of month;" value="{{m.id}}">{{ m.name }}</option>
+            </select>
+        </div>
+        <div class="col">
+            <label for="" class="font-thai m-2">ถึง</label>
+            <select class="form-control text-center" [formControl]="inputMonth2">
+                <option *ngFor="let m of month2;" value="{{m.id}}">{{ m.name }}</option>
+            </select>
+        </div> -->
+        <div class="col">
+            <label for="" class="font-thai m-2">ทีม</label>
+            <input type="text" class="form-control font-thai">
+        </div>
+    </div>
+
+    <div class="row">
+
+
+        <div class="col">
+
+            <label for="" class="font-thai m-2">พนักงาน</label>
+            <input type="text" class="form-control font-thai">
+        </div>
+        <div class="col">
+            <label for="" class="font-thai m-2">คะแนนสรุป</label>
+            <input type="text" class="form-control font-thai">
+        </div>
+        <div class="col">
+            <label for="" class="font-thai m-2">เกรด</label>
+            <input type="text" class="form-control font-thai">
+        </div>
+        <div class="col">
+            <label for="" class="font-thai m-2">ผู้ปรับปรุงล่าสุด</label>
+            <input type="text" class="form-control font-thai">
+        </div>
+        <div class="col">
+            <label for="" class="font-thai m-2">วันที่ปรับปรุงล่าสุด</label>
+            <input type="text" class="form-control font-thai">
+        </div>
+    </div>
+</div>
+
+<!-- <p *ngFor="let m of Month; let i = index;">{{ m }}</p> -->
+
+<div class="row">
+    <p>Start {{ this.startMonth }} , Last {{ this.lastMonth }}</p>
+    <div class="col">
+        <table class="table table-bordered font-thai">
+            <thead class="text-center">
+                <tr>
+                    <th scope="col">หัวข้อประเมินงาน</th>
+                    <th scope="col">คะแนนเต็ม</th>
+                    <ng-container *ngFor="let m of month; let i = index;">
+
+                        <th scope="col" *ngIf="i >= (this.startMonth-1) && i <= (this.lastMonth-1)">
+                            {{ m.name }}
+                        </th>
+
+                    </ng-container>
+                    <th scope="col">คะแนนเฉลี่ย</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- <tr>
+                <th scope="row">1</th>
+                <td>Mark</td>
+                <td>Otto</td>
+                <td>@mdo</td>
+              </tr>
+              <tr>
+                <th scope="row">2</th>
+                <td>Jacob</td>
+                <td>Thornton</td>
+                <td>@fat</td>
+              </tr>
+              <tr>
+                <th scope="row">3</th>
+                <td colspan="2">Larry the Bird</td>
+                <td>@twitter</td>
+              </tr> -->
+            </tbody>
+        </table>
+    </div>
+</div>

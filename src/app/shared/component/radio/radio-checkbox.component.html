@@ -1,0 +1,15 @@
+<label *ngIf="hasLabel">
+  <ng-content></ng-content><span *ngIf="required" class="text-danger"> *</span>
+</label>
+<div>
+  <div class="custom-control custom-checkbox" *ngFor="let item of items" [class.custom-control-inline]="inline">
+    <input type="checkbox" [disabled]="disabled || item.disabled"  [checked]="value == item.value" (change)="onSelect(item)" class="custom-control-input"
+      id="{{item.value+guid}}">
+    <label class="custom-control-label" for="{{item.value+guid}}">{{item.text}}</label>
+  </div>
+</div>
+<div class="invalid" *ngIf="hasErrors">
+  <div *ngIf="control.hasError('required') ">
+    {{'message.STD00036' | translate}}
+  </div>
+</div>

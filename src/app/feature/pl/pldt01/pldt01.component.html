@@ -1,0 +1,82 @@
+<toolbar></toolbar>
+<h4>{{ 'label.PLDT01.ProgramName' | translate }}</h4>
+
+<div class="row">
+    <div class="col">
+        <app-card header="{{ 'label.PLDT01.CalendarTable' | translate }}">
+            <div class="card-menu justify-content-end">
+                <button class="btn btn-blue-primary" (click)="handleTaskEntry(null)">
+                    <i class="fas fa-plus-circle"></i> {{ 'label.ALL.Add' | translate }}
+                </button>
+            </div>
+            <div class="card-content" (contextmenu)="rightClick($event)">
+                <hr>
+                <full-calendar deepChangeDetection="true" [options]="calendarOptions"></full-calendar>
+            </div>
+        </app-card>
+    </div>
+</div>
+
+<!-- Context Menu (right click) -->
+<div style="visibility: hidden; position: fixed" 
+    [style.left]="contextMenuPosition.x"
+    [style.top]="contextMenuPosition.y" 
+    [matMenuTriggerFor]="contextMenu">
+</div>
+
+<mat-menu #contextMenu="matMenu">
+    <ng-template matMenuContent let-item="item">
+        <button mat-menu-item (click)="handleTaskEntry(item)" [hidden]="item.rowVersion">
+            <mat-icon><i class="fas fa-plus text-blue-primary"></i></mat-icon><span>{{ 'label.ALL.Add' | translate }}</span>
+        </button>
+        <button mat-menu-item (click)="openModal(copyModal, item)" [disabled]="!item.rowVersion">
+            <mat-icon><i class="far fa-copy text-warning"></i></mat-icon><span>{{ 'label.ALL.Copy' | translate }}</span>
+        </button>
+        <button mat-menu-item (click)="removeTaskEntry(item)" [disabled]="!item.rowVersion">
+            <mat-icon><i class="far fa-trash-alt text-danger"></i></mat-icon><span>{{ 'label.ALL.Delete' | translate }}</span>
+        </button>
+    </ng-template>
+</mat-menu>
+
+<!-- Modal Copy -->
+<ng-template #copyModal>
+    <app-modal (onClose)="closeModal()" header="{{ 'label.PLDT01.TaskInformation' | translate }}">
+        <div class="row">
+            <div class="col">
+                <app-card>
+                    <div class="card-content">
+                        <form #header [formGroup]="plTaskEntryForm">
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <datepicker formControlName="startWorkDate" [small]="true">
+                                        {{ 'label.PLDT01.FromDate' | translate }}
+                                    </datepicker>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <datepicker formControlName="endWorkDate" [min]="plTaskEntryForm.controls.startWorkDate.value" [small]="true">
+                                        {{ 'label.PLDT01.ToDate' | translate }}
+                                    </datepicker>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-12">
+                                    <checkbox formControlName="includeWeekend" [small]="true">{{ 'label.PLDT01.IncludingWeekend' | translate }}</checkbox>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="form-row text-center">
+                                <div class="form-group col-12">
+                                    <button class="btn btn-outline-primary" (click)="closeModal()">{{ 'label.ALL.Close' | translate }}</button>
+                                    <button class="btn btn-primary" (click)="copyTaskEntry()">
+                                        <i class="fas fa-cog fa-spin" [hidden]="!saving"></i>
+                                        <i class="fas fa-copy" [hidden]="saving"></i> {{ 'label.ALL.Copy' | translate }}
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </app-card>
+            </div>
+        </div>
+    </app-modal>
+</ng-template>

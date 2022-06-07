@@ -1,0 +1,218 @@
+<toolbar>
+  <button class="btn btn-primary" [disabled]="!isFormDirty() || permission.isReadOnly" (click)="util.focusInvalid(header); save()">
+    <i class="fas fa-cog fa-spin" [hidden]="!saving"></i>
+    <i class="fas fa-save" [hidden]="saving"></i> {{ 'label.ALL.Save' | translate}}
+  </button>
+</toolbar>
+
+<h4>{{ 'label.DBRT11.ProgramName' | translate}}</h4>
+<div class="row">
+  <div class="col">
+    <app-card header="{{ 'label.DBRT11.GbEmployeeData' | translate }}">
+      <div class="card-content">
+        <form #header [formGroup]="gbEmployeeForm">
+          <div class="form-row">
+            <div class="form-group col-md-8">
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <textbox formControlName="empId" class="text-center">{{ 'label.DBRT11.EmpId' | translate }}</textbox>
+                </div>
+                <div class="form-group col-md-6">
+                  <textbox formControlName="personalId" class="text-center">{{ 'label.DBRT11.PersonalId' | translate }}</textbox>
+                </div>
+                <div class="form-group col-md-6">
+                  <select-input 
+                    [items]="masterData.genders" 
+                    placeholder="{{ 'label.ALL.PleaseSelect' | translate }}"
+                    formControlName="gender">
+                    {{ 'label.DBRT11.Gender' | translate }}
+                  </select-input>
+                </div>
+                <div class="form-group col-md-6">
+                  <auto-complete 
+                    [showDescription]="false" 
+                    [onSearch]="onSearchPreName" 
+                    formControlName="preNameId">
+                    {{ 'label.DBRT11.PreNameId' | translate }}
+                  </auto-complete>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <textbox formControlName="tFirstName" >{{ 'label.DBRT11.TFirstName' | translate }}</textbox>
+                </div>
+                <div class="form-group col-md-6">
+                  <textbox formControlName="tLastName" >{{ 'label.DBRT11.TLastName' | translate }}</textbox>
+                </div>
+              </div>
+            </div>
+            <div class="form-group col-md-4" style="color: gray;">
+              <label for="pictureId">{{ 'label.DBRT11.ImageUpload' | translate }}</label>
+              <span style="display: block; text-align: center; margin-top: 10px;">
+                <i class="fas fa-portrait fa-10x"></i>
+              </span>
+            </div>
+            <!-- <div class="form-group col-md-4">
+              <image formControlName="pictureId" [category]="filePath">{{ 'label.DBRT11.ImageUpload' | translate }}</image>
+            </div> -->
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-4">
+              <textbox formControlName="eFirstName">{{ 'label.DBRT11.EFirstName' | translate }}</textbox>
+            </div>
+            <div class="form-group col-md-4">
+              <textbox formControlName="eLastName">{{ 'label.DBRT11.ELastName' | translate }}</textbox>
+            </div>
+            <div class="form-group col-md-2">
+              <textbox formControlName="tNickname">{{ 'label.DBRT11.NicknameTha' | translate }}</textbox>
+            </div>
+            <div class="form-group col-md-2">
+              <textbox formControlName="eNickname">{{ 'label.DBRT11.NicknameEng' | translate }}</textbox>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-4">
+              <auto-complete 
+                [showDescription]="false" 
+                [onSearch]="onSearchRaceId" 
+                formControlName="raceId">
+                {{ 'label.DBRT11.RaceId' | translate }}
+              </auto-complete>
+            </div>
+            <div class="form-group col-md-4">
+              <auto-complete 
+                [showDescription]="false" 
+                [onSearch]="onSearchNation" 
+                formControlName="nationId">
+                {{ 'label.DBRT11.NationId' | translate }}
+              </auto-complete>
+            </div>
+            <div class="form-group col-md-4">
+              <auto-complete 
+                [showDescription]="false" 
+                [onSearch]="onSearchReligion" 
+                formControlName="religionId">
+                {{ 'label.DBRT11.ReligionId' | translate }}
+              </auto-complete>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-4">
+              <datepicker formControlName="birthday">{{ 'label.DBRT11.Birthday' | translate }}</datepicker>
+            </div>
+            <div class="form-group col-md-2">
+              <number formControlName="age">{{ 'label.DBRT11.Age' | translate }}</number>
+            </div>
+            <div class="form-group col-md-2">
+              <textbox formControlName="bloodType" class="text-center">{{ 'label.DBRT11.BloodType' | translate }}</textbox>
+            </div>
+            <div class="form-group col-md-2">
+              <number currency formControlName="high">{{ 'label.DBRT11.High' | translate }}</number>
+            </div>
+            <div class="form-group col-md-2">
+              <number currency formControlName="weight">{{ 'label.DBRT11.Weight' | translate }}</number>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-12">
+              <textbox formControlName="addr1">{{ 'label.DBRT11.Address' | translate }}</textbox>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-4">
+              <textbox formControlName="tel1">{{ 'label.DBRT11.Telephone' | translate }}</textbox>
+            </div>
+            <div class="form-group col-md-8">
+              <textbox formControlName="email">{{ 'label.DBRT11.Email' | translate }}</textbox>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-4">
+              <auto-complete 
+                [showDescription]="false" 
+                [onSearch]="onSearchProvinceId" 
+                formControlName="provinceId">
+                {{ 'label.DBRT11.ProvinceId' | translate }}
+              </auto-complete> 
+            </div> 
+            <div class="form-group col-md-4">
+              <auto-complete 
+                [showDescription]="true" 
+                [onSearch]="onSearchDistrict" 
+                formControlName="districtId">
+                {{ 'label.DBRT11.DistrictId' | translate }}
+              </auto-complete>
+            </div>
+            <div class="form-group col-md-4">
+              <textbox formControlName="zipcode" class="text-center">{{ 'label.DBRT11.Zipcode' | translate }}</textbox>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-4">
+              <datepicker formControlName="workDate">{{ 'label.DBRT11.WorkDate' | translate }}</datepicker>
+            </div>
+            <div class="form-group col-md-4">
+              <select-input 
+                [items]="masterData.locations" 
+                placeholder="{{ 'label.ALL.PleaseSelect' | translate }}"
+                formControlName="locationId">
+                {{ 'label.DBRT11.WorkLocation' | translate }}
+              </select-input>
+            </div>
+            <div class="form-group col-md-4">
+              <auto-complete 
+                [showDescription]="false" 
+                [onSearch]="onSearchPosition" 
+                formControlName="positionCode">
+                {{ 'label.DBRT11.Position' | translate }}
+              </auto-complete>
+            </div>
+            <div class="form-group col-md-4">
+              <auto-complete 
+                [showDescription]="false" 
+                [onSearch]="onSearchDivision" 
+                formControlName="divisionId">
+                {{ 'label.DBRT11.Division' | translate }}
+              </auto-complete>
+            </div>
+            <div class="form-group col-md-4">
+              <auto-complete 
+                [showDescription]="false" 
+                [onSearch]="onSearchManager" 
+                formControlName="managerId">
+                {{ 'label.DBRT11.Manager' | translate }}
+              </auto-complete>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-sm-12">
+              <label for="workDesc">{{ 'label.DBRT11.WorkDesc' |  translate }}</label>
+              <textarea id="workDesc" formControlName="workDesc" class="text-left form-control" rows="3"></textarea>
+            </div> 
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-4">
+              <select-input 
+                [items]="masterData.empTypes" 
+                placeholder="{{ 'label.ALL.PleaseSelect' | translate }}"
+                formControlName="empType">
+                {{ 'label.DBRT11.EmpType' | translate }}
+              </select-input>
+            </div>
+            <div class="form-group col-md-4">
+              <select-input 
+                [items]="masterData.empStatus" 
+                placeholder="{{ 'label.ALL.PleaseSelect' | translate }}"
+                formControlName="empStatus">
+                {{ 'label.DBRT11.EmpStatus' | translate }}
+              </select-input>
+            </div>
+            <div class="form-group col-md-4" *ngIf="gbEmployeeForm.controls.empStatus.value === '002'">
+              <datepicker formControlName="trunoverDate">{{ 'label.DBRT11.ResignedDate' | translate }}</datepicker>
+            </div>
+          </div>
+        </form>
+      </div>
+    </app-card>
+  </div>
+</div>

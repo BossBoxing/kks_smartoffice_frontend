@@ -1,0 +1,97 @@
+<toolbar>
+  <button class="btn btn-primary" [disabled]="!isFormDirty()" (click)="util.focusInvalid(header); save()">
+    <i class="bi bi-printer" [hidden]="!saving"></i>
+    <i class="bi bi-printer" [hidden]="saving"></i> {{ 'label.ALL.Print' | translate}}
+  </button>
+  <button class="btn btn-primary" [disabled]="!isFormDirty()" (click)="util.focusInvalid(header); save()">
+    <i class="bi bi-x-circle" [hidden]="!saving"></i>
+    <i class="bi bi-x-circle" [hidden]="saving"></i> {{ 'label.ALL.Cancel' | translate}}
+  </button>
+  <button class="btn btn-primary" [disabled]="!isFormDirty()" (click)="util.focusInvalid(header); save()">
+    <i class="fas fa-cog fa-spin" [hidden]="!saving"></i>
+    <i class="fas fa-save" [hidden]="saving"></i> {{ 'label.ALL.Save' | translate}}
+  </button>
+</toolbar>
+
+<h4>ประเมินการปฏิบัติงานรายบุคคล</h4>
+<div class="row">
+  <div class="col">
+    <app-card header="รายละเอียด">
+      <div class="card-content">
+        <form #header [formGroup]="transMasterForm">
+          <div class="form-row justify-content-center">
+            <div class="form-group col-md-2 col-sm-12">
+              <textbox formControlName="transNo" class="text-center">
+                เลขที่เอกสาร
+              </textbox>
+            </div>
+            <div class="form-group col-md-2 col-sm-12">
+              <textbox formControlName="transYear" class="text-left">
+                ปี
+              </textbox>
+            </div>
+            <div class="form-group col-md-2 col-sm-12">
+              <textbox formControlName="transPeriod" class="text-left">
+                ครั้งที่
+              </textbox>
+            </div>
+            <div class="form-group col-md-3 col-sm-12">
+              <textbox formControlName="commitDate" class="text-left">
+                วันที่ยืนยันแบบประเมิน
+              </textbox>
+            </div>
+            <div class="form-group col-md-3 col-sm-12">
+              <textbox formControlName="status" class="text-left">
+                สถานะ
+              </textbox>
+            </div>
+          </div>
+          <div class="form-row justify-content-center">
+            <div class="form-group col-md-4 col-sm-12">
+
+              <label for="">เดือนที่ประเมินตั้งแต่</label>
+              <select class="form-control" [formControl]="inputMonth1">
+                <option *ngFor="let m of month;" value="{{m.id}}">{{ m.name }}</option>
+              </select>
+
+            </div>
+            <div class="form-group col-md-4 col-sm-12">
+
+              <label for="">ถึง</label>
+              <select class="form-control" [formControl]="inputMonth2">
+                <option *ngFor="let m of month2;" value="{{m.id}}">{{ m.name }}</option>
+              </select>
+
+            </div>
+            <div class="form-group col-md-4 col-sm-12">
+              <textbox formControlName="titleIniTha" class="text-left">ทีม
+              </textbox>
+            </div>
+          </div>
+          <div class="form-row justify-content-center">
+            <div class="form-group col-md-3 col-sm-12">
+              <textbox formControlName="titleIniEng" class="text-left">พนักงาน
+              </textbox>
+            </div>
+            <div class="form-group col-md-2 col-sm-12">
+              <textbox formControlName="suffixIniTha" class="text-left">คะแนนสรุป
+              </textbox>
+            </div>
+            <div class="form-group col-md-2 col-sm-12">
+              <textbox formControlName="suffixIniEng" class="text-left">เกรด
+              </textbox>
+            </div>
+            <div class="form-group col-md-3 col-sm-12">
+              <textbox formControlName="suffixIniEng" class="text-left">ผู้ปรับปรุงล่าสุด
+              </textbox>
+            </div>
+            <div class="form-group col-md-2 col-sm-12">
+              <textbox formControlName="suffixIniEng" class="text-left">วันที่ปรับปรุงล่าสุด
+              </textbox>
+            </div>
+          </div>
+        </form>
+      </div>
+    </app-card>
+  </div>
+</div>

@@ -1,0 +1,16 @@
+<div class="cal-month-view">
+  <calendar-month-header [days]="columnHeaders"></calendar-month-header>
+  <div class="cal-days">
+    <div *ngFor="let rowIndex of view.rowOffsets">
+      <div class="cal-cell-row">
+        <calendar-month-cell *ngFor="let day of view.days | slice: rowIndex:rowIndex + view.totalDaysVisibleInWeek;"
+          [day]="day" [openDay]="openDay" (mwlClick)="dayClicked.emit({ day: day })"
+          (eventClicked)="eventClicked.emit({ event: $event.event })">
+        </calendar-month-cell>
+      </div>
+      <calendar-open-day-events [calendarView]="calendarView" [isOpen]="openRowIndex === rowIndex"
+        [events]="openDay?.events" (eventClicked)="eventClicked.emit({ event: $event.event })">
+      </calendar-open-day-events>
+    </div>
+  </div>
+</div>

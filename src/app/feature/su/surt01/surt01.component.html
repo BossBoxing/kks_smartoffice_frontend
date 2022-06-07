@@ -1,0 +1,76 @@
+<h4>{{ 'label.SURT01.ProgramName' | translate }}</h4>
+<!--########## criteria section ##########-->
+<div class="row">
+  <div class="col">
+    <app-card header="{{ 'label.ALL.Search' | translate }}">
+      <div class="card-content">
+        <app-search [value]="keyword" (search)="enter($event)" placeholder="{{ 'label.SURT01.SearchPlaceholder' | translate }}">
+        </app-search>
+      </div>
+    </app-card>
+  </div>
+</div>
+
+<!--########## result grid section ##########-->
+<div class="row">
+  <div class="col">
+    <app-card header="{{ 'label.SURT01.ProgramInfo' | translate }}">
+      <div class="card-menu">
+        <button class="btn btn-primary" (click)="addFunction()" [disabled]="permission.isReadOnly">
+          <i class="fas fa-plus-circle"></i> {{ 'label.ALL.Add' | translate }}
+        </button>
+      </div>
+      <div class="card-content">
+        <div class="row">
+          <div class="col">
+            <app-table [rows]="organizes" [page]="page" (onTableEvent)="search()">
+              <ngx-datatable-column prop="ouCode" width="50" [cellClass]="'text-center'">
+                <ng-template let-sort="sortFn" ngx-datatable-header-template>
+                  <label class="datatable-header-cell-wrapper" (click)="sort()">{{ 'label.SURT01.CompanyCode' | translate }}</label>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  <a [routerLink]="['detail']" [state]="{ ouCode: row.ouCode, page: 'detail' }">{{ row.ouCode }}</a>
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column prop="ouNameTha" width="100">
+                <ng-template let-sort="sortFn" ngx-datatable-header-template>
+                  <label class="datatable-header-cell-wrapper" (click)="sort()">{{ 'label.SURT01.CompanyNameTha' | translate }}</label>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  {{ row.ouNameTha }}
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column prop="ouNameEng" width="100">
+                <ng-template let-sort="sortFn" ngx-datatable-header-template>
+                  <label class="datatable-header-cell-wrapper" (click)="sort()">{{ 'label.SURT01.CompanyNameEng' | translate }}</label>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  {{ row.ouNameEng }}
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column prop="active" width="50" [cellClass]="'text-center'">
+                <ng-template let-sort="sortFn" ngx-datatable-header-template>
+                  <label class="datatable-header-cell-wrapper" (click)="sort()">{{ 'label.ALL.Active' | translate }}</label>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  <i *ngIf="row.active === 'Y'" class="fas fa-check"></i>
+                  <i *ngIf="row.active === 'N'" class="fas fa-times"></i>
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column [cellClass]="'text-center'" [sortable]="false" width="50">
+                <ng-template ngx-datatable-header-template>
+                  <label class="datatable-header-cell-wrapper">{{ 'label.ALL.Delete' | translate }}</label>
+                </ng-template>
+                <ng-template let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                  <button (click)="remove(row.ouCode, row.rowVersion)" class="btn btn-outline-danger btn-sm" [disabled]="permission.isReadOnly">
+                    <i class="far fa-trash-alt"></i>
+                  </button>
+                </ng-template>
+              </ngx-datatable-column>
+            </app-table>
+          </div>
+        </div>
+      </div>
+    </app-card>
+  </div>
+</div>

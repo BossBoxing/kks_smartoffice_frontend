@@ -1,0 +1,47 @@
+<toolbar>
+  <button class="btn btn-primary" [disabled]="!isFormDirty()" (click)="util.focusInvalid(header); save()">
+    <i class="fas fa-cog fa-spin" [hidden]="!saving"></i>
+    <i class="fas fa-save" [hidden]="saving"></i> {{ 'label.ALL.Save' | translate}}
+  </button>
+</toolbar>
+<h4>{{ 'label.PLRT03.AddHoliday' | translate}}</h4>
+<div class="row">
+  <div class="col">
+    <app-card header="{{ 'label.PLRT03.Holiday' | translate }}">
+      <div class="card-content">
+        <form #header [formGroup]="plHolidayForm">
+          <div class="form-row justify-content-center">
+            <div class="form-group col-md-6 col-sm-12">
+              <textbox formControlName="holidayYear" class="text-center"
+                onkeypress='return event.charCode >= 48 && event.charCode <= 57'>
+                {{ 'label.PLRT03.Years' | translate }}
+              </textbox>
+            </div>
+            <div class="form-group col-md-6 col-sm-12 text-left">
+              <checkbox formControlName="activeBool">{{ 'label.PLRT03.SubstitutionYn' | translate }}</checkbox>
+            </div>
+          </div>
+          <div class="form-row justify-content-left">
+            <div class="form-group col-md-6 col-sm-12">
+              <textbox formControlName="holidayName">
+                {{ 'label.PLRT03.HolidayName' | translate }}
+              </textbox>
+            </div>
+            <div class="form-group col-md-6 col-sm-6">
+              <datepicker formControlName="holidayDate">
+                {{ 'label.PLRT03.HolidayDate' | translate }}
+              </datepicker>
+            </div>
+          </div>
+          <div class="form-row justify-content-left">
+            <div class="form-group col-md-12 col-sm-12">
+              <areabox formControlName="holidayDesc">
+                {{ 'label.PLRT03.Description' | translate }}
+              </areabox>
+            </div>
+          </div>
+        </form>
+      </div>
+    </app-card>
+  </div>
+</div>

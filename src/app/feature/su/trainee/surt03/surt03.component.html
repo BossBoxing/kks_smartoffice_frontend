@@ -1,0 +1,134 @@
+<toolbar>
+  <button class="btn btn-primary" [disabled]="!isFormDirty()" (click)="util.focusInvalid(header); save()">
+    <i class="fas fa-cog fa-spin" [hidden]="!saving"></i>
+    <i class="fas fa-save" [hidden]="saving"></i> {{ 'label.ALL.Save' | translate}}
+  </button>
+</toolbar>
+<h4>{{ 'label.SURT03.ProgramName' | translate }}</h4>
+<div class="row">
+<div class="col">
+  <app-card header="{{ 'label.SURT03.DataSuProfile' | translate }}">
+    <div class="card-content">
+      <form #header [formGroup]="suUserForm">
+        <div class="form-row">
+          <div class="col-md-4 text-center">
+            <div class="form-group col-md-12 col-sm-12 row-8">
+              <img
+                src="..\..\..\..\..\assets\images\no-profile-256.png"
+                class="img-fluid"
+                width="125"
+                height="125"
+                alt=""
+              />
+            </div>
+          </div>
+          <div class="col-md-8">
+            <div class="row">
+              <div class="form-group col-md-6 col-sm-12">
+              <textbox formControlName="id" class="text-center"
+                >{{ 'label.SURT03.UserID' | translate }}
+              </textbox>
+              </div>
+              <div class="form-group col-md-6 col-sm-12 pl-0">
+                <textbox formControlName="userName" class="text-left"
+                  >{{ 'label.SURT03.UserName' | translate }}
+                </textbox>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-md-3 col-sm-12">
+                <select-input 
+                  [items]="genderItems"
+                  placeholder="{{ 'label.ALL.PleaseSelect' | translate }}"
+                  formControlName="sex">
+                  {{ 'label.SURT03.Sex' | translate }}
+                </select-input>
+              </div>
+              <div class="form-group col-md-3 col-sm-12">
+                <checkbox formControlName="activeBool"
+                  >&nbsp;{{ 'label.ALL.Active' | translate }}</checkbox
+                >
+                </div>
+              <div class="form-group col-md-6 col-sm-12 pl-0">
+                <auto-complete 
+                  [showDescription]="false" 
+                  [onSearch]="onSearchGetPreNameFromId" 
+                  formControlName="preNameId"
+                  placeholder="{{ 'label.ALL.PleaseSelect' | translate }}">
+                  {{ 'label.SURT03.TPreNameID' | translate }}
+                </auto-complete>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-4">
+          <div class="form-row">
+            <div class="form-group col-md-4 col-sm-12">
+              <textbox formControlName="tFirstName" class="text-left">{{ 'label.SURT03.TFirstName' |
+                translate }}
+              </textbox>
+            </div>
+            <div class="form-group col-md-4 col-sm-12">
+              <textbox formControlName="tLastName" class="text-left">{{ 'label.SURT03.TLastName' |
+                translate }}
+              </textbox>
+            </div>
+            <div class="form-group col-md-4 col-sm-12">
+              <textbox formControlName="email" class="text-left">{{ 'label.SURT03.Email' |
+                translate }}
+              </textbox>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-3">
+          <div class="form-row">
+            <div class="form-group col-md-4 col-sm-12">
+              <textbox formControlName="eFirstName" class="text-left">{{ 'label.SURT03.EFirstName' |
+                translate }}
+              </textbox>
+            </div>
+            <div class="form-group col-md-4 col-sm-12">
+              <textbox formControlName="eLastName" class="text-left">{{ 'label.SURT03.ELastName' |
+                translate }}
+              </textbox>
+            </div>
+            <div class="form-group col-md-4 col-sm-12">
+              <textbox formControlName="telephone" class="text-center">{{ 'label.SURT03.Telephone' |
+                translate }}
+              </textbox>
+            </div>
+          </div>
+        </div>
+        <div class="mt-3">
+          <div class="form-row">
+            <div class="form-group col-md-4 col-sm-12">
+              <auto-complete
+                [showDescription]="false"
+                [onSearch]="onSearchGetPosition"
+                formControlName="position"
+                placeholder="{{ 'label.ALL.PleaseSelect' | translate }}"
+              >
+                {{ 'label.SURT03.Position' | translate }}
+              </auto-complete>
+            </div>
+            <div class="form-group col-md-8 col-sm-12">
+              <textbox formControlName="description" class="text-left">
+                {{ 'label.SURT03.Description' | translate }}
+              </textbox>
+            </div> 
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-md-12 col-sm-12">
+            <label for="address">{{ 'label.SURT03.Address' |  translate }}</label>
+            <textarea formControlName="address" class="text-left form-control" id="address">
+            </textarea>
+          </div>  
+        </div>
+      </form>
+    </div>
+  </app-card>
+</div>
+</div>

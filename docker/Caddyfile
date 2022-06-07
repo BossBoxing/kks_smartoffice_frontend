@@ -1,0 +1,14 @@
+:80 { 
+  
+  root * /usr/share/caddy
+
+  try_files {path} /index.html
+
+  file_server
+  encode gzip
+
+  log {
+    output stderr 
+  }
+}
+

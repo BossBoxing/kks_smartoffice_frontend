@@ -1,0 +1,46 @@
+<div class="cal-week-view">
+  <!-- head column -->
+  <calendar-week-view-header
+      [days]="days">
+  </calendar-week-view-header>
+  <div class="cal-time-events">
+    <!-- column ห้อง -->
+    <div class="cal-time-label-column">
+      <div *ngFor="let roomColumn of week.roomColumns;" class="cal-hour">
+        <mwl-calendar-week-view-hour-segment
+            [room]="roomColumn.room"
+            [segmentHeight]="roomColumn.height"
+            [customTemplate]="hourSegmentTemplate"
+            [isRoomLabel]="true">
+        </mwl-calendar-week-view-hour-segment>
+      </div>
+    </div>
+    <div class="cal-day-columns">
+      <div class="cal-day-column" *ngFor="let column of week.dayColumns;">
+        <div *ngFor="let timeEvent of column.events;"
+            class="cal-event-container"
+            [class.cal-starts-within-day]="true"
+            [class.cal-ends-within-day]="true"
+            [style.top.px]="timeEvent.top"
+            [style.height.px]="timeEvent.height"
+            [style.left.%]="timeEvent.left"
+            [style.width.%]="timeEvent.width">
+          <mwl-calendar-week-view-event
+              [weekEvent]="timeEvent"
+              [tooltipPlacement]="tooltipPlacement"
+              [tooltipAppendToBody]="tooltipAppendToBody"
+              [calendarView]="calendarView"
+              (click)="eventClicked.emit({ event: timeEvent.event })">
+          </mwl-calendar-week-view-event>
+        </div>
+        <div *ngFor="let roomColumn of week.roomColumns;" class="cal-hour">
+          <mwl-calendar-week-view-hour-segment
+              [style.height.px]="roomColumn.height"
+              [room]="roomColumn"
+              [segmentHeight]="roomColumn.height">
+          </mwl-calendar-week-view-hour-segment>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

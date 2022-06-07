@@ -1,0 +1,95 @@
+<h4>Layout</h4>
+<div class="row">
+  <div class="col">
+    <div id="stepper1" class="bs-stepper">
+      <div class="bs-stepper-header">
+        <div class="step" data-target="#test-l-1">
+          <button class="step-trigger">
+            <span class="bs-stepper-circle"><i class="fas fa-walking"></i></span>
+            <span class="bs-stepper-label">Email</span>
+          </button>
+        </div>
+        <div class="line"></div>
+        <div class="step" data-target="#test-l-2">
+          <button class="step-trigger">
+            <span class="bs-stepper-circle">2</span>
+            <span class="bs-stepper-label">Password</span>
+          </button>
+        </div>
+        <div class="line"></div>
+        <div class="step" data-target="#test-l-3">
+          <button class="step-trigger">
+            <span class="bs-stepper-circle">3</span>
+            <span class="bs-stepper-label">Validate</span>
+          </button>
+        </div>
+      </div>
+      <div class="bs-stepper-content">
+
+        <div id="test-l-1" class="content text-center">
+          <p>page 1</p>
+          <button type="button" (click)="next()" class="btn btn-primary">Next</button>
+        </div>
+        <div id="test-l-2" class="content text-center">
+          <p>page 2</p>
+          <button type="button" (click)="next()" class="btn btn-primary">Next</button>
+        </div>
+        <div id="test-l-3" class="content text-center">
+          <p>page 3</p>
+          <button type="button" class="btn btn-primary">Submit</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col">
+    <app-card header="card">
+      <div class="card-menu">
+        <button class="btn btn-primary"><i class="fas fa-plus-circle"></i> เพิ่ม</button>
+      </div>
+      <div class="card-content">
+        tab in card
+        <tabset>
+          <tab heading="buttons">
+            <button class="btn btn-primary"><i class="fas fa-search"></i> ค้นหา</button>
+            <button class="btn btn-outline-dark-primary"><i class="fas fa-eraser"></i> ล้างข้อมูล</button>
+          </tab>
+          <tab heading="tab2">content 2</tab>
+          <tab heading="tab3">content 3</tab>
+        </tabset>
+      </div>
+    </app-card>
+  </div>
+</div>
+<div class="row">
+  <div class="col">
+    <tabset>
+      <tab heading="tab1">
+        <app-card header="card in tab">
+          <div class="card-content">
+            content
+          </div>
+        </app-card>
+      </tab>
+      <tab heading="modal">
+        <button class="btn btn-primary" type="button" (click)="confirm()">confirm</button>
+        <button class="btn btn-primary" type="button" (click)="template(templateModal)">template</button>
+      </tab>
+      <tab heading="tab3">content 3</tab>
+    </tabset>
+  </div>
+</div>
+
+<ng-template #templateModal>
+  <app-modal (onClose)="close()" header="header">
+    <div class="container-fluid">
+      <div class="row justify-content-center">
+        <div class="col-10">
+          template ref modal
+        </div>
+      </div>
+    </div>
+  </app-modal>
+</ng-template>

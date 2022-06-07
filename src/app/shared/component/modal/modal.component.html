@@ -1,0 +1,10 @@
+<div class="modal-header">
+    <h5 class="modal-title">{{ header }}</h5>
+    <button type="button" class="close" (click)="close()" aria-label="Close">
+        <i class="fas fa-times fa-xs"></i>
+    </button>
+</div>
+<div class="modal-body">
+   <ng-content></ng-content>
+</div>
+<ng-content select=".modal-footer"></ng-content>

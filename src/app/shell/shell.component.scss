@@ -1,0 +1,47 @@
+.page-wrapper {
+  &:before {
+    content:'';
+    background: #B2A1CD;
+    height: 5px;
+    width: 100%;
+    position: fixed;
+    z-index: 999;
+  }
+  .page-content {
+    display: inline-block;
+    width: 100%;
+    margin-top: 59px;
+    padding-top: 20px;
+    transition: padding-left 0.3s ease;
+    
+    .overlay {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 997;
+      background: #000;
+      opacity: 0.5;
+    }
+  }
+
+  .sidebar {
+    left: 0px;
+  }
+
+  &.toggled {
+    .page-content {
+      padding-left: 0;
+    }
+  }
+
+  .attribution {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    padding: 5px;
+    margin: 5px;
+    letter-spacing: 1px;
+  }
+}

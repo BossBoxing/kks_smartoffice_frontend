@@ -1,0 +1,6 @@
+<div class="custom-control custom-checkbox  d-inline-block d-sm-inline-block">
+  <input type="checkbox" [checked]="value" class="custom-control-input"
+  (change)="onSelect($event.target.checked); afterChange.emit($event.target.checked);"
+   id="{{ id }}" [disabled]="disabled">
+  <label class="custom-control-label" for="{{ id }}"><ng-content></ng-content></label>
+</div>

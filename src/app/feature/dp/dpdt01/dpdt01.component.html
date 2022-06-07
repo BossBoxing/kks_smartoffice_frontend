@@ -1,0 +1,122 @@
+<h4>{{ 'label.DPDT01.IDP' | translate }}</h4>
+
+<div class="row">
+  <div class="col">
+    <app-card header="{{ 'label.ALL.Search' | translate }}">
+      <div class="card-content">
+        <form #criteria [formGroup]="searchForm">
+          <div class="form-row justify-content-left">
+            <div class="form-group col-md-6 col-sm-12">
+              <textbox formControlName="keyword" placeholder="{{ 'label.DPDT01.SearchKeyword' | translate }}">
+                {{ 'label.DPDT01.Keyword' | translate }}
+              </textbox>
+            </div>
+            <div class="form-group col-md-3 col-sm-6">
+              <select-input formControlName="status" [items]="masterData.status" placeholder="">
+                {{ 'label.DPDT01.Status' | translate }}
+              </select-input> 
+            </div>
+          </div>
+          <div class="form-row ">
+            <div class="form-group col-md-12 col-sm-12 text-center mt-1 ">
+              <button class="btn btn-primary" (click)="util.focusInvalid(criteria); searchFunction()"><i
+                  class="fas fa-search"></i>
+                {{ 'label.ALL.Search' | translate }}</button>
+              <button class="btn btn-outline-primary" (click)="clear();"><i class="fas fa-eraser"></i>
+                {{ 'label.ALL.Clear' | translate }}</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </app-card>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col">
+    <app-card header="{{ 'label.DPDT01.TrasactionMasterData' | translate }}
+    ">
+      <div class="card-menu">
+        <button class="btn btn-primary" (click)="addFunction()">
+          <i class="fas fa-plus-circle"></i> {{ 'label.DPDT01.Add' | translate }}
+        </button>
+      </div>
+      <div class="card-content">
+        <div class="row">
+          <div class="col">
+            <app-table [rows]="dpTransectionMasters" [page]="page" (onTableEvent)="search()">
+
+              <ngx-datatable-column prop="transNo" [width]="50" [cellClass]="'text-center'">
+                <ng-template let-sort="sortFn" ngx-datatable-header-template>
+                  <label class="datatable-header-cell-wrapper" (click)="sort()">{{ 'label.DPDT01.TransNo' | translate
+                    }}</label>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  <a [routerLink]="['detail']" [state]="{transNo: row.transNo}">{{ row.transNo | translate }}</a>
+                </ng-template>
+              </ngx-datatable-column>
+
+              <ngx-datatable-column prop="evaluationYearsPeriod" [width]="50" [cellClass]="'text-center'">
+                <ng-template let-sort="sortFn" ngx-datatable-header-template>
+                  <label class="datatable-header-cell-wrapper" (click)="sort()"> {{ 'label.DPDT01.Year' | translate
+                    }}/{{ 'label.DPDT01.Period' | translate }}</label>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>{{ row.evaluationYearsPeriod }}</ng-template>
+              </ngx-datatable-column>
+
+              <ngx-datatable-column prop="docFormatNo" [width]="200" [cellClass]="'text-left'">
+                <ng-template let-sort="sortFn" ngx-datatable-header-template>
+                  <label class="datatable-header-cell-wrapper" (click)="sort()">{{ 'label.DPDT01.DocFormatType' |
+                    translate }}</label>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>{{ row.docFormatNo }}</ng-template>
+              </ngx-datatable-column>
+
+              <ngx-datatable-column prop="totalScore" [width]="10" [cellClass]="'text-right'">
+                <ng-template let-sort="sortFn" ngx-datatable-header-template>
+                  <label class="datatable-header-cell-wrapper" (click)="sort()">{{ 'label.DPDT01.TotolScroe' | translate
+                    }}</label>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>{{ row.totalScore | number: '0.2-2' }}
+                </ng-template>
+              </ngx-datatable-column>
+
+              <ngx-datatable-column prop="submitDate" [width]="50" [cellClass]="'text-center'">
+                <ng-template let-sort="sortFn" ngx-datatable-header-template>
+                  <label class="datatable-header-cell-wrapper" (click)="sort()">{{ 'label.DPDT01.SubmiteDate' |
+                    translate }}</label>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>{{ row.submitDate | thaidate }}</ng-template>
+              </ngx-datatable-column>
+
+              <ngx-datatable-column prop="status" [width]="50" [cellClass]="'text-left'">
+                <ng-template let-sort="sortFn" ngx-datatable-header-template>
+                  <label class="datatable-header-cell-wrapper">{{ 'label.DPDT01.NextEvaluator' | translate }}</label>
+                </ng-template>
+
+                <ng-template let-row="row" ngx-datatable-cell-template>{{ row.evaluator }}</ng-template>
+              </ngx-datatable-column>
+
+              <ngx-datatable-column prop="status" [width]="50" [cellClass]="'text-center'">
+                <ng-template let-sort="sortFn" ngx-datatable-header-template>
+
+                  <label class="datatable-header-cell-wrapper" (click)="sort()">{{ 'label.DPDT01.Status' | translate
+                    }}</label>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  <div style="margin-top:-15px">
+                    <status [status]="row.status" [color]="row.statusColor">
+                    </status>
+                  </div>
+
+                </ng-template>
+              </ngx-datatable-column>
+
+
+            </app-table>
+          </div>
+        </div>
+      </div>
+    </app-card>
+  </div>
+</div>

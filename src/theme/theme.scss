@@ -1,0 +1,364 @@
+@each $color, $value in $theme-colors {
+  .btn-outline-dark-#{$color} {
+    @include button-outline-dark($value);
+  }
+}
+@function color-level($color: $primary, $level: 0) {
+  $color-base: if($level > 0, $black, $white);
+  $level: abs($level);
+
+  @return mix($color-base, $color, $level * $theme-color-interval);
+}
+router-outlet ~ * > *:not(toolbar) {
+  animation-duration: 1s;
+  animation-name: fadeIn;
+}
+
+.ngx-datatable.scroll-vertical {
+  height: 70vh;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.fadeIn {
+  animation-name: fadeIn;
+}
+
+.btn + .btn {
+  margin-left: 5px;
+}
+.page-wrapper.toggled .sidebar {
+  left: -259px;
+}
+
+// angular perfect scrollbar style
+.sidebar .ps.ps--scrolling-y > .ps__rail-y,
+.sidebar > .ps.ps--scrolling-x > .ps__rail-x,
+.ps .ps__rail-x:hover,
+.ps .ps__rail-y:hover,
+.ps .ps__rail-x:focus,
+.ps .ps__rail-y:focus,
+.ps .ps__rail-x.ps--clicking,
+.ps .ps__rail-y.ps--clicking {
+  background-color: transparent !important;
+}
+
+.sidebar .ps.ps--active-y > .ps__rail-y:hover,
+.sidebar > .ps.ps--active-y > .ps__rail-y.ps--clicking {
+  width: 10px !important;
+}
+
+.ps__thumb-y {
+  background-color: rgba(0, 0, 0, 0.452) !important;
+  width: 6px !important;
+  border-radius: 0px !important;
+  opacity: 0.5;
+}
+
+.card-header + .card-body {
+  padding-top: 0;
+}
+.nav-tabs .nav-item {
+  margin-bottom: -1px;
+}
+.nav-tabs .nav-link {
+  color: $gray-600;
+  font-size: $font-size-sm;
+  transition: all 0.3s ease-in-out;
+  transition-property: background-color, color, border;
+  .card-content & {
+    border: 1px solid transparent;
+  }
+  &:hover {
+    color: $primary;
+  }
+  &.active {
+    font-weight: 600;
+    color: $primary;
+    box-shadow: 0 -3px 0px color-level($primary, -9);
+    .card-content & {
+      box-shadow: none;
+      border: 1px solid;
+      border-color: #c8ced3 #c8ced3 #fff;
+    }
+  }
+}
+.tab-content {
+  background: white;
+  border-top-right-radius: 0.3rem;
+  border-bottom-left-radius: 0.3rem;
+  border-bottom-right-radius: 0.3rem;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
+  .card {
+    box-shadow: none !important;
+    border: 1px solid #c8ced3;
+    margin-bottom: 0px !important;
+  }
+  .card-content & {
+    box-shadow: none;
+    border: 1px solid #c8ced3;
+    margin-bottom: 0px !important;
+  }
+  .tab-pane {
+    padding: 1rem;
+    animation-duration: 0.5s;
+    animation-name: fadeIn;
+  }
+}
+
+.form-group {
+  margin-bottom: 0.3rem;
+  label {
+    margin-bottom: 0;
+    font-size: $font-size-sm;
+  }
+  label:not(.custom-control-label) {
+    .alert-primary & {
+      color: color-level($primary, $alert-color-level);
+    }
+    color: #777777;
+  }
+}
+
+.invalid {
+  text-align: left;
+  width: 100%;
+  margin-top: 0.25rem;
+  font-size: 80%;
+  color: $red;
+}
+
+.is-invalid {
+  &.form-control {
+    padding: 0.375rem 0.75rem;
+  }
+  &,
+  &.ng-select.custom > .ng-select-container {
+    background-image: none !important;
+    border-color: $danger;
+  }
+  &:focus,
+  &.ng-select.custom.ng-select-opened > .ng-select-container,
+  &.ng-select.custom.ng-select-focused:not(.ng-select-opened) > .ng-select-container {
+    border-color: $danger;
+    box-shadow: 0 0 0 $input-focus-width rgba($danger, 0.25);
+  }
+}
+
+.ng-select.custom {
+  &.ng-select-opened,
+  &.ng-select-focused:not(.ng-select-opened) {
+    > .ng-select-container {
+      border: $input-border-width solid $input-border-color;
+      color: $input-focus-color;
+      background-color: $input-focus-bg;
+      border-color: $input-focus-border-color;
+      outline: 0; // Avoid using mixin so we can pass custom focus shadow properly
+      @if $enable-shadows {
+        box-shadow: $input-box-shadow, $input-focus-box-shadow;
+      } @else {
+        box-shadow: $input-focus-box-shadow;
+      }
+    }
+  }
+  .ng-arrow-wrapper {
+    color: rgba(0, 0, 0, 0.25);
+    .ng-arrow {
+      display: none;
+    }
+    &:before {
+      display: block;
+      font-style: normal;
+      font-variant: normal;
+      text-rendering: auto;
+      -webkit-font-smoothing: antialiased;
+      font-family: "Font Awesome 5 Free";
+      font-weight: 900;
+      content: "\f107";
+    }
+  }
+  &.ng-select-opened {
+    span.ng-arrow-wrapper:before {
+      font-family: "Font Awesome 5 Free";
+      font-weight: 900;
+      content: "\f106";
+    }
+  }
+  .ng-clear-wrapper {
+    color: rgba(0, 0, 0, 0.25);
+    position: relative;
+    &:hover .ng-clear {
+      color: rgba(0, 0, 0, 0.45);
+    }
+    .ng-clear {
+      visibility: hidden;
+      font-size: 0.65rem;
+      transition: color 0.2s ease-in-out;
+      line-height: $input-height;
+      &:before {
+        position: absolute;
+        visibility: visible;
+        display: inline-block;
+        font-style: normal;
+        font-variant: normal;
+        text-rendering: auto;
+        -webkit-font-smoothing: antialiased;
+        font-family: "Font Awesome 5 Free";
+        font-weight: 900;
+        content: "\f00d";
+      }
+    }
+  }
+}
+
+.ng-select.custom.ng-select-multiple .ng-select-container .ng-value-container {
+  padding-top: 0;
+  .ng-value {
+    margin-bottom: 0;
+  }
+  .ng-input {
+    padding-bottom: 0;
+  }
+}
+.ng-select.custom {
+  &.ng-select-disabled > .ng-select-container {
+    background-color: $input-disabled-bg;
+  }
+  .ng-select-container {
+    min-height: auto;
+    height: $input-height;
+    border: $input-border-width solid $input-border-color;
+  }
+}
+
+.ng-select.custom.sm {
+  .ng-select-container {
+    height: $input-height-sm;
+    font-size: $input-font-size-sm;
+    border-radius: 0.2rem;
+    .ng-value-container {
+      .ng-value,
+      .ng-input {
+        line-height: 1.625;
+      }
+      .ng-input {
+        top: 3px;
+      }
+    }
+  }
+}
+
+.custom .ng-dropdown-panel,
+.ng-dropdown-panel.custom {
+  body > &,
+  &.sm {
+    font-size: $input-font-size-sm;
+  }
+  border: $border-width solid $border-color;
+  .ng-dropdown-panel-items {
+    margin: 0;
+    .ng-option {
+      transition: background-color 0.2s ease-in-out;
+      &.ng-option-selected.ng-option-marked {
+        .ng-option-label {
+          font-weight: 500;
+        }
+      }
+      &.ng-option-selected {
+        .ng-option-label {
+          font-weight: 500;
+        }
+      }
+    }
+  }
+}
+
+$large-screen: 1400px;
+$sidebar-distance: 259px;
+.page-wrapper {
+  .page-content {
+    @media screen and (min-width: $large-screen) {
+      padding-left: $sidebar-distance;
+    }
+  }
+  &:not(.toggled) .toolbar .col-padding {
+    @media screen and (min-width: $large-screen) {
+      margin-left: $sidebar-distance;
+    }
+  }
+}
+
+toolbar + * > h4,
+toolbar + h4 {
+  margin-top: 40px;
+}
+
+.bs-stepper .step-trigger {
+  font-size: 0.875rem;
+  font-weight: 600;
+  &:focus {
+    color: $gray-900;
+  }
+}
+.bs-stepper-circle {
+  .active & {
+    background-color: $main;
+  }
+}
+
+label.require:after {
+  content: " *";
+  color: $danger;
+  font-weight: bold;
+}
+
+.tooltip-inner {
+  text-align: left;
+}
+.tooltip .arrow {
+  display: none;
+}
+.cdk-overlay-container {
+  z-index: 10000 !important;
+}
+
+.menu-panel .mat-menu-item {
+  outline: none;
+}
+
+.tree-preview {
+  div.panel.card.panel-default {
+    box-shadow: unset !important;
+  }
+
+  .card-header {
+    padding: unset !important;
+  }
+
+  div.panel.card.panel-default {
+    margin-bottom: unset !important;
+  }
+
+  div.panel-body.card-block.card-body {
+    padding-top: unset !important;
+    padding-right: 1rem !important;
+    padding-bottom: unset !important;
+    padding-left: 1rem !important;
+  }
+
+  div.pull-left.float-left {
+    color: rgb(0, 0, 0);
+  }
+
+  span.badge.badge-secondary.float-right.pull-right {
+    background: unset !important;
+    color: gray !important;
+  }
+}

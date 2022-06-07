@@ -1,0 +1,74 @@
+<div class="row m-4">
+    <div class="col">
+        <span class="font-thai">ประเมินผลการปฏิบัติงานของพนักงาน</span>
+    </div>
+</div>
+
+<div class="row m-4 border p-4">
+    <div class="col">
+        <form action="">
+        <!-- <form [formGroup]="searchForm"> -->
+            <div class="row">
+                <div class="col-md-8">
+                    <label for="id" class="font-thai">ค้นหา</label>
+                    <input class="form-control font-thai" type="text" 
+                        placeholder="เลขที่เอกสาร, เลขที่เอกสารอ้างอิง, ชื่อ - รหัสพนักงาน" >
+                    <!-- <input class="form-control" formControlName="id" type="number" placeholder="Input 1 - 10"
+                    [ngClass]="{ 'is-invalid': searchForm.controls['id'].invalid && searchForm.controls['id'].dirty}" >
+                    <div class="invalid-feedback" *ngIf="searchForm.controls['id'].errors?.['min']">
+                        กรุณาระบุ ตั้งแต่ 1-10 เท่านั้น
+                    </div>
+                    <div class="invalid-feedback" *ngIf="searchForm.controls['id'].errors?.['max']">
+                        กรุณาระบุ ตั้งแต่ 1-10 เท่านั้น
+                    </div> -->
+                </div>
+                <div class="col-md-3 mt-4">
+                    <button type="button" 
+                    class="btn btn-primary font-thai"
+                    >ค้นหา</button>
+                    <button type="button" 
+                    class="btn btn-outline-danger ms-3 font-thai"
+                    >ล้างข้อมูล</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="row m-4 border p-4">
+    <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">First</th>
+            <th scope="col">Last</th>
+            <th scope="col">Handle</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            
+                <th><a routerLink="detail">1</a></th> 
+            
+            <td>Mark</td>
+            <td>Otto</td>
+            <td>@mdo</td>
+          </tr>
+          <tr>
+
+                <th><a routerLink="detail">2</a></th>
+            
+            <td>Jacob</td>
+            <td>Thornton</td>
+            <td>@fat</td>
+          </tr>
+          <tr>
+            
+                <th><a routerLink="detail">3</a></th>
+            <td>Larry</td>
+            <td>the Bird</td>
+            <td>@twitter</td>
+          </tr>
+        </tbody>
+      </table>
+</div>

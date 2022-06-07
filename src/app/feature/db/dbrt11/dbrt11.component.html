@@ -1,0 +1,128 @@
+<h4>{{ 'label.DBRT11.ProgramName' | translate}}</h4>
+<div class="row">
+   <div class="col">
+     <app-card header="{{ 'label.ALL.Search' | translate }}">
+      <div class="card-content">
+        <form #criteria [formGroup]="searchForm">
+          <div class="form-row">
+            <div class="form-group col-lg-6 col-sm-12">
+              <textbox formControlName="keyword" placeholder="{{ 'label.DBRT11.Search' | translate }}">
+                {{ 'label.DBRT11.Keyword' | translate }}
+              </textbox>
+            </div>
+            <div class="form-group col-lg-3 col-sm-6">
+              <select-input 
+                  [items]="masterData.empTypes" 
+                  placeholder="{{ 'label.ALL.PleaseSelect' | translate }}"
+                  formControlName="empType">
+                  {{ 'label.DBRT11.EmpType' | translate }}
+              </select-input>
+            </div>
+            <div class="form-group col-lg-3 col-sm-6">
+              <select-input 
+                  [items]="masterData.empStatus" 
+                  placeholder="{{ 'label.ALL.PleaseSelect' | translate }}"
+                  formControlName="empStatus">
+                  {{ 'label.DBRT11.EmpStatus' | translate }}
+              </select-input>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-12 col-xs-12 text-center">
+              <button class="btn btn-primary" (click)="util.focusInvalid(criteria); searchFunction()"><i class="fas fa-search"></i>
+                {{ 'label.ALL.Search' | translate }}</button>
+              <button class="btn btn-outline-primary" (click)="clear();"><i class="fas fa-eraser"></i>
+                {{ 'label.ALL.Clear' | translate }}</button>
+            </div>
+          </div>
+        </form>
+      </div>
+     </app-card>
+   </div>
+</div>
+<div class="row">
+  <div class="col">
+    <app-card header="{{ 'label.DBRT11.GbEmployeeData' | translate }}">
+      <div class="card-menu">
+        <button class="btn btn-primary" (click)="addFunction()" [disabled]="permission.isReadOnly">
+          <i class="fas fa-plus-circle"></i> {{ 'label.ALL.Add' | translate}}
+        </button>
+      </div>
+      <div class="card-content">
+        <div class="row">
+          <div class="col">
+            <app-table [rows]="gbEmployees" [page]="page" (onTableEvent)="search()">
+              <ngx-datatable-column prop="empId" [width]="150" [cellClass]="'text-center'">
+                <ng-template let-sort="sortFn" ngx-datatable-header-template>
+                  <label class="datatable-header-cell-wrapper" (click)="sort()">{{ 'label.DBRT11.EmpId' | translate }}</label>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    <a [routerLink]="['detail']" [state]="{ouCode: row.ouCode, empId: row.empId}">{{ row.empId }}</a>
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column prop="personalId" [width]="150" [cellClass]="'text-center'">
+                <ng-template let-sort="sortFn" ngx-datatable-header-template>
+                  <label class="datatable-header-cell-wrapper" (click)="sort()">{{ 'label.DBRT11.PersonalId' | translate }}</label>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{ row.personalId }}
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column prop="tNameConcat" [width]="200">
+                <ng-template let-sort="sortFn" ngx-datatable-header-template>
+                  <label class="datatable-header-cell-wrapper" (click)="sort()">{{ 'label.DBRT11.TNameConcat' | translate }}</label>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{ row.tNameConcat }}
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column prop="eNameConcat" [width]="200">
+                <ng-template let-sort="sortFn" ngx-datatable-header-template>
+                  <label class="datatable-header-cell-wrapper" (click)="sort()">{{ 'label.DBRT11.ENameConcat' | translate }}</label>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{ row.eNameConcat }}
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column prop="nickname" [width]="150">
+                <ng-template let-sort="sortFn" ngx-datatable-header-template>
+                  <label class="datatable-header-cell-wrapper" (click)="sort()">{{ 'label.DBRT11.Nickname' | translate }}</label>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{ row.nickname }}
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column prop="empTypeDesc" [width]="150">
+                <ng-template let-sort="sortFn" ngx-datatable-header-template>
+                  <label class="datatable-header-cell-wrapper" (click)="sort()">{{ 'label.DBRT11.EmpType' | translate }}</label>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{ row.empTypeDesc }}
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column prop="empStatusDesc" [width]="150">
+                <ng-template let-sort="sortFn" ngx-datatable-header-template>
+                  <label class="datatable-header-cell-wrapper" (click)="sort()">{{ 'label.DBRT11.EmpStatus' | translate }}</label>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                    {{ row.empStatusDesc }}
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column cellClass="text-center" [sortable]="false" [width]="50">
+                <ng-template ngx-datatable-header-template>
+                  <label class="datatable-header-cell-wrapper">{{ 'label.ALL.Delete' | translate }}</label>
+                </ng-template>
+                <ng-template let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                  <button class="btn btn-outline-danger btn-sm" (click)="remove(row.ouCode, row.empId,row.rowVersion)" 
+                    [disabled]="permission.isReadOnly">
+                    <i class="far fa-trash-alt"></i>
+                  </button>
+                </ng-template>
+              </ngx-datatable-column>
+            </app-table>
+          </div>
+        </div>
+      </div>
+    </app-card>
+  </div>
+</div>

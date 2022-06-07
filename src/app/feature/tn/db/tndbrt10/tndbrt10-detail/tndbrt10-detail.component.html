@@ -1,0 +1,39 @@
+<toolbar>
+    <button class="btn btn-primary" [disabled]="!isFormDirty()" (click)="util.focusInvalid(header); save()">
+      <i class="fas fa-cog fa-spin" [hidden]="!saving"></i>
+      <i class="fas fa-save" [hidden]="saving"></i> {{ 'label.ALL.Save' | translate}}
+    </button>
+</toolbar>
+  
+  <h4>{{ 'label.TNDBRT10.ProgramName' | translate}}</h4>
+  <div class="row">
+    <div class="col">
+      <app-card header="{{ 'label.TNDBRT10.PositionData' | translate}}">
+        <div class="card-content">
+          <form #header [formGroup]="dbPositionForm">
+            <div class="form-row justify-content-center">
+              <div class="form-group col-md-4 col-sm-12">
+                <textbox formControlName="positionCode" class="text-center">{{ 'label.TNDBRT10.PositionCode' | translate }}
+                </textbox>
+              </div>
+              <div class="form-group col-md-4 col-sm-12">
+                <textbox formControlName="positionNameTha" class="text-left">{{ 'label.TNDBRT10.PositionNameTha' | translate }}
+                </textbox>
+              </div>
+              <div class="form-group col-md-4 col-sm-12">
+                <textbox formControlName="positionNameEng" class="text-left">{{ 'label.TNDBRT10.PositionNameEng' | translate }}
+                </textbox>
+              </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-4 col-sm-12">
+                    <div class="form-group col-md-4 col-sm-12">
+                      <checkbox formControlName="activeBool">{{ 'label.TNDBRT10.Active' | translate }}</checkbox>
+                    </div>
+                </div>
+            </div>
+          </form>
+        </div>
+      </app-card>
+    </div>
+  </div>

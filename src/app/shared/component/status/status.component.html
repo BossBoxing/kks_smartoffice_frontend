@@ -1,0 +1,4 @@
+<label *ngIf="hasLabel"><ng-content></ng-content></label>
+<div class="{{ small ? 'small' : 'normal'}}" >
+  <span class="badge custom w-100" [ngStyle]="{'background-color': color, 'color': getTextColorByBg(color)}">{{status}}</span>
+</div>

@@ -1,0 +1,17 @@
+<label *ngIf="hasLabel">
+    <ng-content></ng-content><span *ngIf="required" class="text-danger"> *</span>
+</label>
+<textarea [value]="value" (change)="value = $event.target.value" [disabled]="disabled" rows="{{rows}}"
+    (input)="onChange($event.target.value)" (blur)="onTouched()" class="form-control" [class.is-invalid]="hasErrors"
+    [class.form-control-sm]="small"></textarea>
+<div class="invalid" *ngIf="hasErrors">
+    <div *ngIf="control.hasError('required') ">
+        กรุณาระบุ
+    </div>
+    <div *ngIf="control.hasError('minlength') ">
+        กรุณาระบุมากกว่า {{ control.errors.minlength.requiredLength }} ตัวอักษร
+    </div>
+    <div *ngIf="control.hasError('maxlength') ">
+        กรุณาระบุไม่เกิน {{ control.errors.maxlength.requiredLength }} ตัวอักษร
+    </div>
+</div>

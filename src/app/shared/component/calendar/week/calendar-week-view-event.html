@@ -1,0 +1,41 @@
+<ng-template
+        #defaultTemplate
+        let-weekEvent="weekEvent"
+        let-tooltipPlacement="tooltipPlacement"
+        let-tooltipAppendToBody="tooltipAppendToBody"
+        let-tooltipDisabled="tooltipDisabled">
+    <div
+            class="cal-event"
+            [ngStyle]="{
+                backgroundColor: color.background,
+                borderColor: color.border
+            }"
+            [mwlCalendarTooltip]="
+            !tooltipDisabled
+            ? (weekEvent.event.title
+              | calendarEventTitle: 'weekTooltip':weekEvent.event)
+            : ''
+        "
+        [tooltipPlacement]="tooltipPlacement"
+        [tooltipEvent]="weekEvent.event"
+        [tooltipAppendToBody]="tooltipAppendToBody"
+      >
+        <calendar-reserve-title
+          [event]="weekEvent.event"
+          view="week"
+          [calendarView]="calendarView"
+          [titleColor]="color">
+        </calendar-reserve-title>
+      </div>
+    </ng-template>
+    
+    <ng-template
+      [ngTemplateOutlet]="customTemplate || defaultTemplate"
+      [ngTemplateOutletContext]="{
+        weekEvent: weekEvent,
+        tooltipPlacement: tooltipPlacement,
+        tooltipAppendToBody: tooltipAppendToBody,
+        tooltipDisabled: tooltipDisabled
+      }"
+    >
+    </ng-template>

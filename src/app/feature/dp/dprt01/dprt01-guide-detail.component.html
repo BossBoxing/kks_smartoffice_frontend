@@ -1,0 +1,123 @@
+<toolbar>
+  <button class="btn btn-primary" [disabled]="!isFormDirty()" (click)="util.focusInvalid(header); save()">
+    <i class="fas fa-cog fa-spin" [hidden]="!saving"></i>
+    <i class="fas fa-save" [hidden]="saving"></i> {{ 'label.ALL.Save' | translate}}
+  </button>
+</toolbar>
+
+<h4>{{ 'label.DPRT01.Define an assessment format (Evaluation criteria)' | translate }}</h4>
+<div class="row">
+  <div class="col">
+    <app-card header="ข้อมูลหัวข้อการประเมิน">
+      <div class="card-content">
+        <form #header [formGroup]="dpFormatDetailForm">
+          <div class="form-row">
+            <div class="form-group col-md-3 col-sm-12">
+              <textbox formControlName="mainTopic" class="text-center">{{ 'label.DPRT01.MainTopic' | translate }}
+              </textbox>
+            </div>
+            <div class="form-group col-md-3 col-sm-12">
+              <textbox formControlName="topicNo" class="text-center">{{ 'label.DPRT01.TopicNo' | translate }}</textbox>
+            </div>
+            <div class="form-group col-md-3 col-sm-12">
+              <number formControlName="maxScore">{{ 'label.DPRT01.MaxScore' | translate }}</number>
+            </div>
+            <div class="form-group col-md-6 col-sm-12">
+              <textbox formControlName="descriptionTha" class="text-left">{{ 'label.DPRT01.DescriptionTha' | translate
+                }}
+              </textbox>
+            </div>
+            <div class="form-group col-md-6 col-sm-12">
+              <textbox formControlName="descriptionEng" class="text-left">ร{{ 'label.DPRT01.DescriptionEng' |translate
+                }}
+              </textbox>
+            </div>
+          </div>
+        </form>
+      </div>
+    </app-card>
+  </div>
+</div>
+
+<!--รายละเอียดเกณฑ์การให้คะแนน-->
+<div class="row">
+  <div class="col">
+    <app-card header="รายละเอียดหัวข้อการประเมิน">
+      <div class="card-menu">
+        <button class="btn btn-primary" (click)="addFormatGuideline()">
+          <i class="fas fa-plus-circle"></i> {{ 'label.ALL.Add' | translate }}
+        </button>
+      </div>
+      <div class="card-content">
+        <div class="row">
+          <div class="col">
+            <app-table-client #detailTab [rows]="dpFormatDetail.guides" [sorts]="false">
+              <ngx-datatable-column prop="guidelineSeq" [width]="50" [cellClass]="'text-center'">
+                <ng-template let-sort="sortFn" ngx-datatable-header-template>
+                  <label class="datatable-header-cell-wrapper" (click)="sort()">
+                    {{ 'label.DPRT01.Sequence' | translate }}<span class="text-danger ng-star-inserted"> * </span>
+                  </label>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  <div [formGroup]="row.form">
+                    <textbox formControlName="guidelineSeq" class="text-center" [hasLabel]="false" [small]="true">
+                    </textbox>
+                  </div>
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column prop="guidelineDescTha" [width]="200">
+                <ng-template let-sort="sortFn" ngx-datatable-header-template>
+                  <label class="datatable-header-cell-wrapper" (click)="sort()">
+                    {{ 'label.DPRT01.NotationTha' | translate }}</label><span class="text-danger ng-star-inserted"> * </span>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  <div [formGroup]="row.form">
+                    <textbox formControlName="guidelineDescTha" [hasLabel]="false" [small]="true">
+                    </textbox>
+                  </div>
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column prop="guidelineDescEng" [width]="200" [cellClass]="'text-center'">
+                <ng-template let-sort="sortFn" ngx-datatable-header-template>
+                  <label class="datatable-header-cell-wrapper" (click)="sort()">
+                    {{ 'label.DPRT01.NotationEng' | translate }}
+                  </label>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  <div [formGroup]="row.form">
+                    <textbox formControlName="guidelineDescEng" [hasLabel]="false" [small]="true">
+                    </textbox>
+                  </div>
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column prop="guidelineScore" [width]="50" [cellClass]="'text-center'">
+                <ng-template let-sort="sortFn" ngx-datatable-header-template>
+                  <label class="datatable-header-cell-wrapper" (click)="sort()">
+                    {{ 'label.DPRT01.Criterion Score' | translate }}<span class="text-danger ng-star-inserted"> * </span>
+                  </label>
+                </ng-template>
+                <ng-template let-row="row" ngx-datatable-cell-template>
+                  <div [formGroup]="row.form">
+                    <number currency formControlName="guidelineScore" [hasLabel]="false" [small]="true">
+                    </number>
+                  </div>
+                </ng-template>
+              </ngx-datatable-column>
+              <ngx-datatable-column cellClass="text-center" [width]="50" [sortable]="false">
+                <ng-template ngx-datatable-header-template>
+                  <label class="datatable-header-cell-wrapper"> {{ 'label.ALL.Delete' | translate }}
+                  </label>
+                </ng-template>
+                <ng-template let-row="row" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                  <button (click)="removeFormatGuideline(row)" class="btn btn-outline-danger btn-sm">
+                    <i class="far fa-trash-alt"></i>
+                  </button>
+                </ng-template>
+              </ngx-datatable-column>
+            </app-table-client>
+          </div>
+        </div>
+      </div>
+    </app-card>
+  </div>
+</div>

@@ -1,0 +1,7 @@
+<app-modal (onClose)="decline()" header="ยืนยัน">
+    <p>{{message | translate}}</p>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-primary" (click)="decline()">ยกเลิก</button>
+        <button type="button" class="btn btn-primary" (click)="confirm()">ตกลง</button>
+    </div>
+</app-modal>

@@ -1,0 +1,53 @@
+<nav id="sidebar" class="sidebar" [ngClass]="{'sidebar-bg' : hasBackgroundImage()}">
+  <div class="sidebar-content">
+    <perfect-scrollbar>
+      <div class="sidebar-profile">
+        <div class="user-pic text-muted">
+          <i class="far fa-user"></i>
+        </div>
+        <div class="user-info">
+          <span class="user-name">
+             {{ personalName | async }}
+          </span>
+          <span class="badge badge-primary text-uppercase">{{ userName | async }}</span>
+        </div>
+        <div class="clear-left mt-2 d-block d-md-none">
+          <button class="btn btn-light btn-sm" (click)="signOut()"><small><i class="fas fa-sign-out-alt"></i> logout</small></button>
+        </div>
+      </div>
+      <div class="sidebar-menu" *ngIf="!loading; else notLoad" [@fadeAnimation]>
+        <ul>
+            <ng-template #recursiveList let-menus let-level="level">
+              <li *ngFor="let menu of menus" [ngClass]="{'active': menu.active ,'sidebar-dropdown': haveChildren(menu) , 'header-menu':menu.type === 'header'}">
+                <span *ngIf="menu.type === 'header'">{{menu.title}}</span>
+                <a *ngIf="haveChildren(menu); else isLink" class="d-flex align-items-center" routerLinkActive="active"
+                 href="javascript:void(0)" (click)='toggle(menu,level)' [style.padding-left.px]="level*10">
+                    <i class="{{menu.icon}}"></i>
+                    <span>{{ menu.title | translate}}</span>
+               </a>
+               <ng-template #isLink>
+                <a class="d-flex align-items-center" routerLinkActive="active"
+                 href="javascript:void(0)" routerLink="{{menu.url ? menu.url : '/notfound'}}" (click)="hide()" [style.padding-left.px]="level*10">
+                    <i class="{{menu.icon}}"></i>
+                    <span>{{ menu.title | translate}}</span>
+               </a>
+               </ng-template>
+               <div class="sidebar-submenu" [class.active]="menu.active" *ngIf="menu.subMenus && menu.subMenus.length">
+                  <ul>
+                      <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: menu.subMenus,level:level+1 }"></ng-container>
+                  </ul>
+                </div>
+              </li>
+            </ng-template>
+            <ng-container *ngTemplateOutlet="recursiveList; context:{ $implicit: menus,level:1 }"></ng-container>
+        </ul>
+      </div>
+      <ng-template #notLoad>
+          <div class="d-flex flex-column align-items-center justify-content-center mt-4">
+              <div class="fa-2x text-white-50"><i class="fas fa-circle-notch fa-spin"></i></div>
+              <small class="text-white">loading.....</small>
+          </div>
+      </ng-template>
+    </perfect-scrollbar>
+  </div>
+</nav>

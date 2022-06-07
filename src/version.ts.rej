@@ -1,0 +1,5 @@
+diff a/Web/spa/src/version.ts b/Web/spa/src/version.ts	(rejected hunks)
+@@ -1,7 +1,5 @@
+ export const version = {
+     timeStamp: '2020-07-16T12:54:10.065Z'
+ };

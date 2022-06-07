@@ -1,0 +1,56 @@
+<nav class="navbar navbar-fixed-top navbar-light">
+
+  <div class="d-flex">
+    <a class="menu" href="javascript:void(0)" (click)="toggleSidebar()">
+      <span></span>
+    </a>
+    <a class="navbar-brand ml-3 d-flex" href="#">
+      <img src="assets/images/logo.png">
+      <div class="logo-title d-none d-sm-block">
+        <div class="title">KKS SMART OFFICE</div>
+        <small class="">ระบบสมาร์ทออฟฟิศ</small>
+      </div>
+    </a>
+  </div>
+  <ul class="nav ml-auto">
+    <li dropdown class="nav-item dropdown" *ngIf="orgService.companies as comps">
+      <a class="nav-link dropdown-toggle" [matMenuTriggerFor]="companyMenu" href="javascript:void(0)" >
+        <span class="d-inline d-lg-none">สถาบัน <i class="fas fa-chevron-down fa-xs"></i></span>
+        <span class="d-none d-lg-inline" *ngIf="orgService.company | async as current">{{ getCompanyName(current,comps) }} <i class="fas fa-chevron-down fa-xs"></i></span>
+      </a>
+      <mat-menu #companyMenu="matMenu" class="menu-panel">
+        <ng-container *ngIf="orgService.company | async as current">
+          <button [class.menu-active]="current == company.value" (click)="changeCompany(company.value,current)" *ngFor="let company of comps" mat-menu-item>{{ company.text }}</button>
+        </ng-container>
+      </mat-menu>
+    </li>
+    <li dropdown class="nav-item dropdown" *ngIf="orgService.divisions as divisions">
+      <a class="nav-link dropdown-toggle" [matMenuTriggerFor]="divisionMenu" href="javascript:void(0)" >
+        <span class="d-inline d-lg-none">หน่วยงาน <i class="fas fa-chevron-down fa-xs"></i></span>
+        <span class="d-none d-lg-inline" *ngIf="orgService.division | async as current">{{ getDivisionName(current,divisions) }} <i class="fas fa-chevron-down fa-xs"></i></span>
+      </a>
+      <mat-menu #divisionMenu="matMenu" class="menu-panel">
+        <ng-container *ngIf="orgService.division | async as current">
+          <button [class.menu-active]="current == div.value" (click)="changeDivision(div.value,current)" *ngFor="let div of divisions" mat-menu-item>{{ div.text }}</button>
+        </ng-container>
+      </mat-menu>
+    </li>
+  </ul>
+
+  <ul class="nav nav-pills ml-auto">
+    <li class="nav-item">
+      <a class="nav-link" [class.disabled]="i18n.language === thai" [routerLink]="['/empty/lang', thai]"
+        [class.active]="i18n.language === thai">ไทย</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" [class.disabled]="i18n.language === eng" [routerLink]="['/empty/lang', eng]"
+        [class.active]="i18n.language === eng">eng</a>
+    </li>
+  </ul>
+  <ul class="nav d-none d-md-flex">
+    <li class="nav-item">
+      <a class="nav-link" href="javascript:void(0)" (click)="signOut()"><i class="fas fa-sign-out-alt"></i><span
+          class="d-none d-md-inline"> Logout</span></a>
+    </li>
+  </ul>
+</nav>

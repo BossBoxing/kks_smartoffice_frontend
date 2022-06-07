@@ -1,0 +1,159 @@
+<h4>Input</h4>
+<div class="row">
+  <div class="col">
+    <app-card header="all input">
+      <div class="card-content">
+        <form [formGroup]="inputForm" (ngSubmit)="onSubmit()" [class.validated]="submited">
+          <div class="form-row">
+            <div class="form-group col-md-3">
+              <textbox formControlName="text" class="text-center" placeholder="placeholder">Text
+              </textbox>
+              <div class="invalid" *ngIf="inputForm.errors && inputForm.errors.textrange">
+                ห้ามเกิน {{  inputForm.errors.textrange.end  }}
+              </div>
+            </div>
+            <div class="form-group col-md-3">
+              <textbox formControlName="textTo" class="text-center" placeholder="placeholder">Text To
+              </textbox>
+              <div class="invalid" *ngIf="inputForm.errors && inputForm.errors.textrange">
+                ห้ามน้อยกว่า {{  inputForm.errors.textrange.start  }}
+              </div>
+            </div>
+            <div class="form-group col-md-3">
+              <number formControlName="integer">integer</number>
+            </div>
+            <div class="form-group col-md-3">
+              <number formControlName="number" currency>number</number>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-3">
+              <textbox formControlName="email" class="text-center" placeholder="placeholder">email
+              </textbox>
+            </div>
+            <div class="form-group col-md-3">
+              <textbox formControlName="phone" class="text-center" placeholder="placeholder">phone
+                  <div class="invalid-pattern">
+                      อนุญาตให้ระบุ # , - และตัวเลขเท่านั้น
+                  </div>
+              </textbox>
+            </div>
+            <div class="form-group col-md-3">
+              <textbox formControlName="idCard" class="text-center" placeholder="placeholder">id card
+                  <div class="invalid-pattern">
+                      รูปแบบเลขประจำตัวไม่ถูกต้อง 
+                  </div>
+              </textbox>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-3">
+              <datepicker [max]="inputForm.controls.dateTo.value" formControlName="date">Date</datepicker>
+            </div>
+            <div class="form-group col-md-3">
+              <datepicker [min]="inputForm.controls.date.value" formControlName="dateTo">Date To</datepicker>
+            </div>
+            <div class="form-group col-md-6">
+              <time formControlName="time">time</time>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <select-input [items]="selectItemsAddMode" placeholder="placeholder" formControlName="select">select mode add
+              </select-input>
+            </div>
+            <div class="form-group col-md-6">
+              <select-input [items]="selectItemsEditMode" [showDescription]="true" placeholder="placeholder"
+                formControlName="selectDesc">select with description mode edit
+              </select-input>
+            </div>
+          </div>
+          <div class="form-row">
+              <div class="form-group col-md-6">
+                <auto-complete [onSearch]="onSearchAutocomplete" formControlName="auto">auto complete</auto-complete>
+              </div>
+              <div class="form-group col-md-6">
+                <auto-complete [showDescription]="true" [onSearch]="onSearchAutocomplete" formControlName="autoDesc">auto with description</auto-complete>
+              </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <checkbox formControlName="checkbox">Checkbox</checkbox>
+            </div>
+            <div class="form-group col-md-6">
+              <radio [items]="radioItems" [inline]="true" formControlName="radio">Radio (ปิดไม่ให้เลือกบางอย่าง)</radio>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <lookup name="demo" [param]="lookupParam" [service]="LookupDemoService" [content]="LookupDemoComponent" formControlName="lookup">lookup
+              </lookup>
+            </div>
+            <div class="form-group col-md-3">
+              <textbox name="nameTha" lookupParent="demo" [disabled]="true">description</textbox>
+            </div>
+            <div class="form-group col-md-3">
+              <textbox name="nameEng" lookupParent="demo" [disabled]="true">description2</textbox>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <year formControlName="year">year</year>
+            </div>
+            <div class="form-group col-md-6">
+              <areabox formControlName="area">Textarea</areabox>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <image formControlName="image">Image Upload</image>
+            </div>
+            <div class="form-group col-md-6">
+              <attachment formControlName="file">File Upload</attachment>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-3">
+              <status status="ฉบับร่าง" [color]="color['DRAFT']">สถานะ</status>
+            </div>
+            <div class="form-group col-md-3">
+              <status status="ปกติ" [color]="color['NORMAL']">สถานะ</status>
+            </div>
+            <div class="form-group col-md-3">
+              <status status="รอ" [color]="color['WAIT']">สถานะ</status>
+            </div>
+            <div class="form-group col-md-3">
+              <status status="ดำเนินการ" [color]="color['PROCESS']">สถานะ</status>
+            </div>
+            <div class="form-group col-md-3">
+              <status status="อนุมัติ" [color]="color['APPROVE']">สถานะ</status>
+            </div>
+            <div class="form-group col-md-3">
+              <status status="ไม่อนุมัติ" [color]="color['REJECT']">สถานะ</status>
+            </div>
+            <div class="form-group col-md-3">
+              <status status="ยกเลิก" [color]="color['CANCEL']">สถานะ</status>
+            </div>
+            <div class="form-group col-md-3">
+              <status status="ถูกอ้างอิง" [color]="color['REFER']">สถานะ</status>
+            </div>
+            <div class="form-group col-md-3">
+              <status status="เสร็จสมบูรณ์" [color]="color['COMPLETE']">สถานะ</status>
+            </div>
+          </div>
+          <button class="btn btn-primary" type="submit">submit</button>
+          <button class="btn btn-primary" type="button" (click)="clear()">clear</button>
+        </form>
+      </div>
+    </app-card>
+  </div>
+</div>
+<div class="row">
+  <div class="col">
+    <app-card>
+      <div class="card-content">
+        <app-search></app-search>
+      </div>
+    </app-card>
+  </div>
+</div>

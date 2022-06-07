@@ -1,0 +1,14 @@
+.attach-url {
+    position: relative;
+    width: 100%;
+    .icon {
+      position: absolute;
+      top: 8px;
+      right: 10px;
+      color: #0073dd;
+      cursor: pointer;
+    }
+    .icon:hover {
+      color: #02529c;
+    }
+  }
